@@ -8,13 +8,15 @@ const routes = [
     component: Home
   },
   {
+    path: '/learn',
+    name: 'WEMLibrary',
+    component: () => import(/* webpackChunkName: "home" */ '../views/WEMLibrary.vue')
+  },
+  {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
 ]
 
 const router = createRouter({
