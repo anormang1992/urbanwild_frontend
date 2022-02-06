@@ -3,13 +3,7 @@
     <div class="wem-container flex flex-col w-full overflow-y-auto">
       <div id="top" class="recent-outer">
         <div class="recent-inner">
-          <div class="video-container">
-            <iframe :src="current_wem.video_link +'&title=0&byline=0&portrait=0'"
-                    allowfullscreen
-                    id="current-video"
-                    class="responsive-vid-container" >
-            </iframe>
-          </div>
+          <div class="video-container" id="current-video-container"></div>
           <div class="flex flex-row justify-between" style="font-family: 'Baloo 2';">
             <div class="flex flex-col text-left text-white">
               <h1 class="text-3xl font-bold">{{current_wem.title}}</h1>
@@ -34,9 +28,8 @@
         <div class="gallery-container">
           <div class="gallery-overlay w-full h-full"></div>
           <div class="flex flex-row w-full justify-between items-center relative p-2">
-            <h2 class="text-3xl font-primary font-bold text-white pl-2" style="font-family: 'Baloo 2';">More Videos From the {{current_wem.series.name}} Series</h2>
+            <h2 class="text-3xl font-primary font-bold text-white pl-2" style="font-family: 'Baloo 2';">All Videos From the {{current_wem.series.name}} Series</h2>
           </div>
-          <!--Convert this to a reusable component-->
           <div class="grid grid-cols-3 gap-2 w-full">
             <div v-for="(wem,index) in current_series" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <div class="video-container p-2" @click="switchCurrentWEM(wem)">
@@ -204,7 +197,7 @@ export default {
       filter_params: {
         sort: '-date',
         classification: 'all',
-        limit: 3,
+        limit: 15,
         offset: 0
       },
     }
@@ -217,6 +210,7 @@ export default {
         this.series_gallery = true;
       }
       this.getSeriesCollections();
+      this.createPlayer();
     })
   },
 
@@ -224,7 +218,7 @@ export default {
     getWEMs() {
       let query_string = this.formatQueryString(this.filter_params)
       let url = '/api/v1/wems/'
-      url += '?'+query_string
+      url += '?' + query_string
       return axios.get(url)
         .then(response => {
         //TODO: Fix this whenever you reset filters on a page other than 1
@@ -232,8 +226,7 @@ export default {
         this.wems = response.data.results;
         this.upcoming_wems = this.wems;
         this.reset_filters = false;
-        })
-        .catch(error => {
+        }).catch(error => {
           console.log(error);
       })
     },
@@ -243,26 +236,33 @@ export default {
       axios.get(url)
         .then(response => {
           this.series_collections = response.data;
-          this.getCurrentSeries();
+          this.current_series = this.getCurrentSeries();
         })
         .catch(error => {
           console.log(error);
         })
     },
-    //TODO: Optimize this to get the current series from the series collections
-    getCurrentSeries() {
-      let current_series = [];
-      for(var i = 0, size = this.series_collections.length; i < size ; i++) {
-        let series = this.series_collections[i];
-        if (series.collection_name && this.current_wem.series.name == series.collection_name) {
-          current_series = series.collection_videos;
-        } else {
-          current_series = [];
-        }
+
+    createPlayer() {
+      var video_container = document.getElementById('current-video-container');
+      let iframe = document.createElement('iframe');
+      iframe.src = this.current_wem.video_link + '&title=0&byline=0&portrait=0';
+      iframe.setAttribute('allowFullScreen', '')
+      iframe.className = "responsive-vid-container";
+      video_container.appendChild(iframe);
+      let options = {
+        url: this.current_wem.video_link + '&title=0&byline=0&portrait=0',
       }
+      this.player = new Vimeo.Player(iframe, options);
+      this.initFinishWatcher(this.current_wem);
+    },
 
-      this.current_series = current_series
-
+    getCurrentSeries() {
+     for (let i = 0; i < this.series_collections.length; i++){
+        if (this.series_collections[i].collection_name == this.current_wem.series.name) {
+          return this.series_collections[i].collection_videos
+        }
+     }
     },
 
     formatWEMDate(date) {
@@ -272,6 +272,25 @@ export default {
     switchCurrentWEM(wem) {
       this.series_gallery = !wem.series ? false : true;
       this.current_wem = wem;
+      if (this.current_wem.series) {
+        this.current_series = this.getCurrentSeries()
+      }
+      this.player.destroy().then(()=>{
+        this.createPlayer();
+      })
+    },
+
+    initFinishWatcher(wem) {
+      this.player.on('ended', function(data) {
+        wem.play_count += 1;
+        let url = `/api/v1/wems/${wem.id}/`;
+        let update = {
+          'play_count': wem.play_count
+        }
+        axios.patch(url, update).then((wem)=>{
+          console.log('Play count updated!')
+        })
+      })
     },
 
     updatePage(page) {
@@ -279,6 +298,7 @@ export default {
       this.filter_params.offset = (page-1) * this.filter_params.limit;
       this.getWEMs()
     },
+
     selectSeries(wem,index) {
       this.current_wem = wem.collection_videos[0];
       this.series_gallery = true;
