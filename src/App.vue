@@ -30,22 +30,4 @@ export default {
   color: #2c3e50;
   height: 100%;
 }
-
-#nav {
-  position: relative;
-  padding: 15px;
-    a {
-      font-weight: bold;
-      color: #FFFFFF;
-      font-family: 'Baloo 2';
-
-      &.router-link-exact-active {
-        color: #589040;
-      }
-    }
-
-    a:hover {
-      color: #589040;
-    }
-}
 </style>

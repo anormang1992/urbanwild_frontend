@@ -8,6 +8,7 @@
 						 type="text" 
 						 name="tag-search" 
 						 id="tag-search"
+						 autocomplete="off"
 						 placeholder="Search Tags..." />		
 				<div class="flex items-center justify-center h-8 bg-white"> 
 					<i class="fas fa-search text-xl bg-white pr-2"></i>

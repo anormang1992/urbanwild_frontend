@@ -92,7 +92,6 @@
   flex-direction: column;
   height: 100%;
   align-items: flex-end;
-
 }
 .about-page-inner {
   display: flex;

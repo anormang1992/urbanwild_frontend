@@ -3,8 +3,10 @@
     <div class="wem-container flex flex-col w-full overflow-y-auto">
       <div id="top" class="recent-outer">
         <div class="recent-inner">
-          <div class="video-container" id="current-video-container"></div>
-          <div class="flex flex-row justify-between" style="font-family: 'Baloo 2';">
+          <div class="video-container" id="current-video-container">
+            <farm-bureau-form v-if="form_open" @closeForm="closeForm" ></farm-bureau-form>
+          </div>
+          <div class="video-info-container" style="font-family: 'Baloo 2';">
             <div class="flex flex-col text-left text-white">
               <h1 class="text-3xl font-bold">{{current_wem.title}}</h1>
               <h2 class="text-lg">Uploaded On: {{formatWEMDate(current_wem.created_at)}}</h2>
@@ -14,6 +16,9 @@
                 <h2 v-else>Hide Description</h2>
               </div>
             </div>
+            <div v-if="show_ad" class="ad-container">
+              <img @click="form_open=true" class="ad-hot-button" src="../../src/assets/images/Farm_Bureau_Ad.png"/>
+            </div> 
           </div>
           <div v-if="show_description" class="description-container">
             <div class="description-overlay w-full h-full"></div>
@@ -163,6 +168,7 @@ import SortFilter from '@/components/filters/SortFilter.vue';
 import DateFilter from '@/components/filters/DateFilter.vue';
 import TagsFilter from '@/components/filters/TagsFilter.vue';
 import ClassFilter from '@/components/filters/ClassFilter.vue';
+import FarmBureauForm from '@/components/forms/FarmBureauForm.vue';
 import Tooltip from '@/components/ui/Tooltip';
 import Paginator from '@/components/ui/Paginator';
 
@@ -175,6 +181,7 @@ export default {
     DateFilter,
     ClassFilter,
     TagsFilter,
+    FarmBureauForm,
     Tooltip,
     Paginator
   },
@@ -185,6 +192,9 @@ export default {
       wems: Array,
       current_wem: Object,
       upcoming_wems: Array,
+      show_ad: false,
+      form_open: false,
+
       series_gallery: false,
       series_collections: Array,
       current_series:[],
@@ -270,6 +280,7 @@ export default {
     },
 
     switchCurrentWEM(wem) {
+      this.show_ad = false;
       this.series_gallery = !wem.series ? false : true;
       this.current_wem = wem;
       if (this.current_wem.series) {
@@ -281,7 +292,8 @@ export default {
     },
 
     initFinishWatcher(wem) {
-      this.player.on('ended', function(data) {
+      this.player.on('ended', data => {
+        this.show_ad = true;
         wem.play_count += 1;
         let url = `/api/v1/wems/${wem.id}/`;
         let update = {
@@ -291,6 +303,10 @@ export default {
           console.log('Play count updated!')
         })
       })
+    },
+
+    triggerAd() {
+      this.show_ad = true;
     },
 
     updatePage(page) {
@@ -394,6 +410,10 @@ export default {
       delete this.filter_params['tags']
 
       this.getWEMs();
+    },
+
+    closeForm() {
+      this.form_open = false;
     }
 
   }
@@ -418,7 +438,17 @@ export default {
   flex-direction: column;
   position: relative;
   width: 60%;
-  margin-top: 15px;
+  margin-top: 50px;
+  .video-info-container {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    .ad-container {
+      width:150px;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
 }
 .video-container {
   position: relative;
