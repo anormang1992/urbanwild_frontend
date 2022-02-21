@@ -214,13 +214,29 @@ export default {
   },
 
   mounted() {
+    // TODO: Refactor the complexity of this function --> should only need to set
+    // the current_wem value based on if the wem query paramater exists instead of
+    // duplicating so much code in both cases.
     this.getWEMs().then(()=>{
-      this.current_wem = this.wems[0];
-      if (this.current_wem.series) {
-        this.series_gallery = true;
+      if (this.$route.query.wem) {
+        let url = `/api/v1/wems/${this.$route.query.wem}/`
+        axios.get(url).then(result => {
+          this.current_wem = result.data;
+          if (this.current_wem.series) {
+            this.series_gallery = true;
+          }
+          this.getSeriesCollections();
+          this.createPlayer();
+        })
+      } 
+      else {
+        this.current_wem = this.wems[0];
+        if (this.current_wem.series) {
+          this.series_gallery = true;
+        }
+        this.getSeriesCollections();
+        this.createPlayer();
       }
-      this.getSeriesCollections();
-      this.createPlayer();
     })
   },
 

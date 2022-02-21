@@ -27,6 +27,9 @@
         <ul class="route-list" :class="{'hidden': !open_nav}">
           <template v-for="route in routes">
             <li>
+              <img v-if="route.path == currentRoutePath" 
+                   src="../../assets/active_link_owl.png" width="30"
+                   class="pr-2"/>
               <router-link :to="route.path" @click="updateRoute">{{ route.name }}</router-link>
             </li>
           </template>
@@ -38,7 +41,7 @@
   <transition name="slide">
     <search-results :searching="searching"
                     :results="search_results"
-                    @closeSearchPanel="closeSearch"
+                    @closeSearch="closeSearch"
                     v-if="search_panel_open"/>
   </transition>
 
@@ -80,8 +83,13 @@ export default {
     }
   },
 
-  methods: {
+  computed: {
+    currentRoutePath() {
+      return this.$route.path;
+    }
+  },
 
+  methods: {
     toggleNav(){
       this.open_nav = !this.open_nav;
       if (this.search_panel_open) {
@@ -151,33 +159,35 @@ export default {
 .nav-sidebar {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  align-items: center;
+  width: 20%;
   height: 100%;
   position: absolute;
   right: 0;
-  z-index: 9999;
-  background-color: #435B6B;
+  z-index: 99999;
+  background-color: #469cdd;
   border-radius: 10px 0 0 10px;
 }
 .route-list {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-end;
+  padding: 25px;
   width: 100%;
   height: 100%;
-  margin: 25px;
   li {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
     text-transform: uppercase;
     color: #FFFFFF;
-    padding: 15px;
-    text-align: left;
+    padding: 25px;
+    text-align: center;
     font-family: 'Baloo 2';
+    font-weight: bold;
+    font-size: 28px;
     &:hover {
       color: #589040;
-    }
-    .router-link-exact-active {
-      color: #589040;
-      text-decoration: underline;    
     }
   }
 }

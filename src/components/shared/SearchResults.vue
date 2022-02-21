@@ -1,6 +1,6 @@
 <template>
   <div class="search-sidebar shadow-xl">
-    <i class="close-button text-4xl p-4 fas fa-times" @click="$emit('closeSearchPanel')"></i>
+    <i class="close-button text-4xl p-4 fas fa-times" @click="$emit('closeSearch')"></i>
     <div v-if="searching" class="searching-text text-2xl">
       Searching for critters, stories, and more...
     </div>
@@ -10,11 +10,10 @@
           <div class="results-header">
             <h2>{{ key }}</h2>
           </div>
-          <div v-for="result in obj" class="result-wrapper">
+          <div v-for="result in obj" class="result-wrapper" @click="navigateToResult(key, result)">
             <div class="name">
               {{ result.title || result.name}}
               <span v-if="result.series_video_count">({{ result.series_video_count }} Videos in Series) </span>
-
             </div>
           </div>
         </div>
@@ -37,7 +36,19 @@ export default {
     }
   },
   methods: {
-
+    navigateToResult(result_type, result) {
+      this.$emit('closeSearch');
+      switch(result_type) {
+        case 'Wildlife Educational Moments':
+          this.$router.push({path:'/learn', query: {wem: result.id}})
+          break;
+        case 'Wildlife Educational Series':
+          console.log('WEM Series')
+          break;
+        case 'Wildlife Stories':
+          break;
+      }
+    }
   }
 }
 
@@ -51,8 +62,9 @@ export default {
   width: 25%;
   position: absolute;
   right: 0;
-  z-index: 9999;
+  z-index: 99999;
   background-color: #E9F0F8;
+  border-radius: 10px 0 0 10px;
   .close-button {
     position: relative;
     color: #469cdd;
