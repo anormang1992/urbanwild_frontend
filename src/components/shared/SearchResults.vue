@@ -58,13 +58,13 @@ export default {
 .search-sidebar {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 100px);
   width: 25%;
   position: absolute;
   right: 0;
   z-index: 99999;
   background-color: #E9F0F8;
-  border-radius: 10px 0 0 10px;
+  border-radius: 25px 0 0 25px;
   .close-button {
     position: relative;
     color: #469cdd;

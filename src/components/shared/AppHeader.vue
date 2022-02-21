@@ -161,12 +161,12 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 20%;
-  height: 100%;
+  height: calc(100% - 100px);
   position: absolute;
   right: 0;
   z-index: 99999;
   background-color: #469cdd;
-  border-radius: 10px 0 0 10px;
+  border-radius: 25px 0 0 25px;
 }
 .route-list {
   display: flex;
