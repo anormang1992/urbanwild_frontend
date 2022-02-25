@@ -344,8 +344,13 @@ export default {
 
     selectSeries(wem,index) {
       this.current_wem = wem.collection_videos[0];
-      this.series_gallery = true;
-      this.getCurrentSeries();
+      this.player.destroy().then(()=>{
+        this.createPlayer();
+      })
+      if (this.current_wem.series) {
+        this.series_gallery = true;
+        this.current_series = this.getCurrentSeries()
+      }
     },
 
     changeView() {
