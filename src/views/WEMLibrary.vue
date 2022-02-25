@@ -213,23 +213,19 @@ export default {
     }
   },
 
+  watch:{
+    $route (to, from){
+      this.applyGlobalSearch();
+    }
+  },
+
   mounted() {
     // TODO: Refactor the complexity of this function --> should only need to set
     // the current_wem value based on if the wem query paramater exists instead of
     // duplicating so much code in both cases.
     this.getWEMs().then(()=>{
-      if (this.$route.query.wem) {
-        let url = `/api/v1/wems/${this.$route.query.wem}/`
-        axios.get(url).then(result => {
-          this.current_wem = result.data;
-          if (this.current_wem.series) {
-            this.series_gallery = true;
-          }
-          this.getSeriesCollections();
-          this.createPlayer();
-        })
-      } 
-      else {
+      let gs = this.applyGlobalSearch();
+      if (!gs) {
         this.current_wem = this.wems[0];
         if (this.current_wem.series) {
           this.series_gallery = true;
@@ -255,6 +251,21 @@ export default {
         }).catch(error => {
           console.log(error);
       })
+    },
+
+    applyGlobalSearch() {
+      if (this.$route.query.wem) {
+        let url = `/api/v1/wems/${this.$route.query.wem}/`
+        axios.get(url).then(result => {
+          this.current_wem = result.data;
+          if (this.current_wem.series) {
+            this.series_gallery = true;
+          }
+          this.getSeriesCollections();
+          this.createPlayer();
+          return true;
+        })
+      } 
     },
 
     getSeriesCollections() {
