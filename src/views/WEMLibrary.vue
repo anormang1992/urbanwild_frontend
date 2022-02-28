@@ -281,6 +281,11 @@ export default {
     },
 
     createPlayer() {
+      if (this.$route.query.wem) {
+        let query = Object.assign({}, this.$route.query);
+        delete query.wem;
+        this.$router.replace({ query });
+      }
       var video_container = document.getElementById('current-video-container');
       let iframe = document.createElement('iframe');
       iframe.src = this.current_wem.video_link + '&title=0&byline=0&portrait=0';
@@ -307,6 +312,9 @@ export default {
     },
 
     switchCurrentWEM(wem) {
+      if (this.$route.query.wem) {
+        console.log('true')
+      }
       this.show_ad = false;
       this.series_gallery = !wem.series ? false : true;
       this.current_wem = wem;

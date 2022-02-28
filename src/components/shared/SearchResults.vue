@@ -43,7 +43,6 @@ export default {
           this.$router.push({path:'/learn', query: {wem: result.id}})
           break;
         case 'Wildlife Educational Series':
-          console.log('WEM Series')
           break;
         case 'Wildlife Stories':
           break;
