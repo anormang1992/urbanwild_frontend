@@ -4,7 +4,7 @@
       <div id="top" class="recent-outer">
         <div class="recent-inner">
           <div class="video-container" id="current-video-container">
-            <farm-bureau-form v-if="form_open" @closeForm="closeForm" ></farm-bureau-form>
+            <farm-bureau-form v-if="form_open" @closeForm="closeForm"></farm-bureau-form>
           </div>
           <div class="video-info-container" style="font-family: 'Baloo 2';">
             <div class="flex flex-col text-left text-white">

@@ -14,31 +14,9 @@
             </div>
           </div>
         </div>
-        <div class="contact-content-container">
-          <div class="contact-position shadow-2xl">
-            <div class="contact-overlay"></div>
-            <div class="contact-content">
-              <h1>Contact Us</h1>
-              <form action="">
-                <div class="form-group">
-                  <label class="form-label">Your Name</label>
-                  <input type="text" required v-model="name">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Your Email</label>
-                  <input type="text" required v-model="email">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Message</label>
-                  <textarea v-model="message" rows=5></textarea>
-                </div>
-                <div class="flex flex-row w-full justify-center mt-4">
-                  <button class="send-button" @click="sendMessage">
-                    Send Message
-                  </button>
-                </div>
-              </form>
-            </div>
+        <div class="support-container">
+          <div class="support-inner">
+            <img src="../assets/images/Fox_Message.png"/>
           </div>
         </div>
       </div>
@@ -142,63 +120,18 @@
     margin: 10px;
   }
 }
-.contact-content-container {
+.support-container {
   display: flex;
   flex-direction:column;
   position: relative;
   width: 100%;
-  margin: 75px 25px 0 15px;
-  background-color: #589040;
-  border-radius: 10px;
-  .contact-position {
-    position: relative;
-    bottom: 15px;
-    right: 15px;
-    width: 100%;
-  }
-  .contact-overlay {
-    background-color: #E9F0F8;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-  }
-  .contact-content {
-    position: relative;
+  margin: 50px 25px 0 15px;
+  .support-inner {
+    display: flex;
+    justify-content: center;
     padding: 15px;
-    text-align: left;
-    width:100%;
-    h1 {
-      font-family: 'Baloo 2';
-      font-weight: bold;
-      font-size: 32px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      padding-top: 5px;
-      input {
-        outline: none;
-      }
-      textarea {
-        outline: none;
-      }
-    }
-    .form-label {
-      font-family: 'Montserrat';
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .send-button {
-      background-color: #435B6B;
-      color: #FFFFFF;
-      padding: 0.5rem;
-      width: 10rem;
-      font-size: 1.125rem;
-      line-height: 1.75rem;
-      &:hover{
-        background-color: #469cdd;
-      }
+    img {
+      width: 100%;
     }
   }
 }
