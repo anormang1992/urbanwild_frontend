@@ -7,7 +7,7 @@
             <farm-bureau-form v-if="form_open" @closeForm="closeForm"></farm-bureau-form>
           </div>
           <div class="video-info-container" style="font-family: 'Baloo 2';">
-            <div class="flex flex-col text-left text-white">
+            <div class="flex flex-col text-left text-white w-full">
               <h1 class="text-3xl font-bold">{{current_wem.title}}</h1>
               <h2 class="text-lg">Uploaded On: {{formatWEMDate(current_wem.created_at)}}</h2>
               <div v-if="current_wem.description" class="description-toggle" 
@@ -17,7 +17,12 @@
               </div>
             </div>
             <div v-if="show_ad" class="ad-container">
-              <img @click="form_open=true" class="ad-hot-button" src="../../src/assets/images/Farm_Bureau_Ad.png"/>
+              <div class="logo-sponsors">
+                <img src="../../src/assets/logos/logo_proud_sponsors.png"/>
+              </div>
+              <div class="ad-hot-button">
+                <img @click="form_open=true" src="../../src/assets/logos/Farm_Bureau_Ad.png"/>
+              </div>
             </div> 
           </div>
           <div v-if="show_description" class="description-container">
@@ -484,9 +489,26 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     .ad-container {
-      width:150px;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
       padding: 5px;
-      cursor: pointer;
+      justify-content: flex-end;
+      align-items: center;
+      .logo-sponsors {
+        width: 200px;
+        margin-right: 10px;
+        img {
+          image-rendering: -moz-crisp-edges;         
+          image-rendering: -o-crisp-edges;         
+          image-rendering: -webkit-optimize-contrast;
+        }
+      }
+      .ad-hot-button {
+        cursor: pointer;
+        width: 125px;
+        image-rendering: -moz-crisp-edges;
+      }
     }
   }
 }

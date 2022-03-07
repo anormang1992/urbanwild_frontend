@@ -4,7 +4,7 @@
       <i class="fas fa-times text-4xl"></i>
     </div>
     <div class="fb-form-content">
-      <img class="fb-image" src="../../../src/assets/images/Farm_Bureau_Ad.png"/>
+      <img class="fb-image" src="../../../src/assets/logos/Farm_Bureau_Ad.png"/>
       <h2 class="text-xl font-primary uppercase tracking-widest pt-2">Helping You Is What We Do Best!</h2>
       <form class="fb-form">
         <table class="fb-form-table">

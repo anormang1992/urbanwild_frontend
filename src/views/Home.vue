@@ -16,7 +16,7 @@
         </div>
 
         <div class="logo-container"> 
-          <img src="../assets/logo_circular.png" width="625">
+          <img src="../assets/logos/logo_circular.png" width="625">
         </div>
 
         <div class="help-side flex flex-row w-full items-center">
@@ -86,5 +86,10 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
+  img {
+    image-rendering: -moz-crisp-edges;         
+    image-rendering: -o-crisp-edges;         
+    image-rendering: -webkit-optimize-contrast;
+  }
 }
 </style>

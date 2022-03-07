@@ -1,6 +1,6 @@
 <template>
   <div class="header-container flex flex-row items-center p-3 justify-between">
-    <router-link to="/"><img src="../../assets/logo_minimal.png" width="250"></router-link>
+    <router-link to="/"><img src="../../assets/logos/logo_minimal.png" width="250"></router-link>
     <div class="flex flex-row items-center space-x-8">
       <div class="search flex flex-row w-full items-center justify-center">
         <form action='#' class="flex flex-row items-center">
@@ -28,7 +28,7 @@
           <template v-for="route in routes">
             <li>
               <img v-if="route.path == currentRoutePath" 
-                   src="../../assets/active_link_owl.png" width="30"
+                   src="../../assets/images/active_link_owl.png" width="30"
                    class="pr-2"/>
               <router-link :to="route.path" @click="updateRoute">{{ route.name }}</router-link>
             </li>
