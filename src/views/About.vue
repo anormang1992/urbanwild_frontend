@@ -125,11 +125,12 @@
   position: relative;
   height: 100%;
   margin-top: 15px;
-  justify-content: flex-end;
   .support-inner {
     display: flex;
-    width: 75%;
+    width: 100%;
     padding: 15px;
+    justify-content: center;
+    align-items: center;
     img {
       width: 100%;
       image-rendering: -moz-crisp-edges;         
