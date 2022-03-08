@@ -1,17 +1,23 @@
 <template>
   <div class="about-page flex flex-row w-full">
-    <div class="about-page-inner">
-      <div class="about-content-container">
-        <div class="about-left">
-          <div class="slogan-text text-8xl">Helping to Rehabilitate Wildlife Since 2021</div>
+    <div class="about-page-outer w-full">
+      <div class="about-page-inner sm:w-1/2 w-full">
+        <div class="about-content-container">
+          <div class="about-position shadow-2xl">
+            <div class="about-overlay"></div>
+            <div class="about-content">
+              <h1>Helping to Rehabilitate Wildlife Since 2021</h1>
+              <p>UrbanWild is a non-profit organization based out of Raleigh, North Carolina dedicated to rescuing and protecting wildlife from the threats of urbanization. We work hand-in-hand with licensed rehabilitators across the United States to create an effective network of resources designed to quickly Report, Relieve, and Release injured wildlife. We also strive to educate people of all ages about the diverse wildlife we often come into contact with.</p>
+              <div class="action-container">
+                <uw-button name="Learn" route_path="/learn"/>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="about-right">
-          <img src="../assets/images/about_us_message.png"/>
-        </div>
-      </div>
-      <div class="support-container">
-        <div class="support-inner">
-          <img src="../assets/images/Fox_Message.png"/>
+        <div class="support-container">
+          <div class="support-inner">
+            <img src="../assets/images/Fox_Message.png"/>
+          </div>
         </div>
       </div>
     </div>
@@ -59,61 +65,76 @@
 </script>
 
 <style lang="scss">
-.about-page-inner {
+.about-page-outer {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
+  align-items: flex-end;
+}
+.about-page-inner {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  padding: 25px;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: #435B6B;
-  padding: 15px;
-  .about-content-container {
-    display: flex;
+}
+.about-content-container {
+  display: flex;
+  background-color: #469cdd;
+  position: relative;
+  border-radius: 10px;
+  margin: 25px 25px 0 0;  
+  .about-position {
     position: relative;
+    top: 15px;
+    left: 15px;
+    width: 100%;    
+  }
+  .about-overlay {
+    background-color: #E9F0F8;
+    position: absolute;
+    width: 100%;
     height: 100%;
-    background-color: #469cdd;
-    .about-left {
-      display: flex;
-      width: 50%;
-      padding: 15px;
-      justify-content: center;
-      align-items: center;
-      .slogan-text {
-        font-family: 'Baloo 2';
-        color: #FFFFFF;
-        font-style: italic;
-      }
+    border-radius: 10px;
+  }
+  .about-content {
+    position: relative;
+    padding: 15px;
+    text-align: left;
+    h1 {
+      font-family: 'Baloo 2';
+      font-weight: bold;
+      font-size: 32px;
     }
-    .about-right {
-      display: flex;
-      width: 50%;
-      position: relative;
-      padding: 15px;
-      img {
-        width: 100%;
-        image-rendering: -moz-crisp-edges;         
-        image-rendering: -o-crisp-edges;         
-        image-rendering: -webkit-optimize-contrast;
-      }
+    p {
+      font-family: 'Montserrat';
+      font-size: 18px;
     }
   }
-  .support-container {
+  .action-container {
     display: flex;
-    position: relative;
-    height: 100%;
-    background-color: #589040;
-    margin-top: 15px;
-    .support-inner {
-      display: flex;
-      width: 50%;
-      padding: 15px;
-      img {
-        width: 100%;
-        image-rendering: -moz-crisp-edges;         
-        image-rendering: -o-crisp-edges;         
-        image-rendering: -webkit-optimize-contrast;
-      }
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 10px;
+  }
+}
+.support-container {
+  display: flex;
+  position: relative;
+  height: 100%;
+  margin-top: 15px;
+  justify-content: flex-end;
+  .support-inner {
+    display: flex;
+    width: 75%;
+    padding: 15px;
+    img {
+      width: 100%;
+      image-rendering: -moz-crisp-edges;         
+      image-rendering: -o-crisp-edges;         
+      image-rendering: -webkit-optimize-contrast;
     }
   }
 }
