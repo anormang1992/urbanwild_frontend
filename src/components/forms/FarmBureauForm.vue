@@ -13,7 +13,7 @@
               <label for="name">Name: </label>
             </th>
             <td>
-              <input type="text" name="name">
+              <input v-model="form.name" type="text" name="name">
             </td>
           </tr>
           <tr>
@@ -21,7 +21,7 @@
               <label for="address">Address: </label>
             </th>
             <td>
-              <input type="text" name="address">
+              <input v-model="form.address" type="text" name="address">
             </td>
           </tr>
           <tr>
@@ -29,7 +29,7 @@
               <label for="zip">Zip-code: </label>
             </th>
             <td>
-              <input type="text" name="zip">
+              <input v-model="form.zip" type="text" name="zip">
             </td>
           </tr>
           <tr>
@@ -37,7 +37,7 @@
               <label for="phone">Phone: </label>
             </th>
             <td>
-              <input type="text" name="phone">
+              <input v-model="form.phone" @input="formatPhoneNumber" type="tel" name="phone">
             </td>
           </tr>
           <tr>
@@ -45,28 +45,59 @@
               <label for="email">Email: </label>
             </th>
             <td>
-              <input type="text" name="email">
+              <input v-model="form.email" type="email" name="email">
             </td>
           </tr>
         </table>
       </form>
-      <button class="fb-submit">Submit</button>
+      <button @click="submitLeadForm()" class="fb-submit">Submit</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
+
 export default {
   name: 'FarmBureauForm',
 
   data: function() {
     return {
-
+      form: {
+        name: '',
+        address: '',
+        zip: '',
+        phone: '',
+        email: ''
+      }
     }
   },
   methods: {
     closeForm() {
       this.$emit('closeForm', '')
+    },
+
+    formatPhoneNumber() {
+      var formatted_number = this.form.phone.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      this.form.phone = !formatted_number[2] ? formatted_number[1] : '(' + formatted_number[1] + ')'
+        + formatted_number[2] + (formatted_number[3] ? '-' + formatted_number[3] : '');
+    },
+
+    submitLeadForm() {
+      let url = 'send-lead-message/'
+      axios.post(url, this.form).then(() => {
+        this.clearFields()
+        this.$emit('closeForm', '')
+      })
+    },
+
+    clearFields() {
+      this.form.name = null;
+      this.form.address = null;
+      this.form.zip = null;
+      this.form.phone = null;
+      this.form.email = null;
     }
   }
 }
