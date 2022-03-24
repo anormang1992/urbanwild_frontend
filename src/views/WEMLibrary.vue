@@ -26,7 +26,7 @@
             </div> 
           </div>
           <div v-if="show_description" class="description-container">
-            <div class="description-overlay w-full h-full"></div>
+            <div class="description-overlay"></div>
             <div class="description-content">
               {{current_wem.description}}
             </div>
@@ -36,7 +36,7 @@
 
       <div v-if="series_gallery && current_series && current_wem.series" class="gallery-outer">
         <div class="gallery-container">
-          <div class="gallery-overlay w-full h-full"></div>
+          <div class="gallery-overlay"></div>
           <div class="flex flex-row w-full justify-between items-center relative p-2">
             <h2 class="text-3xl font-primary font-bold text-white pl-2" style="font-family: 'Baloo 2';">All Videos From the {{current_wem.series.name}} Series</h2>
           </div>
@@ -44,7 +44,7 @@
             <div v-for="(wem,index) in current_series" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <div class="video-container p-2" @click="switchCurrentWEM(wem)">
                 <a href="#top" class="h-full w-full">
-                  <div class="thumb-overlay h-full w-full"></div>
+                  <div class="thumb-overlay"></div>
                   <iframe :src="wem.video_link +'&title=0&byline=0&portrait=0'" 
                           :title="wem.title"
                           class="responsive-thumb-vid-container">
@@ -62,7 +62,7 @@
 
       <div class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
-          <div class="gallery-overlay w-full h-full"></div>
+          <div class="gallery-overlay"></div>
           <div class="flex flex-row w-full justify-between items-center relative p-2">
             <h2 class="text-left text-3xl font-primary font-bold text-white w-3/5 pl-2" 
                 style="font-family: 'Baloo 2';">
@@ -97,7 +97,7 @@
             <div v-for="(wem,index) in upcoming_wems" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <div class="video-container p-2" @click="switchCurrentWEM(wem)">
                 <a href="#top" class="h-full w-full">
-                <div class="thumb-overlay h-full w-full"></div>
+                <div class="thumb-overlay"></div>
                 <iframe :src="wem.video_link +'&title=0&byline=0&portrait=0'" 
                         :title="wem.title"
                         class="responsive-thumb-vid-container">
@@ -129,7 +129,7 @@
 
       <div v-if="series_collections.length" class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
-          <div class="gallery-overlay w-full h-full"></div>
+          <div class="gallery-overlay"></div>
           <div class="flex flex-row w-full justify-between items-center relative p-2">
             <h2 class="text-3xl font-primary font-bold text-white pl-2" 
                 style="font-family: 'Baloo 2';">
@@ -140,8 +140,8 @@
             <div v-for="(wem,index) in series_collections" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <a href="#top" class="w-full h-full">
                 <div class="video-container p-2" @click="selectSeries(wem, index)">
-                  <div class="thumb-overlay h-full w-full"></div>
-                  <div class="series-overlay h-full w-full">
+                  <div class="thumb-overlay"></div>
+                  <div class="series-overlay">
                     <div class="flex flex-row space-x-2 justify-between items-center">
                       <h1 class="text-lg text-white pl-2">{{wem.collection_videos[0].series.name}}</h1>
                       <div>
@@ -539,6 +539,8 @@ export default {
 .description-overlay {
   background-color: #589040;
   position: absolute;
+  width: 100%;
+  height: 100%;
 }
 .description-content {
   color: #FFFFFF;
@@ -585,6 +587,8 @@ export default {
   background-color: #435B6B;
   position: absolute;
   opacity: 70%;
+  width: 100%;
+  height: 100%;
 }
 .filters-panel {
   display: flex;
@@ -636,6 +640,8 @@ export default {
   opacity: 25%; 
   z-index: 9999;
   cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 .thumb-overlay:hover {
   background-color: #469cdd;
