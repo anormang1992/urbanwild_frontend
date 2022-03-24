@@ -653,6 +653,8 @@ export default {
   left: 0;
   z-index: 9999;
   cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 .series-overlay:hover .thumb-overlay{
   background-color: #469cdd;
