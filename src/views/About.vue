@@ -14,11 +14,6 @@
             </div>
           </div>
         </div>
-        <div class="support-container">
-          <div class="support-inner">
-            <img src="../assets/images/Fox_Message.png"/>
-          </div>
-        </div>
       </div>
     </div>
   </div>
