@@ -586,7 +586,7 @@ export default {
 .gallery-overlay {
   background-color: #435B6B;
   position: absolute;
-  opacity: 70%;
+  opacity: .70;
   width: 100%;
   height: 100%;
 }
@@ -637,7 +637,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 25%; 
+  opacity: .25; 
   z-index: 9999;
   cursor: pointer;
   width: 100%;

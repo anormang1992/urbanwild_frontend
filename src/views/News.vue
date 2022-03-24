@@ -66,7 +66,7 @@
 .post-overlay {
   background-color: #488d4a;
   position: absolute;
-  opacity: 70%;
+  opacity: .70;
   width: 75%;
 }
 

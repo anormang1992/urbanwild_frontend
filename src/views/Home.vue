@@ -65,7 +65,7 @@ export default {
 .learn-side-overlay {
   background-color: #469cdd;
   position: absolute;
-  opacity: 40%;
+  opacity: .40;
 }
 
 .help-side {
@@ -77,7 +77,7 @@ export default {
 .help-side-overlay {
   background-color: #42414d;
   position: absolute;
-  opacity: 80%;
+  opacity: .80;
 }
 
 .logo-container {
