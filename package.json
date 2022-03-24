@@ -1,6 +1,10 @@
 {
   "name": "urbanwild_frontend",
   "version": "0.1.0",
+  "engines": {
+      "node": "16.7.0",
+      "npm": "7.20.3"
+  },
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
