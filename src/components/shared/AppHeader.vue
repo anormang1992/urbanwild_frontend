@@ -1,8 +1,10 @@
 <template>
   <div class="header-container flex flex-row items-center p-3 justify-between">
-    <router-link to="/"><img src="../../assets/logos/logo_minimal.png" width="250"></router-link>
-    <div class="flex flex-row items-center space-x-8">
-      <div class="search flex flex-row w-full items-center justify-center">
+    <div class="nav-logo">
+      <router-link to="/"><img src="../../assets/logos/logo_minimal.png" width="250"></router-link>
+    </div>
+    <div class="flex flex-row w-full items-center justify-end space-x-8 relative">
+      <div class="search flex flex-row items-center justify-center">
         <form action='#' class="flex flex-row items-center">
           <input v-model="search_string" 
                  @input="sendSearchString" 
@@ -135,6 +137,11 @@ export default {
 </script>
 
 <style lang="scss">
+.nav-logo {
+  @media(max-width:800px) {
+    display: none;
+  }
+}
 .search input[type=text]{
   padding: 5px;
   border: none;
@@ -144,6 +151,11 @@ export default {
   outline: none;
   font-family: 'Baloo 2';
   letter-spacing: 0.1em;
+  @media(max-width:800px) {
+    align-items: center;
+    width: 100%;
+  }
+
 }
 .search i {
   padding: 5px;
@@ -167,6 +179,10 @@ export default {
   z-index: 99999;
   background-color: #469cdd;
   border-radius: 25px 0 0 25px;
+  @media(max-width:1200px) {
+    width: 100%;
+    border-radius: 0;
+  }
 }
 .route-list {
   display: flex;

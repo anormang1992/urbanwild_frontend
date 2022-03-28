@@ -64,6 +64,10 @@ export default {
   z-index: 99999;
   background-color: #E9F0F8;
   border-radius: 25px 0 0 25px;
+  @media(max-width:1200px) {
+    width: 100%;
+    border-radius: 0;
+  }
   .close-button {
     position: relative;
     color: #469cdd;

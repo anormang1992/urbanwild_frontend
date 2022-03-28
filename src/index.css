@@ -11,36 +11,15 @@ html, body {
   height: 100%;
   width:  100%;
   overflow: hidden;
-  background-color: #435B6B;
 }
-
 .header-container {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   height: 100px;
   background-color: #ffffff;
 }
-
 .router-container {
   height: calc(100vh - 100px);
-
 }
-
-.learn-side {
-  background-image: url('../src/assets/backgrounds/learn_bg.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  font-family: "Baloo 2";
-}
-
-.help-side {
-  background-image: url('../src/assets/backgrounds/help_bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  
-  font-family: "Baloo 2";
-}
-
 .about-page {
   background-image: url('../src/assets/backgrounds/about_bg.jpg');
   background-repeat: no-repeat;
@@ -48,18 +27,8 @@ html, body {
 
   height: calc(100vh - 100px);
 }
-
 .news-page {
   background-image: url('../src/assets/backgrounds/news_bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  height: calc(100vh - 100px);
-}
-
-
-.wem-page {
-  background-image: url('../src/assets/backgrounds/wem_bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="wem-page flex flex-row w-full">
+  <div class="wem-page">
     <div class="wem-container flex flex-col w-full overflow-y-auto">
       <div id="top" class="recent-outer">
         <div class="recent-inner">
@@ -40,7 +40,7 @@
           <div class="flex flex-row w-full justify-between items-center relative p-2">
             <h2 class="text-3xl font-primary font-bold text-white pl-2" style="font-family: 'Baloo 2';">All Videos From the {{current_wem.series.name}} Series</h2>
           </div>
-          <div class="grid grid-cols-3 gap-2 w-full">
+          <div class="grid sm:grid-cols-3 grid-cols-1 gap-2 w-full">
             <div v-for="(wem,index) in current_series" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <div class="video-container p-2" @click="switchCurrentWEM(wem)">
                 <a href="#top" class="h-full w-full">
@@ -63,12 +63,12 @@
       <div class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
           <div class="gallery-overlay"></div>
-          <div class="flex flex-row w-full justify-between items-center relative p-2">
-            <h2 class="text-left text-3xl font-primary font-bold text-white w-3/5 pl-2" 
+          <div class="gallery-header-container">
+            <h2 class="gallery-header-text" 
                 style="font-family: 'Baloo 2';">
               All Wildlife Educational Moments
             </h2>
-            <div class="flex flex-row items-center w-2/5 justify-end">
+            <div class="gallery-filters-container">
               <search :reset="reset_filters" @updateSearch="updateParams"/>
               <i class="far fa-times-circle text-2xl text-white px-2 cursor-pointer"
                  @click="resetFilters"></i>
@@ -93,7 +93,7 @@
             </div>
           </div>
           <!--Convert this to a reusable component-->
-          <div v-if="upcoming_wems.length" class="grid grid-cols-3 gap-2 w-full">
+          <div v-if="upcoming_wems.length" class="grid sm:grid-cols-3 grid-cols-1 gap-2 w-full">
             <div v-for="(wem,index) in upcoming_wems" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <div class="video-container p-2" @click="switchCurrentWEM(wem)">
                 <a href="#top" class="h-full w-full">
@@ -136,7 +136,7 @@
               All Wildlife Series
             </h2>
           </div>
-          <div class="grid grid-cols-3 gap-2 w-full">
+          <div class="grid sm:grid-cols-3 grid-cols-1 gap-2 w-full">
             <div v-for="(wem,index) in series_collections" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <a href="#top" class="w-full h-full">
                 <div class="video-container p-2" @click="selectSeries(wem, index)">
@@ -467,6 +467,15 @@ export default {
 </script>
 
 <style lang="scss">
+.wem-page {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 100px);
+  width: 100%;
+  background-image: url('../../src/assets/backgrounds/wem_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .wem-container {
   height:100%;
   scroll-behavior: smooth;
@@ -484,6 +493,9 @@ export default {
   position: relative;
   width: 60%;
   margin-top: 50px;
+  @media(max-width:1200px) {
+    width: 100%;
+  }
   .video-info-container {
     display: flex; 
     flex-direction: row;
@@ -582,6 +594,43 @@ export default {
   justify-content: center;
   position: relative;
   padding: 10px;
+  @media(max-width:1200px) {
+    width: 100%;
+  }
+  .gallery-header-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 5px;
+    @media(max-width:1200px) {
+      flex-direction: column;
+    }
+    .gallery-header-text {
+      text-align: left;
+      font-size: 1.87rem;
+      font-family: 'Montserrat';
+      font-weight: bold;
+      color: #FFFFFF;
+      width: 60%;
+      padding-left: 5px;
+      @media(max-width:1200px) {
+        width: 100%;
+      }
+    }
+    .gallery-filters-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 40%;
+      justify-content: flex-end;
+      @media(max-width:1200px) {
+        width: 100%;
+      }
+    }
+  }
 }
 .gallery-overlay {
   background-color: #435B6B;
@@ -597,16 +646,27 @@ export default {
   background-color: #E9F0F8;
   width: 100%;
   padding: 15px;
+  @media(max-width:1200px) {
+   padding: 5px;
+   flex-direction: column;
+  }
   .filters-left {
     display: flex;
     flex-direction: column;
     width: 50%;
+    @media(max-width:1200px) {
+      width: 100%;
+    }
   }
   .filters-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     width: 50%;
+    @media(max-width:1200px) {
+      width: 100%;
+      align-items: flex-start;
+    }
   }
 }
 .filters-panel:after {

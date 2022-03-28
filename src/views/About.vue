@@ -115,23 +115,4 @@
     margin: 10px;
   }
 }
-.support-container {
-  display: flex;
-  position: relative;
-  height: 100%;
-  margin-top: 15px;
-  .support-inner {
-    display: flex;
-    width: 100%;
-    padding: 15px;
-    justify-content: center;
-    align-items: center;
-    img {
-      width: 100%;
-      image-rendering: -moz-crisp-edges;         
-      image-rendering: -o-crisp-edges;         
-      image-rendering: -webkit-optimize-contrast;
-    }
-  }
-}
 </style>
