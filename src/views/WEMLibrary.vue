@@ -1,7 +1,7 @@
 <template>
   <div class="wem-page">
     <div class="wem-container flex flex-col w-full overflow-y-auto">
-      <div id="top" class="recent-outer">
+      <div v-if="current_wem" id="top" class="recent-outer">
         <div class="recent-inner">
           <div class="video-container" id="current-video-container">
             <farm-bureau-form v-if="form_open" @closeForm="closeForm"></farm-bureau-form>
@@ -60,7 +60,7 @@
         </div>
       </div>  
 
-      <div class="gallery-outer">
+      <div v-if="wems.length" class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
           <div class="gallery-overlay"></div>
           <div class="gallery-header-container">
@@ -232,7 +232,7 @@ export default {
       let gs = this.applyGlobalSearch();
       if (!gs) {
         this.current_wem = this.wems[0];
-        if (this.current_wem.series) {
+        if (this.current_wem && this.current_wem.series) {
           this.series_gallery = true;
         }
         this.getSeriesCollections();
