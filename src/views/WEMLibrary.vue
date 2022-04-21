@@ -1,5 +1,9 @@
 <template>
-  <div class="wem-page">
+  <div v-if="loading" class="loading-wrapper">
+    <div class="loader"></div>
+    <h5>Loading WEM Library...</h5>
+  </div>
+  <div v-if="!loading" class="wem-page">
     <div class="wem-container flex flex-col w-full overflow-y-auto">
       <div v-if="current_wem" id="top" class="recent-outer">
         <div class="recent-inner">
@@ -22,6 +26,9 @@
               </div>
               <div class="ad-hot-button">
                 <img @click="form_open=true" src="../../src/assets/logos/Farm_Bureau_Ad.png"/>
+              </div>
+              <div class="sponsor-logo">
+                <img src="../../src/assets/logos/Rucci_Productions_Logo.png"/>
               </div>
             </div> 
           </div>
@@ -193,6 +200,7 @@ export default {
 
   data: function() {
     return {
+      loading: true,
       page: Object,
       wems: Array,
       current_wem: Object,
@@ -253,6 +261,7 @@ export default {
         this.wems = response.data.results;
         this.upcoming_wems = this.wems;
         this.reset_filters = false;
+        this.loading = false;
         }).catch(error => {
           console.log(error);
       })
@@ -467,6 +476,54 @@ export default {
 </script>
 
 <style lang="scss">
+.loading-wrapper {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  h5 {
+    padding-top: 10px;
+    font-size: 24px;
+    color: #469cdd;
+    font-family: 'Baloo 2';
+  }
+  .loader {
+    height: 100px;
+    width: 100px;
+    margin: -25px 0 0 -25px;
+    border: 8px rgba(0, 0, 0, 0.25) solid;
+    border-top: 8px #589040 solid;
+    border-radius: 50%;
+    -webkit-animation: spin2 1s infinite linear;
+            animation: spin2 1s infinite linear;
+  }
+
+  @-webkit-keyframes spin2 {
+    from {
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(359deg);
+              transform: rotate(359deg);
+    }
+  }
+  @keyframes spin2 {
+    from {
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(359deg);
+              transform: rotate(359deg);
+      -webkit-transform: rotate(359deg);
+              transform: rotate(359deg);
+    }
+  }
+}
 .wem-page {
   display: flex;
   flex-direction: row;
@@ -500,6 +557,9 @@ export default {
     display: flex; 
     flex-direction: row;
     justify-content: space-between;
+    @media(max-width:1200px) {
+      flex-direction: column;
+    }
     .ad-container {
       display: flex;
       flex-direction: row;
@@ -516,10 +576,14 @@ export default {
           image-rendering: -webkit-optimize-contrast;
         }
       }
-      .ad-hot-button {
+      .ad-hot-button, .sponsor-logo {
         cursor: pointer;
         width: 125px;
+        padding: 2px;
         image-rendering: -moz-crisp-edges;
+      }
+      .sponsor-logo {
+        cursor: auto;
       }
     }
   }

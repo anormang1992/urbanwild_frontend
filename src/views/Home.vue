@@ -9,7 +9,7 @@
                         @mouseleave="overlayLeftOn = true"
                         @click="navigateToRoute('/learn')">
               <h1 class="xl:text-8xl text-5xl font-bold tracking-widest">Learn</h1>
-              <h2 class="xl:text-3xl text-xl tracking-widest">about the wildlife in your area</h2>
+              <h2 class="xl:text-3xl text-xl tracking-widest">about wildlife in your area</h2>
             </div>
           </div> 
         </div>
@@ -20,8 +20,8 @@
 
         <div class="help-side">
           <div v-if="overlayRightOn" class="help-side-overlay w-full h-full relative"></div>
-          <div class="flex flex-col w-full sm:items-end items-start xl:pr-20 p-4 relative">
-            <div class="text-white sm:text-right text-left cursor-pointer sm:w-3/5">
+          <div class="flex flex-col w-full sm:items-end justify-end xl:pr-20 p-4 relative">
+            <div class="text-white text-left cursor-pointer">
               <h1 class="xl:text-9xl text-5xl font-bold tracking-widest">Help</h1>
               <!--<h2 class="text-3xl tracking-widest">wildlife in need</h2> -->
               <h2 class="xl:text-3xl text-xl tracking-widest">Under Construction...</h2>
