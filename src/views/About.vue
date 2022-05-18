@@ -3,36 +3,28 @@
     <div class="about-page-outer w-full">
       <div class="about-page-inner sm:w-1/2 w-full">
         <div class="about-content-container">
-          <div class="about-position shadow-2xl">
-            <div class="about-overlay"></div>
-            <div class="about-content">
-              <h1>Helping to Rehabilitate Wildlife Since 2021</h1>
-              <p>UrbanWild is a non-profit organization based out of Raleigh, North Carolina dedicated to rescuing and protecting wildlife from the threats of urbanization. We work hand-in-hand with licensed rehabilitators across the United States to create an effective network of resources designed to quickly Report, Relieve, and Release injured wildlife. We also strive to educate people of all ages about the diverse wildlife we often come into contact with.</p>
-              <div class="action-container">
-                <uw-button name="Learn" route_path="/learn"/>
-              </div>
+          <div class="about-content">
+            <h1>Helping to Rehabilitate Wildlife Since 2021</h1>
+            <p>UrbanWild is a non-profit organization based out of Raleigh, North Carolina dedicated to rescuing and protecting wildlife from the threats of urbanization. We work hand-in-hand with licensed rehabilitators across the United States to create an effective network of resources designed to quickly Report, Relieve, and Release injured wildlife. We also strive to educate people of all ages about the diverse wildlife we often come into contact with.</p>
+            <div class="action-container">
+              <uw-button name="Learn" route_path="/learn"/>
             </div>
           </div>
         </div>
-
         <div class="about-content-container">
-          <div class="about-position shadow-2xl">
-            <div class="about-overlay"></div>
-            <div class="about-content">
-              <h1>Our Generous Sponsors and Supporters</h1>
-              <p>UrbanWild wouldn't be possible without the support, dedication, and skills of some truly wonderful companies and individuals. We would like to thank and give credit where credit is due to our sponsors, supporters, family, and friends who have made UrbanWild a reality. Together, we can save the wild, one life at a time!</p>
-              <div class="sponsor-grid-container">
-                <div class="sponsor-item">
-                  <img src="../assets/logos/Farm_Bureau_Ad.png"/>
-                </div>
-                <div class="sponsor-item">
-                  <img src="../assets/logos/Rucci_Productions_Logo.png"/>
-                </div>
+          <div class="about-content">
+            <h1>Our Generous Sponsors and Supporters</h1>
+            <p>UrbanWild wouldn't be possible without the support, dedication, and skills of some truly wonderful companies and individuals. We would like to thank and give credit where credit is due to our sponsors, supporters, family, and friends who have made UrbanWild a reality. Together, we can save the wild, one life at a time!</p>
+            <div class="sponsor-grid-container">
+              <div class="sponsor-item">
+                <img src="../assets/logos/Farm_Bureau_Ad.png" width="200"/>
+              </div>
+              <div class="sponsor-item">
+                <img src="../assets/logos/Rucci_Productions_Logo.png" width="200"/>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -96,23 +88,10 @@
 }
 .about-content-container {
   display: flex;
-  background-color: #469cdd;
+  background-color: #E9F0F8;
   position: relative;
   border-radius: 10px;
-  margin: 25px 25px 0 0;  
-  .about-position {
-    position: relative;
-    top: 15px;
-    left: 15px;
-    width: 100%;    
-  }
-  .about-overlay {
-    background-color: #E9F0F8;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-  }
+  margin: 25px;
   .about-content {
     position: relative;
     padding: 15px;
@@ -133,6 +112,10 @@
       column-gap: 5px;
       padding-top: 10px;
       width: 100%;
+      .sponsor-item {
+        display: flex;
+        justify-content: center;
+      }
     }
   }
   .action-container {
