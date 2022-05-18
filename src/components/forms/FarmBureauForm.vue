@@ -1,11 +1,16 @@
 <template>  
   <div class="fb-form-container">
-    <div class="close-form" @click="closeForm">
-      <i class="fas fa-times text-4xl"></i>
+    <div class="form-header">
+      <div class="uw-logo-container">
+        <img src="../../assets/logos/logo_minimal.png" width="150">
+      </div>
+      <div class="close-form" @click="closeForm">
+        <i class="fas fa-times text-4xl"></i>
+      </div>
     </div>
     <div class="fb-form-content">
       <img class="fb-image" src="../../../src/assets/logos/Farm_Bureau_Ad.png"/>
-      <h2 class="text-xl font-primary uppercase tracking-widest pt-2">Helping You Is What We Do Best!</h2>
+      <h2 class="font-primary uppercase tracking-widest pt-2">Helping You Is What We Do Best!</h2>
       <form class="fb-form">
         <table class="fb-form-table">
           <tr>
@@ -14,22 +19,6 @@
             </th>
             <td>
               <input v-model="form.name" type="text" name="name">
-            </td>
-          </tr>
-          <tr>
-            <th>
-              <label for="address">Address: </label>
-            </th>
-            <td>
-              <input v-model="form.address" type="text" name="address">
-            </td>
-          </tr>
-          <tr>
-            <th>
-              <label for="zip">Zip-code: </label>
-            </th>
-            <td>
-              <input v-model="form.zip" type="text" name="zip">
             </td>
           </tr>
           <tr>
@@ -46,6 +35,22 @@
             </th>
             <td>
               <input v-model="form.email" type="email" name="email">
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label for="address">Address: </label>
+            </th>
+            <td>
+              <input v-model="form.address" type="text" name="address">
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label for="zip">Zip-code: </label>
+            </th>
+            <td>
+              <input v-model="form.zip" type="text" name="zip">
             </td>
           </tr>
         </table>
@@ -108,43 +113,55 @@ export default {
 <style lang="scss">
 .fb-form-container{
   display: flex;
-  width:100%;
-  height: 100%;
+  flex-direction: column;
   position: absolute;
-  align-content: center;
-  background-color: #FFFFFF;
   top: 0;
+  height: 100%;
+  background-color: #FFFFFF;
   z-index: 9999;
-  padding: 15px;
-  .close-form {
-    position: absolute;
-    cursor: pointer;
-    top: 10px;
-    right: 25px;
-    color: #7c2b31;
-    z-index: 99999;
+  .form-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    .close-form {
+      cursor: pointer;
+      color: #7c2b31;
+    }
   }
   .fb-form-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     align-items: center;
-    justify-content: center;
     position: relative;
+    overflow-y: auto;
+    padding: 20px;
     .fb-image {
-      width: 25%;
+      width: 20%;
     }
     .fb-form {
       width: 50%;
+      padding: 10px;
+      @media(max-width:800px) {
+        width: 100%;
+      }
       .fb-form-table {
         border-collapse: separate;
         border-spacing: 0 15px;
         width: 100%;
         th {
           text-align: right;
+          @media(max-width:800px) {
+            width: 10%;
+          }
         }
         td {
           padding-left: 5px;
+          @media(max-width:800px) {
+            padding-right: 15px;
+          }
         }
       }
       input {
@@ -161,6 +178,7 @@ export default {
       padding: 10px;
       border-radius: 10px;
       width: 150px;
+      margin-bottom: 5px;
     }
   }
 }

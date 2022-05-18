@@ -24,11 +24,8 @@
               <div class="logo-sponsors">
                 <img src="../../src/assets/logos/logo_proud_sponsors.png"/>
               </div>
-              <div class="ad-hot-button">
+              <div class="ad-hot-button pulse">
                 <img @click="form_open=true" src="../../src/assets/logos/Farm_Bureau_Ad.png"/>
-              </div>
-              <div class="sponsor-logo">
-                <img src="../../src/assets/logos/Rucci_Productions_Logo.png"/>
               </div>
             </div> 
           </div>
@@ -585,6 +582,16 @@ export default {
       .sponsor-logo {
         cursor: auto;
       }
+      @keyframes pulse {
+        from { transform: scale(1); box-shadow: 0 0 0 0px rgba(166, 202, 231, 0.2);}
+        50% { transform: scale(0.85); }
+        to { transform: scale(1); box-shadow: 0 0 0 15px rgba(166, 202, 231, 0);}
+      }
+      .pulse {
+        animation-name: pulse;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+      }
     }
   }
 }
@@ -737,7 +744,7 @@ export default {
   content: "";
   position: absolute;
   top: -20px;
-  right: 15px;
+  right: 6px;
   height: 0px;
   width: 0px;
   border-width: 10px;

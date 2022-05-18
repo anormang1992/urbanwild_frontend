@@ -14,6 +14,25 @@
             </div>
           </div>
         </div>
+
+        <div class="about-content-container">
+          <div class="about-position shadow-2xl">
+            <div class="about-overlay"></div>
+            <div class="about-content">
+              <h1>Our Generous Sponsors and Supporters</h1>
+              <p>UrbanWild wouldn't be possible without the support, dedication, and skills of some truly wonderful companies and individuals. We would like to thank and give credit where credit is due to our sponsors, supporters, family, and friends who have made UrbanWild a reality. Together, we can save the wild, one life at a time!</p>
+              <div class="sponsor-grid-container">
+                <div class="sponsor-item">
+                  <img src="../assets/logos/Farm_Bureau_Ad.png"/>
+                </div>
+                <div class="sponsor-item">
+                  <img src="../assets/logos/Rucci_Productions_Logo.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -102,10 +121,18 @@
       font-family: 'Baloo 2';
       font-weight: bold;
       font-size: 32px;
+      text-align: center;
     }
     p {
       font-family: 'Montserrat';
       font-size: 18px;
+    }
+    .sponsor-grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 5px;
+      padding-top: 10px;
+      width: 100%;
     }
   }
   .action-container {
