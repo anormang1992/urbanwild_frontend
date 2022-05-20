@@ -14,7 +14,7 @@
         <div class="about-content-container">
           <div class="about-content">
             <h1>Our Generous Sponsors and Supporters</h1>
-            <p>UrbanWild wouldn't be possible without the support, dedication, and skills of some truly wonderful companies and individuals. We would like to thank and give credit where credit is due to our sponsors, supporters, family, and friends who have made UrbanWild a reality. Together, we can save the wild, one life at a time!</p>
+            <p>UrbanWild wouldn't be possible without the support, dedication, and skills of some truly wonderful companies and individuals. We would like to thank, and give credit where credit is due, to our sponsors, supporters, family, and friends who have made UrbanWild a reality. Together, we can save the wild, one life at a time!</p>
             <div class="sponsor-grid-container">
               <div class="sponsor-item">
                 <img src="../assets/logos/Farm_Bureau_Ad.png" width="200"/>

@@ -13,7 +13,7 @@
           <div class="video-info-container" style="font-family: 'Baloo 2';">
             <div class="flex flex-col text-left text-white w-full">
               <h1 class="text-3xl font-bold">{{current_wem.title}}</h1>
-              <h2 class="text-lg">Uploaded On: {{formatWEMDate(current_wem.created_at)}}</h2>
+              <h2 class="text-lg">{{formatWEMDate(current_wem.released_at)}}</h2>
               <div v-if="current_wem.description" class="description-toggle" 
                    @click="show_description = !show_description">
                 <h2 v-if="!show_description">Show Description</h2>
@@ -57,20 +57,49 @@
               </div> 
               <div class="flex flex-col text-white text-left tracking-widest">
                 <h1 class="text-lg">{{wem.title}}</h1>
-                <h2 class="text-sm">{{formatWEMDate(wem.created_at)}}</h2>
+                <h2 class="text-sm">{{formatWEMDate(wem.released_at)}}</h2>
               </div>
             </div> 
           </div> 
         </div>
       </div>  
 
-      <div v-if="wems.length" class="gallery-outer">
+      <div v-if="locked_wems.length" class="gallery-outer">
+        <div id="wem-gallery" class="gallery-container">
+          <div class="gallery-overlay"></div>
+          <div class="gallery-header-container">
+            <h2 class="gallery-header-text" style="font-family: 'Baloo 2';">
+              Coming Soon...
+            </h2>
+          </div>
+          <div class="locked-wems-container">
+            <div v-for="(wem,index) in locked_wems" :key="index" class="locked-wems-item">
+              <div class="video-container p-2">
+                <div class="locked-overlay"></div>
+                <div class="locked-icon-container">
+                  <i class="fas fa-lock text-8xl"></i>
+                </div>
+                <iframe :src="wem.video_link +'&title=0&byline=0&portrait=0'" 
+                        :title="wem.title"
+                        class="responsive-thumb-vid-container">
+                </iframe>
+              </div>
+              <div class="flex flex-col text-white text-left tracking-widest">
+                <h1 class="text-lg">{{wem.title}}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div v-if="unlocked_wems.length" class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
           <div class="gallery-overlay"></div>
           <div class="gallery-header-container">
             <h2 class="gallery-header-text" 
                 style="font-family: 'Baloo 2';">
-              All Wildlife Educational Moments
+              WEM Library
             </h2>
             <div class="gallery-filters-container">
               <search :reset="reset_filters" @updateSearch="updateParams"/>
@@ -97,8 +126,8 @@
             </div>
           </div>
           <!--Convert this to a reusable component-->
-          <div v-if="upcoming_wems.length" class="grid sm:grid-cols-3 grid-cols-1 gap-2 w-full">
-            <div v-for="(wem,index) in upcoming_wems" :key="index" class="flex flex-col h-full w-full p-4 relative">
+          <div v-if="unlocked_wems.length" class="grid sm:grid-cols-3 grid-cols-1 gap-2 w-full">
+            <div v-for="(wem,index) in unlocked_wems" :key="index" class="flex flex-col h-full w-full p-4 relative">
               <div class="video-container p-2" @click="switchCurrentWEM(wem)">
                 <a href="#top" class="h-full w-full">
                 <div class="thumb-overlay"></div>
@@ -110,11 +139,11 @@
               </div>
               <div class="flex flex-col text-white text-left tracking-widest">
                 <h1 class="text-lg">{{wem.title}}</h1>
-                <h2 class="text-sm">{{formatWEMDate(wem.created_at)}}</h2>
+                <h2 class="text-sm">{{formatWEMDate(wem.released_at)}}</h2>
               </div>
             </div>
             <div class="paginator-wrapper">
-              <paginator v-if="page.count > wems.length" 
+              <paginator v-if="page.count > unlocked_wems.length" 
                          @pageChange="updatePage"
                          page_type="wems"
                          :page="page"
@@ -199,12 +228,11 @@ export default {
     return {
       loading: true,
       page: Object,
-      wems: Array,
       current_wem: Object,
-      upcoming_wems: Array,
+      unlocked_wems: [],
+      locked_wems: [],
       show_ad: false,
       form_open: false,
-
       series_gallery: false,
       series_collections: Array,
       current_series:[],
@@ -229,14 +257,14 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     // TODO: Refactor the complexity of this function --> should only need to set
     // the current_wem value based on if the wem query paramater exists instead of
     // duplicating so much code in both cases.
-    this.getWEMs().then(()=>{
+    await this.getWEMs().then(()=>{
       let gs = this.applyGlobalSearch();
       if (!gs) {
-        this.current_wem = this.wems[0];
+        this.current_wem = this.unlocked_wems[0];
         if (this.current_wem && this.current_wem.series) {
           this.series_gallery = true;
         }
@@ -255,8 +283,14 @@ export default {
         .then(response => {
         //TODO: Fix this whenever you reset filters on a page other than 1
         this.page = response.data;
-        this.wems = response.data.results;
-        this.upcoming_wems = this.wems;
+        response.data.results.forEach(wem => {
+          if (wem.wem_locked) {
+            if (!this.locked_wems.some(lw => lw.id === wem.id)) this.locked_wems.push(wem);
+          } else if (!this.unlocked_wems.some(uw => uw.id === wem.id)){
+            this.unlocked_wems.push(wem);
+          } 
+        })
+        this.page = this.unlocked_wems;
         this.reset_filters = false;
         this.loading = false;
         }).catch(error => {
@@ -751,6 +785,42 @@ export default {
   border-style: solid;
   border-color: transparent transparent #E9F0F8 transparent;
 } 
+.locked-wems-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+.locked-wems-item {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 10px;
+  .locked-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: #589040;
+    color: #469cdd;
+    opacity: .25;
+  }
+  .locked-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+    color: #E9F0F8;
+  }
+}
 .paginator-wrapper {
   grid-column: 1/-1;
 }
