@@ -50,7 +50,6 @@ export default {
     var logo_animation = document.getElementById('logo-animation');
     logo_animation.addEventListener("timeupdate", function () {
         if(this.currentTime >= 14) {
-            console.log('true')
             this.currentTime = 7.125;
             this.play();
         }
