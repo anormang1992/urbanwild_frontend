@@ -73,7 +73,7 @@
             </h2>
           </div>
           <div class="locked-wems-container">
-            <div v-for="(wem,index) in locked_wems" :key="index" class="locked-wems-item">
+            <div v-for="(wem,index) in locked_wems.reverse()" :key="index" class="locked-wems-item">
               <div class="video-container p-2">
                 <div class="locked-overlay"></div>
                 <div class="locked-icon-container">
@@ -282,7 +282,6 @@ export default {
       return axios.get(url)
         .then(response => {
         //TODO: Fix this whenever you reset filters on a page other than 1
-        this.page = response.data;
         response.data.results.forEach(wem => {
           if (wem.wem_locked) {
             if (!this.locked_wems.some(lw => lw.id === wem.id)) this.locked_wems.push(wem);
@@ -797,6 +796,12 @@ export default {
   flex-direction: column;
   flex-shrink: 0;
   padding: 10px;
+  width: 33%;
+  height: 33%;
+  @media(max-width:1200px) {
+    width: 100%;
+    height: 100%;
+  }
   .locked-overlay {
     position: absolute;
     top: 0;
@@ -804,9 +809,9 @@ export default {
     z-index: 9999;
     width: 100%;
     height: 100%;
-    background-color: #589040;
+    background-color: #353839;
     color: #469cdd;
-    opacity: .25;
+    opacity: .80;
   }
   .locked-icon-container {
     display: flex;
@@ -819,6 +824,9 @@ export default {
     height: 100%;
     width: 100%;
     color: #E9F0F8;
+    .fa-lock {
+      color: #A6CAE7;
+    }
   }
 }
 .paginator-wrapper {

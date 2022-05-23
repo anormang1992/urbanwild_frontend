@@ -188,7 +188,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: 25px;
   width: 100%;
   height: 100%;
   li {
@@ -197,8 +196,7 @@ export default {
     align-items:center;
     text-transform: uppercase;
     color: #FFFFFF;
-    padding: 25px;
-    text-align: center;
+    margin: 25px 0 25px 0;
     font-family: 'Baloo 2';
     font-weight: bold;
     font-size: 28px;

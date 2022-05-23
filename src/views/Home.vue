@@ -15,7 +15,9 @@
         </div>
 
         <div class="logo-container"> 
-          <img src="../assets/logos/logo_circular.png">
+          <video id="logo-animation" class="logo-animation" muted autoplay>
+            <source id="animation-source" src="../assets/animations/uw_animated_logo.mp4" type="video/mp4">
+          </video>
         </div>
 
         <div class="help-side">
@@ -43,6 +45,16 @@ export default {
       overlayLeftOn: true,
       overlayRightOn: true,
     }
+  },
+  mounted() {
+    var logo_animation = document.getElementById('logo-animation');
+    logo_animation.addEventListener("timeupdate", function () {
+        if(this.currentTime >= 14) {
+            console.log('true')
+            this.currentTime = 7.125;
+            this.play();
+        }
+    });
   },
   methods: {
     navigateToRoute(route) {
@@ -126,19 +138,26 @@ export default {
       }
     }
     .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 9999;
-      img {
-        image-rendering: -moz-crisp-edges;         
-        image-rendering: -o-crisp-edges;         
-        image-rendering: -webkit-optimize-contrast;
-        width: 400px;
-        @media(max-width:1200px) {
-          width: 250px;
-        }
+      border-radius: 50%;
+      background-color: #FFFFFF;
+      width: 500px;
+      height: 500px;
+      overflow: hidden;
+      @media(max-width:1200px) {
+        width: 250px;
+        height: 250px;
+      }
+      .logo-animation {
+        -webkit-transform:scale(1.35);
+        transform:scale(1.35);
       }
     }
   }
