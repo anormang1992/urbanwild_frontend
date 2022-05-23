@@ -3,8 +3,8 @@
       <div class="home-page-inner">
         <div class="learn-side">
           <div v-if="overlayLeftOn" class="learn-side-overlay"></div>
-          <div class="flex flex-col w-full items-start xl:pl-20 p-4 relative">
-            <div class="text-white text-left cursor-pointer sm:w-3/5" 
+          <div class="flex flex-col w-full items-start p-8 relative">
+            <div class="text-white text-left cursor-pointer sm:w-3/5 relative" 
                         @mouseover="overlayLeftOn = false"
                         @mouseleave="overlayLeftOn = true"
                         @click="navigateToRoute('/learn')">
@@ -22,9 +22,9 @@
 
         <div class="help-side">
           <div v-if="overlayRightOn" class="help-side-overlay w-full h-full relative"></div>
-          <div class="flex flex-col w-full sm:items-end justify-end xl:pr-20 p-4 relative">
+          <div class="flex flex-col w-full sm:items-end justify-end p-8 relative">
             <div class="text-white text-left cursor-pointer">
-              <h1 class="xl:text-9xl text-5xl font-bold tracking-widest">Help</h1>
+              <h1 class="xl:text-8xl text-5xl font-bold tracking-widest">Help</h1>
               <!--<h2 class="text-3xl tracking-widest">wildlife in need</h2> -->
               <h2 class="xl:text-3xl text-xl tracking-widest">Under Construction...</h2>
             </div>
