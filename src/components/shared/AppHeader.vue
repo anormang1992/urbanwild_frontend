@@ -113,14 +113,20 @@ export default {
         this.search_panel_open = true;
         let url = `/global-search/?search_string=${this.search_string}`
         return axios.get(url).then(results =>{
-          console.log(results.data)
-          this.search_results = results.data;
+          let empty_results = true;
+          for (let res in results.data) {
+            let value = results.data[res]
+            if (value.length) empty_results = false;
+          }
+          this.search_results = empty_results ? null : results.data;
           this.searching = false;
         })
       } else if (!this.search_string.length) {
         this.search_panel_open = false;
         this.searching = false;
-        this.search_results = null;
+        this.search_results = null; 
+      } else if (0 < this.search_string.length < 3) {
+        this.searching = true;
       }
     },
 

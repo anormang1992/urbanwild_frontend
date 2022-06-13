@@ -8,6 +8,9 @@
       <div v-if="current_wem" id="top" class="recent-outer">
         <div class="recent-inner">
           <div class="video-container" id="current-video-container">
+            <div v-if="video_ended" class="video-end-screen">
+              <img src="../../src/assets/logos/logo_circular.png"/>
+            </div>
             <farm-bureau-form v-if="form_open" @closeForm="closeForm"></farm-bureau-form>
           </div>
           <div class="video-info-container" style="font-family: 'Baloo 2';">
@@ -73,7 +76,7 @@
             </h2>
           </div>
           <div class="locked-wems-container">
-            <div v-for="(wem,index) in locked_wems.reverse()" :key="index" class="locked-wems-item">
+            <div v-for="(wem,index) in locked_wems" :key="index" class="locked-wems-item">
               <div class="video-container p-2">
                 <div class="locked-overlay"></div>
                 <div class="locked-icon-container">
@@ -231,6 +234,7 @@ export default {
       current_wem: Object,
       unlocked_wems: [],
       locked_wems: [],
+      video_ended: false,
       show_ad: false,
       form_open: false,
       series_gallery: false,
@@ -289,6 +293,7 @@ export default {
             this.unlocked_wems.push(wem);
           } 
         })
+        this.locked_wems = this.locked_wems.reverse()
         this.page = this.unlocked_wems;
         this.reset_filters = false;
         this.loading = false;
@@ -356,9 +361,7 @@ export default {
     },
 
     switchCurrentWEM(wem) {
-      if (this.$route.query.wem) {
-        console.log('true')
-      }
+      this.video_ended = false;
       this.show_ad = false;
       this.series_gallery = !wem.series ? false : true;
       this.current_wem = wem;
@@ -372,6 +375,7 @@ export default {
 
     initFinishWatcher(wem) {
       this.player.on('ended', data => {
+        this.video_ended = true;
         this.show_ad = true;
         wem.play_count += 1;
         let url = `/api/v1/wems/${wem.id}/`;
@@ -633,6 +637,20 @@ export default {
   overflow: hidden;
   padding-top: 56.25%;
   width: 100%;
+  .video-end-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    img {
+      width: 75%;
+    }
+  }
 }
 .responsive-vid-container {
   position: absolute;

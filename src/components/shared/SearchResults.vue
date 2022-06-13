@@ -4,7 +4,10 @@
     <div v-if="searching" class="searching-text text-2xl">
       Searching for critters, stories, and more...
     </div>
-    <div class="results-container">
+    <div v-if="!results && !searching" class="empty-results-text text-2xl">
+      Sorry, no results found...
+    </div>
+    <div v-if="results && !searching" class="results-container">
       <div v-for="obj, key in results" class="results-block">
         <div v-if="obj.length" class="results-block-inner">
           <div class="results-header">
@@ -28,12 +31,6 @@ export default {
   props: {
     searching: Boolean,
     results: Object
-  },
-
-  data: function() {
-    return {
-
-    }
   },
   methods: {
     navigateToResult(result_type, result) {
@@ -74,7 +71,7 @@ export default {
     text-align: right;
     cursor: pointer;
   }
-  .searching-text {
+  .searching-text, .empty-results-text {
     font-family: 'Baloo 2';
     color: #435B6B;
     position: relative;

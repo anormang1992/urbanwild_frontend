@@ -2,7 +2,7 @@
   <div class="fb-form-container">
     <div class="form-header">
       <div class="uw-logo-container">
-        <img src="../../assets/logos/logo_minimal.png" width="150">
+        <img src="../../assets/logos/logo_minimal.png" width="250">
       </div>
       <div class="close-form" @click="closeForm">
         <i class="fas fa-times text-4xl"></i>
@@ -10,7 +10,9 @@
     </div>
     <div class="fb-form-content">
       <img class="fb-image" src="../../../src/assets/logos/Farm_Bureau_Ad.png"/>
-      <h2 class="font-primary uppercase tracking-widest pt-2">Helping You Is What We Do Best!</h2>
+      <h2 class="font-primary uppercase tracking-widest pt-2 sm:text-center text-left">Helping You Is What We Do Best!</h2>
+      <h2 class="font-primary uppercase tracking-widest pt-2 sm:text-center text-left">In addition to Home, Auto, Life and Health Insurance, we offer commercial, Farm, Crop and personal liability policies, as well as banking products.  
+</h2>
       <form class="fb-form">
         <table class="fb-form-table">
           <tr>
@@ -125,9 +127,11 @@ export default {
     width: 100%;
     padding: 10px;
     justify-content: space-between;
+    align-items: center;
     .close-form {
       cursor: pointer;
       color: #7c2b31;
+      padding-right: 15px
     }
   }
   .fb-form-content {
@@ -138,11 +142,15 @@ export default {
     position: relative;
     overflow-y: auto;
     padding: 20px;
+    h2 {
+      font-family: 'Baloo 2';
+      font-size: 18px;
+    }
     .fb-image {
-      width: 20%;
+      width: 30%;
     }
     .fb-form {
-      width: 50%;
+      width: 75%;
       padding: 10px;
       @media(max-width:800px) {
         width: 100%;
