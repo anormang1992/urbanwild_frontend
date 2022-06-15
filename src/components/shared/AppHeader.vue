@@ -207,7 +207,8 @@ export default {
     font-weight: bold;
     font-size: 28px;
     &:hover {
-      color: #589040;
+      color: #A6CAE7;
+      transform: scale(1.10);
     }
   }
 }
