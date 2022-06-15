@@ -23,10 +23,12 @@
         <div class="help-side">
           <div v-if="overlayRightOn" class="help-side-overlay w-full h-full relative"></div>
           <div class="flex flex-col w-full sm:items-end justify-end p-8 relative">
-            <div class="text-white text-left cursor-pointer">
+            <div class="text-white text-left cursor-pointer" 
+                        @mouseover="overlayRightOn = false"
+                        @mouseleave="overlayRightOn = true"
+                        @click="navigateToRoute('/help')">
               <h1 class="xl:text-8xl text-5xl font-bold tracking-widest">Help</h1>
-              <!--<h2 class="text-3xl tracking-widest">wildlife in need</h2> -->
-              <h2 class="xl:text-3xl text-xl tracking-widest">Under Construction...</h2>
+              <h2 class="text-3xl tracking-widest">wildlife in need</h2> 
             </div>
           </div> 
         </div>
@@ -131,9 +133,9 @@ export default {
       .help-side-overlay {
         height: 100%;
         width: 100%;
-        background-color: #42414d;
+        background-color: #469cdd;
         position: absolute;
-        opacity: .80;
+        opacity: .40;
       }
     }
     .logo-container {

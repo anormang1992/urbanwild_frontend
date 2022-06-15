@@ -27,6 +27,13 @@ html, body {
 
   height: calc(100vh - 100px);
 }
+.help-page {
+  background-image: url('../src/assets/backgrounds/help_page_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  height: calc(100vh - 100px);
+}
 .news-page {
   background-image: url('../src/assets/backgrounds/news_bg.jpg');
   background-repeat: no-repeat;

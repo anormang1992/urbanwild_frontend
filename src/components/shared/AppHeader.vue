@@ -74,6 +74,10 @@ export default {
           path: '/learn'
         },
         {
+          name:'Help Wildlife',
+          path:'/help'
+        },
+        {
           name:'About',
           path:'/about'
         }
