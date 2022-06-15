@@ -211,7 +211,7 @@ export default {
     font-weight: bold;
     font-size: 28px;
     &:hover {
-      color: #A6CAE7;
+      color: #589040;
       transform: scale(1.10);
     }
   }
