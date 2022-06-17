@@ -203,15 +203,16 @@ export default {
   li {
     display: flex;
     flex-direction: row;
-    align-items:center;
+    align-items: center;
+    justify-content: flex-end;
     text-transform: uppercase;
     color: #FFFFFF;
     margin: 25px 0 25px 0;
     font-family: 'Baloo 2';
     font-weight: bold;
     font-size: 28px;
+    width: 100%;
     &:hover {
-      color: #589040;
       transform: scale(1.10);
     }
   }

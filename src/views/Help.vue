@@ -28,5 +28,23 @@
 </script>
 
 <style lang="scss">
+.help-page-inner {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  .chatbox-container {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    width: 50%;
+    height: 90%;
+    background-color: #E9F0F8;
+    opacity: .8;
+    border-radius: 25px;
+  }
+
+}
 
 </style>
