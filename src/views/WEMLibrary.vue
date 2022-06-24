@@ -96,7 +96,7 @@
       </div>
 
 
-      <div v-if="unlocked_wems.length" class="gallery-outer">
+      <div class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
           <div class="gallery-overlay"></div>
           <div class="gallery-header-container">
@@ -232,7 +232,7 @@ export default {
       loading: true,
       page: Object,
       current_wem: Object,
-      unlocked_wems: [],
+      unlocked_wems: Array,
       locked_wems: [],
       video_ended: false,
       show_ad: false,
@@ -247,7 +247,8 @@ export default {
       section_text: 'More Wildlife Educational Moments',
       current_page: 1,
       filter_params: {
-        sort: '-date',
+        wem_locked: 'False',
+        sort: '-released',
         classification: 'all',
         limit: 15,
         offset: 0
@@ -276,6 +277,7 @@ export default {
         this.createPlayer();
       }
     })
+    await this.getLockedWEMS();
   },
 
   methods: {
@@ -286,20 +288,29 @@ export default {
       return axios.get(url)
         .then(response => {
         //TODO: Fix this whenever you reset filters on a page other than 1
-        response.data.results.forEach(wem => {
-          if (wem.wem_locked) {
-            if (!this.locked_wems.some(lw => lw.id === wem.id)) this.locked_wems.push(wem);
-          } else if (!this.unlocked_wems.some(uw => uw.id === wem.id)){
-            this.unlocked_wems.push(wem);
-          } 
-        })
-        this.locked_wems = this.locked_wems.reverse()
-        this.page = this.unlocked_wems;
+        this.page = response.data;
+        this.unlocked_wems = response.data.results;
         this.reset_filters = false;
         this.loading = false;
         }).catch(error => {
           console.log(error);
       })
+    },
+
+    getLockedWEMS() {
+      let params = {
+        wem_locked: 'True',
+        sort: 'date',
+      }
+      let query_string = this.formatQueryString(params);
+      let url = '/api/v1/wems/';
+      url += '?' + query_string;
+      return axios.get(url).then(response => {
+          this.locked_wems = response.data.results;
+        }).catch(error => {
+          console.log(error);
+      })
+
     },
 
     applyGlobalSearch() {
