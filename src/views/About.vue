@@ -33,11 +33,11 @@
             <p>
               It took several years to cultivate the UrbanWild website. The premise of the site is to educate users of all ages about the diverse wildlife around us and to provide individuals with the resources they require to help rescue injured wildlife. These goals are reflected in the very design of the site, which has been split into two distinct sides:
             </p>
-            <h2 style="padding-left: 10px;">LEARN</h2>
+            <h2 style="padding-left: 10px;font-size: 24px;">LEARN</h2>
             <p>
               The LEARN side will showcase three to five minute videos called “On a WEM” (Wildlife Educational Moments). Viewers of all ages will be able to learn something new and enriching about many wildlife species, including the ones they often see in their own backyard.
             </p>
-            <h2 style="padding-left: 10px;">HELP</h2>
+            <h2 style="padding-left: 10px;font-size: 24px;">HELP</h2>
             <p>
               On the HELP side, when people find sick, injured, or orphaned wildlife, the site will advise them on the proper, and most efficient way to assist the wildlife in need. The site will even assist them in locating a licensed wildlife rehabilitator nearest to them as quickly as possible. Try to think of this side as “the 911 for wildlife”.
             </p>
@@ -71,9 +71,9 @@
               <div class="sponsor-item">
                 <img src="../assets/logos/Farm_Bureau_Ad.png" width="200"/>
               </div>
-              <div class="sponsor-item">
+<!--               <div class="sponsor-item">
                 <img src="../assets/logos/Rucci_Productions_Logo.png" width="200"/>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -143,10 +143,10 @@
   background-color: #E9F0F8;
   position: relative;
   border-radius: 10px;
-  margin: 25px;
+  margin: 10px;
   .about-content {
     position: relative;
-    padding: 15px;
+    padding: 10px;
     text-align: left;
     .profile-image {
       height: 200px;

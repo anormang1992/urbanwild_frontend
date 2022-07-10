@@ -37,6 +37,10 @@
           </template>
         </ul>
       </div>
+      <div class="contact-text">
+        For more information, please contact our team at:<br>
+        urbanwild.wems@gmail.com
+      </div>
     </div>
   </transition>
 
@@ -178,6 +182,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   width: 20%;
   height: calc(100% - 100px);
   position: absolute;
@@ -185,9 +190,17 @@ export default {
   z-index: 99999;
   background-color: #469cdd;
   border-radius: 25px 0 0 25px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   @media(max-width:1200px) {
     width: 100%;
     border-radius: 0;
+  }
+  .contact-text {
+    font-family: 'Baloo 2';
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 25px 10px;
   }
 }
 .route-list {

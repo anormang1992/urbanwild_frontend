@@ -648,8 +648,10 @@ export default {
   overflow: hidden;
   padding-top: 56.25%;
   width: 100%;
+  border-radius: 10px;
   .video-end-screen {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -657,7 +659,7 @@ export default {
     z-index: 999;
     width: 100%;
     height: 100%;
-    background-color: #000000;
+    background-color: #435B6B;
     img {
       width: 75%;
     }
@@ -757,8 +759,8 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 40%;
       justify-content: flex-end;
+      width: 40%;
       @media(max-width:1200px) {
         width: 100%;
       }
@@ -771,6 +773,7 @@ export default {
   opacity: .70;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
 }
 .filters-panel {
   display: flex;
@@ -779,6 +782,7 @@ export default {
   background-color: #E9F0F8;
   width: 100%;
   padding: 15px;
+  border-radius: 10px 5px 10px 10px;
   @media(max-width:1200px) {
    padding: 5px;
    flex-direction: column;

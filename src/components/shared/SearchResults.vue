@@ -1,5 +1,5 @@
 <template>
-  <div class="search-sidebar shadow-xl">
+  <div class="search-sidebar">
     <i class="close-button text-4xl p-4 fas fa-times" @click="$emit('closeSearch')"></i>
     <div v-if="searching" class="searching-text text-2xl">
       Searching for critters, stories, and more...
@@ -61,6 +61,7 @@ export default {
   z-index: 99999;
   background-color: #E9F0F8;
   border-radius: 25px 0 0 25px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   @media(max-width:1200px) {
     width: 100%;
     border-radius: 0;
