@@ -78,8 +78,7 @@
           <div class="locked-wems-container">
             <div v-for="(wem,index) in locked_wems" :key="index" class="locked-wems-item">
               <div class="video-container p-2">
-                <div class="locked-overlay"></div>
-                <div class="locked-icon-container">
+                <div class="locked-overlay">
                   <i class="fas fa-lock text-8xl"></i>
                 </div>
                 <iframe :src="wem.video_link +'&title=0&byline=0&portrait=0'" 
@@ -626,6 +625,7 @@ export default {
         width: 125px;
         padding: 2px;
         image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
       }
       .sponsor-logo {
         cursor: auto;
@@ -836,27 +836,17 @@ export default {
     height: 100%;
   }
   .locked-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    width: 100%;
-    height: 100%;
-    background-color: #353839;
-    color: #469cdd;
-    opacity: .80;
-  }
-  .locked-icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 99999;
-    height: 100%;
+    z-index: 9999;
     width: 100%;
-    color: #E9F0F8;
+    height: 100%;
+    background-color: rgba(53,56,57,0.8);
+    color: #469cdd;
     .fa-lock {
       color: #A6CAE7;
     }

@@ -148,6 +148,9 @@ export default {
 
 <style lang="scss">
 .nav-logo {
+  img {
+image-rendering: high-quality;
+  }
   @media(max-width:800px) {
     display: none;
   }
