@@ -64,6 +64,7 @@ export default {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   @media(max-width:1200px) {
     width: 100%;
+    position: relative;
     border-radius: 0;
   }
   .close-button {
@@ -83,6 +84,7 @@ export default {
   .results-container {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
     height: 100%;
     width: 100%;
     .results-block {

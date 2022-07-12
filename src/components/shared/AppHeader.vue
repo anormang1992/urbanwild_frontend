@@ -149,7 +149,7 @@ export default {
 <style lang="scss">
 .nav-logo {
   img {
-image-rendering: high-quality;
+    image-rendering: high-quality;
   }
   @media(max-width:800px) {
     display: none;
@@ -180,7 +180,6 @@ image-rendering: high-quality;
   width: 75px;
   background-color: #E9F0F8;
 }
-
 .nav-sidebar {
   display: flex;
   flex-direction: column;
@@ -196,7 +195,31 @@ image-rendering: high-quality;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   @media(max-width:1200px) {
     width: 100%;
+    position: relative;
     border-radius: 0;
+  }
+  .route-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin: 25px 0 25px 0;
+      font-family: 'Baloo 2';
+      font-weight: bold;
+      font-size: 28px;
+      width: 100%;
+      &:hover {
+        transform: scale(1.10);
+      }
+    }
   }
   .contact-text {
     font-family: 'Baloo 2';
@@ -206,30 +229,6 @@ image-rendering: high-quality;
     padding: 25px 10px;
   }
 }
-.route-list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
-  li {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    margin: 25px 0 25px 0;
-    font-family: 'Baloo 2';
-    font-weight: bold;
-    font-size: 28px;
-    width: 100%;
-    &:hover {
-      transform: scale(1.10);
-    }
-  }
-}
-
 .slide-enter-active {
   animation: menu-slide .5s;
 }
