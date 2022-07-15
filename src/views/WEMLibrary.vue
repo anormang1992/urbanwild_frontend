@@ -78,8 +78,7 @@
           <div class="locked-wems-container">
             <div v-for="(wem,index) in locked_wems" :key="index" class="locked-wems-item">
               <div class="video-container p-2">
-                <div class="locked-overlay"></div>
-                <div class="locked-icon-container">
+                <div class="locked-overlay">
                   <i class="fas fa-lock text-8xl"></i>
                 </div>
                 <iframe :src="wem.video_link +'&title=0&byline=0&portrait=0'" 
@@ -96,7 +95,7 @@
       </div>
 
 
-      <div v-if="unlocked_wems.length" class="gallery-outer">
+      <div class="gallery-outer">
         <div id="wem-gallery" class="gallery-container">
           <div class="gallery-overlay"></div>
           <div class="gallery-header-container">
@@ -232,7 +231,7 @@ export default {
       loading: true,
       page: Object,
       current_wem: Object,
-      unlocked_wems: [],
+      unlocked_wems: Array,
       locked_wems: [],
       video_ended: false,
       show_ad: false,
@@ -247,7 +246,8 @@ export default {
       section_text: 'More Wildlife Educational Moments',
       current_page: 1,
       filter_params: {
-        sort: '-date',
+        wem_locked: 'False',
+        sort: '-released',
         classification: 'all',
         limit: 15,
         offset: 0
@@ -276,6 +276,7 @@ export default {
         this.createPlayer();
       }
     })
+    await this.getLockedWEMS();
   },
 
   methods: {
@@ -286,20 +287,29 @@ export default {
       return axios.get(url)
         .then(response => {
         //TODO: Fix this whenever you reset filters on a page other than 1
-        response.data.results.forEach(wem => {
-          if (wem.wem_locked) {
-            if (!this.locked_wems.some(lw => lw.id === wem.id)) this.locked_wems.push(wem);
-          } else if (!this.unlocked_wems.some(uw => uw.id === wem.id)){
-            this.unlocked_wems.push(wem);
-          } 
-        })
-        this.locked_wems = this.locked_wems.reverse()
-        this.page = this.unlocked_wems;
+        this.page = response.data;
+        this.unlocked_wems = response.data.results;
         this.reset_filters = false;
         this.loading = false;
         }).catch(error => {
           console.log(error);
       })
+    },
+
+    getLockedWEMS() {
+      let params = {
+        wem_locked: 'True',
+        sort: 'date',
+      }
+      let query_string = this.formatQueryString(params);
+      let url = '/api/v1/wems/';
+      url += '?' + query_string;
+      return axios.get(url).then(response => {
+          this.locked_wems = response.data.results;
+        }).catch(error => {
+          console.log(error);
+      })
+
     },
 
     applyGlobalSearch() {
@@ -615,6 +625,7 @@ export default {
         width: 125px;
         padding: 2px;
         image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
       }
       .sponsor-logo {
         cursor: auto;
@@ -637,8 +648,10 @@ export default {
   overflow: hidden;
   padding-top: 56.25%;
   width: 100%;
+  border-radius: 10px;
   .video-end-screen {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -646,7 +659,7 @@ export default {
     z-index: 999;
     width: 100%;
     height: 100%;
-    background-color: #000000;
+    background-color: #435B6B;
     img {
       width: 75%;
     }
@@ -746,8 +759,8 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 40%;
       justify-content: flex-end;
+      width: 40%;
       @media(max-width:1200px) {
         width: 100%;
       }
@@ -760,6 +773,7 @@ export default {
   opacity: .70;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
 }
 .filters-panel {
   display: flex;
@@ -768,6 +782,7 @@ export default {
   background-color: #E9F0F8;
   width: 100%;
   padding: 15px;
+  border-radius: 10px 5px 10px 10px;
   @media(max-width:1200px) {
    padding: 5px;
    flex-direction: column;
@@ -821,27 +836,17 @@ export default {
     height: 100%;
   }
   .locked-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    width: 100%;
-    height: 100%;
-    background-color: #353839;
-    color: #469cdd;
-    opacity: .80;
-  }
-  .locked-icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 99999;
-    height: 100%;
+    z-index: 9999;
     width: 100%;
-    color: #E9F0F8;
+    height: 100%;
+    background-color: rgba(53,56,57,0.8);
+    color: #469cdd;
     .fa-lock {
       color: #A6CAE7;
     }

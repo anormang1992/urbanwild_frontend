@@ -23,7 +23,7 @@ export default {
  	if (!this.message) {
  		this.chat_message = `Hi! Thank you for helping us save the wild, one life at a time! If you have discovered an injured animal and already know what kind it is,
  							you may use the search field below to quickly find information about how to care for the animal and the closest licensed rehabilitator near you. 
- 							Otherwise, click the Get Started button below to allow me to help narrow down the results for you.`
+ 							Otherwise, click the Get Started button below and I'll help you narrow down the animal and provide you with the resources you need to get help.`
  		this.button_text = 'Get Started'
  		this.show_button = true;
  	}

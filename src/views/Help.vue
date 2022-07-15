@@ -51,7 +51,7 @@
     position: relative;
     overflow-y: auto;
     padding: 25px;
-    width: 45%;
+    width: 40%;
     height: 90%;
     border-radius: 25px;
     .chatbox-overlay {

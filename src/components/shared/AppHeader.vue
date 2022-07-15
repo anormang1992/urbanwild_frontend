@@ -37,6 +37,10 @@
           </template>
         </ul>
       </div>
+      <div class="contact-text">
+        For more information, please contact our team at:<br>
+        urbanwild.wems@gmail.com
+      </div>
     </div>
   </transition>
 
@@ -148,6 +152,9 @@ export default {
 
 <style lang="scss">
 .nav-logo {
+  img {
+    image-rendering: high-quality;
+  }
   @media(max-width:800px) {
     display: none;
   }
@@ -177,11 +184,11 @@ export default {
   width: 75px;
   background-color: #E9F0F8;
 }
-
 .nav-sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   width: 20%;
   height: calc(100% - 100px);
   position: absolute;
@@ -189,35 +196,43 @@ export default {
   z-index: 99999;
   background-color: #469cdd;
   border-radius: 25px 0 0 25px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   @media(max-width:1200px) {
     width: 100%;
+    position: relative;
     border-radius: 0;
   }
-}
-.route-list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
-  li {
+  .route-list {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    margin: 25px 0 25px 0;
-    font-family: 'Baloo 2';
-    font-weight: bold;
-    font-size: 28px;
+    flex-direction: column;
+    align-items: flex-end;
     width: 100%;
-    &:hover {
-      transform: scale(1.10);
+    height: 100%;
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin: 25px 0 25px 0;
+      font-family: 'Baloo 2';
+      font-weight: bold;
+      font-size: 28px;
+      width: 100%;
+      &:hover {
+        transform: scale(1.10);
+      }
     }
   }
+  .contact-text {
+    font-family: 'Baloo 2';
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 25px 10px;
+  }
 }
-
 .slide-enter-active {
   animation: menu-slide .5s;
 }

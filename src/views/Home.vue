@@ -15,7 +15,7 @@
         </div>
 
         <div class="logo-container"> 
-          <video id="logo-animation" class="logo-animation" muted autoplay>
+          <video id="logo-animation" class="logo-animation" muted autoplay playsinline>
             <source id="animation-source" src="../assets/animations/uw_animated_logo.mp4" type="video/mp4">
           </video>
         </div>
