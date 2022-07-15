@@ -48,9 +48,9 @@ export default {
     }
   },
   mounted() {
- 	if (this.page_type === "wems") {
- 		this.num_pages = Math.ceil((this.page.count) / (this.limit))
- 	}
+	 	if (this.page_type === "wems") {
+	 		this.num_pages = Math.ceil((this.page.count) / (this.limit))
+	 	}
   },
   methods: {
   	changePage(page, direction){
