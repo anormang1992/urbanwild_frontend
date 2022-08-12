@@ -1,0 +1,35 @@
+{
+  "initial": {
+    "stage": "initial",
+    "message": "Hi, there! Thank you for helping us save the wild, one life at a time! If you already know the species of the injured animal, you may use the search field below to retrieve information about how to care for the animal and the location of the nearest licensed rehabilitator(s). Otherwise, click the Get Started button below to answer a quick series of questions to help me narrow down the category or upload an image and I'll try to identify the species.",
+    "next_stage": "morphology_identification"
+  },
+  "morphology_identification": {
+    "stage": "morphology",
+    "previous_stage": "initial",
+    "message": "Okay, let's get started! Which of the following textures BEST illustrates the appearance of the injured animal?",
+    "type": "image_selection",
+    "options": {
+      "a": {
+        "option": "morphology_textures/fur.jpg",
+        "next_stage": "mammals"
+      },
+      "b": {
+        "option": "morphology_textures/scales.jpg",
+        "next_stage": "reptiles"
+      },
+      "c": {
+        "option": "morphology_textures/feathers.jpg",
+        "next_stage": "birds"
+      },
+      "d": {
+        "option": "morphology_textures/frog_skin.jpg",
+        "next_stage": "amphibians"
+      },
+      "e": {
+        "option": "morphology_textures/shell.jpg",
+        "next_stage": "reptiles"
+      }
+    }
+  }
+}

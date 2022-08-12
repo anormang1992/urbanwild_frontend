@@ -1,39 +1,40 @@
 <template>
 	<div class="chatbot-container">
 		<div class="chatbot-icon-container">
-			<img class="chatbot-icon" src="../../../src/assets/images/chatbot-icon.svg"/>
+			<img class="chatbot-icon" src="../../../src/assets/images/chat_images/chatbot-icon.svg"/>
 		</div>
 		<div class="chat-message-container">
-			<div class="chat-text">{{chat_message}}</div>
-			<div v-if="show_button" class="chat-button">{{button_text}}</div>
+			<div class="chat-text">{{ chat_object.message }}</div>
+			<template v-if="chat_object.stage === 'initial'">
+				<div class="chat-button" @click="$emit('nextStage')">Get Started</div>
+			</template>
+			<template v-else>
+				<animal-identification-form :chat_object="chat_object"></animal-identification-form>
+			</template>
 		</div>
 	</div>
 
 </template>
 
 <script>
+import AnimalIdentificationForm from '@/components/forms/AnimalIdentificationForm';
+
 export default {
   name: 'Chat',
-
+  components: {
+    AnimalIdentificationForm,
+  },
   props: {
-  	message: String
+  	chat_object: Object
   },
 
   mounted() {
- 	if (!this.message) {
- 		this.chat_message = `Hi! Thank you for helping us save the wild, one life at a time! If you have discovered an injured animal and already know what kind it is,
- 							you may use the search field below to quickly find information about how to care for the animal and the closest licensed rehabilitator near you. 
- 							Otherwise, click the Get Started button below and I'll help you narrow down the animal and provide you with the resources you need to get help.`
- 		this.button_text = 'Get Started'
- 		this.show_button = true;
- 	}
+
   },
 
   data: function() {
     return {
-    	chat_message: String,
-    	show_button: false,
-    	button_text: String
+    	animal_data: this.animal_data
     }
   },
 

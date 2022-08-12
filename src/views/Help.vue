@@ -4,11 +4,13 @@
       <div class="chatbox-container">
         <div class="chatbox-overlay"></div>
         <div class="chatbox-container-inner">
-          <chat></chat>
+          <template v-for="message in chat_messages">
+            <chat :chat_object="message" @nextStage="chatResponseHandler"></chat>
+          </template>
         </div>
         <div class="wildlife-search-container">
           <input type="text" name="wildlife-search" placeholder="Search Wildlife...">
-          <div class="submit-search-button">Send</div>
+          <div class="submit-search-button">Search</div>
         </div>
       </div>
     </div>
@@ -18,20 +20,37 @@
 <script type="text/javascript">
   import axios from 'axios';
   import Chat from '@/components/ui/Chat';
+  import chatMessageData from "@/assets/data/chat.json";
 
   export default {
   name: 'Help Page',
+
   components: {
     Chat
   },
+
   data: function() {
     return {
-
+      chat_data: chatMessageData,
+      chat_messages: [],
+      current_stage: Object
     }
   },
 
-  methods: {
+  mounted() {
+    this.chat_messages.push(
+      this.chat_data.initial
+    )
+    this.current_stage = this.chat_data.initial;
+  },
 
+  methods: {
+    chatResponseHandler() {
+      this.chat_messages.push(
+        this.chat_data[this.current_stage.next_stage]
+      )
+      this.current_stage = this.chat_data[this.current_stage.next_stage];
+    }
   }
 
 }
@@ -74,7 +93,7 @@
       width: 100%;
       input {
         border-radius: 10px 0 0 10px;
-        width: 75%;
+        width: 100%;
         padding: 15px;
       }
       .submit-search-button {
@@ -87,7 +106,7 @@
         font-weight: bold;
         font-size: 24px;
         border-radius: 0 10px 10px 0;
-        width: 25%;
+        width: 15%;
         padding: 5px;
         cursor: pointer;
       }
