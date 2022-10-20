@@ -557,12 +557,8 @@ export default {
     from {
       -webkit-transform: rotate(0deg);
               transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-              transform: rotate(0deg);
     }
     to {
-      -webkit-transform: rotate(359deg);
-              transform: rotate(359deg);
       -webkit-transform: rotate(359deg);
               transform: rotate(359deg);
     }

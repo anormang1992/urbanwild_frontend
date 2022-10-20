@@ -16,7 +16,7 @@
           </div>
         </form>
       </div>
-      <div class="text-5xl text-logo-urban pr-4 cursor-pointer">
+      <div class="menu-toggle-container text-5xl text-logo-urban pr-4 cursor-pointer">
         <i v-if="!open_nav" class="fas fa-bars" @click="toggleNav()"></i>
         <i @click="toggleNav()" class="fas fa-times" v-else></i>
       </div>
@@ -183,6 +183,11 @@ export default {
 .search button {
   width: 75px;
   background-color: #E9F0F8;
+}
+.menu-toggle-container {
+  height: 50px;
+  width: 50px;
+
 }
 .nav-sidebar {
   display: flex;
