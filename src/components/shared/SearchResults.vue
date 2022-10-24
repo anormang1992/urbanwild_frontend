@@ -37,7 +37,7 @@ export default {
       this.$emit('closeSearch');
       switch(result_type) {
         case 'Wildlife Educational Moments':
-          this.$router.push({path:'/learn', query: {wem: result.id}})
+          this.$router.push({path:'/learn', query: {key: result.key}})
           break;
         case 'Wildlife Educational Series':
           break;

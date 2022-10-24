@@ -8,6 +8,22 @@
       <div v-if="current_wem" id="top" class="recent-outer">
         <div class="recent-inner">
           <div class="video-container" id="current-video-container">
+            <div v-if="share_button_visible" class="share-container">
+              <div class="share-button" :class="show_share_menu ? 'selected' : ''" @click="toggleShareMenu()">
+                <i class="far fa-paper-plane"></i>
+              </div>
+            </div>
+            <div v-if="show_share_menu" class="share-options">
+              <div class="share-options-inner">
+                <div v-if="share_link_copied" class="copied-success-message">Link Copied!</div>
+                <div class="share-link-container">
+                  <div class="share-link" @click="copyTextToClipboard()">
+                    {{generateShareLink(current_wem.key)}}
+                  </div>
+                  <i :class="share_link_copied ? 'fa fa-clipboard-check' : 'fa fa-clipboard'"></i>
+                </div>
+              </div>
+            </div>
             <div v-if="video_ended" class="video-end-screen">
               <img src="../../src/assets/logos/logo_circular.png"/>
             </div>
@@ -252,6 +268,10 @@ export default {
         limit: 15,
         offset: 0
       },
+      show_share_menu: false,
+      share_button_visible: false,
+      share_link: '',
+      share_link_copied: false,
     }
   },
 
@@ -262,9 +282,6 @@ export default {
   },
 
   async mounted() {
-    // TODO: Refactor the complexity of this function --> should only need to set
-    // the current_wem value based on if the wem query paramater exists instead of
-    // duplicating so much code in both cases.
     await this.getWEMs().then(()=>{
       let gs = this.applyGlobalSearch();
       if (!gs) {
@@ -313,10 +330,10 @@ export default {
     },
 
     applyGlobalSearch() {
-      if (this.$route.query.wem) {
-        let url = `/api/v1/wems/${this.$route.query.wem}/`
-        axios.get(url).then(result => {
-          this.current_wem = result.data;
+      if (this.$route.query.key) {
+        let url = `/api/v1/wems/?key=${this.$route.query.key}`
+        axios.get(url).then(wems => {
+          this.current_wem = wems.data.results[0];
           if (this.current_wem.series) {
             this.series_gallery = true;
           }
@@ -339,22 +356,22 @@ export default {
         })
     },
 
-    createPlayer() {
-      if (this.$route.query.wem) {
+    async createPlayer() {
+      if (this.$route.query.key) {
         let query = Object.assign({}, this.$route.query);
-        delete query.wem;
+        delete query.key;
         this.$router.replace({ query });
       }
-      var video_container = document.getElementById('current-video-container');
+      var video_container = document.getElementById('current-video-container');     
       let iframe = document.createElement('iframe');
       iframe.src = this.current_wem.video_link + '&title=0&byline=0&portrait=0';
       iframe.setAttribute('allowFullScreen', '')
       iframe.className = "responsive-vid-container";
       video_container.appendChild(iframe);
-      let options = {
-        url: this.current_wem.video_link + '&title=0&byline=0&portrait=0',
-      }
-      this.player = new Vimeo.Player(iframe, options);
+      this.player = await new Vimeo.Player(iframe);
+      iframe.addEventListener('mouseenter', (event) => {
+        if (!this.share_button_visibile) this.share_button_visible = true;
+      }); 
       this.initFinishWatcher(this.current_wem);
     },
 
@@ -370,6 +387,30 @@ export default {
       return moment(date).format('MMMM Do YYYY')
     },
 
+    toggleShareMenu() {
+      this.show_share_menu = !this.show_share_menu;
+      if (this.show_share_menu) {
+        this.share_link = this.generateShareLink(this.current_wem.key);
+      } else {
+        this.share_link = '';
+        this.show_share_menu = false;
+        this.share_link_copied = false;
+      }
+
+    },
+
+    generateShareLink(key) {
+      let base = window.location.origin;
+      let query = `?key=${key}`
+      let share_link = `${base}/learn${query}`
+      return share_link
+    },
+
+    copyTextToClipboard() {
+      navigator.clipboard.writeText(this.share_link);
+      this.share_link_copied = true;
+    },
+
     switchCurrentWEM(wem) {
       this.video_ended = false;
       this.show_ad = false;
@@ -379,11 +420,13 @@ export default {
         this.current_series = this.getCurrentSeries()
       }
       this.player.destroy().then(()=>{
+        this.share_button_visible = false;
         this.createPlayer();
       })
     },
 
     initFinishWatcher(wem) {
+      var iframe = document.getElementsByClassName('responsive-vid-container')[0]
       this.player.on('ended', data => {
         this.video_ended = true;
         this.show_ad = true;
@@ -649,6 +692,94 @@ export default {
   padding-top: 56.25%;
   width: 100%;
   border-radius: 10px;
+  .share-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    right: 0px;
+    width: 56px;
+    z-index: 999;
+    .share-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      height: 2rem;
+      min-width: 2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 8px 0 8px 8px;
+      background-color: #000000;
+      &.selected {
+        background-color: #00ADEF;
+        i {
+          color: #000000;
+          opacity: .7;
+        }
+      }
+      i {
+        color: #FFFFFF;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+    }
+    .share-button:hover {
+      background-color: #00ADEF;
+      i {
+        color: #000000;
+        opacity: .7;
+      }
+    }
+  }
+  .share-options {
+    display: flex;
+    position: absolute;
+    right: 1px;
+    top: 80px;
+    background-color: #000000;
+    opacity: .8;
+    border-radius: 4px;
+    z-index: 999;
+    margin: 15px 5px 5px 5px;
+    .share-options-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 5px;
+      font-family: 'Baloo 2';
+      font-size: 16px;
+      font-weight: 700;
+      .copied-success-message {
+        color: #589040;
+      }
+      .share-link-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #469cdd;
+        cursor: pointer;
+        i {
+          padding: 8px;
+          font-size: 24px;
+          color: #E9F0F8;
+        }
+      }
+    }
+  }
+  .share-options:after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    height: 0px;
+    width: 0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #000000 transparent;
+  }
   .video-end-screen {
     display: flex;
     flex-direction: column;
