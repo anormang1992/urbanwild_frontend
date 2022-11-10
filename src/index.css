@@ -13,6 +13,7 @@ html, body {
   overflow: hidden;
 }
 .header-container {
+  
   height: 100px;
   background-color: #ffffff;
 }
@@ -22,13 +23,9 @@ html, body {
   width:  100%;
   height: calc(100vh - 100px);
 }
-.about-page {
-  background-image: url('../src/assets/backgrounds/about_bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-
+/*.about-page {
   height: calc(100vh - 100px);
-}
+}*/
 .news-page {
   background-image: url('../src/assets/backgrounds/news_bg.jpg');
   background-repeat: no-repeat;
