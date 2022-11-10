@@ -8,7 +8,7 @@
       <div v-if="current_wem" id="top" class="recent-outer">
         <div class="recent-inner">
           <div class="video-container" id="current-video-container">
-            <div v-if="share_button_visible" class="share-container">
+<!--             <div v-if="share_button_visible" class="share-container">
               <div class="share-button" :class="show_share_menu ? 'selected' : ''" @click="toggleShareMenu()">
                 <i class="far fa-paper-plane"></i>
               </div>
@@ -23,7 +23,7 @@
                   <i :class="share_link_copied ? 'fa fa-clipboard-check' : 'fa fa-clipboard'"></i>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div v-if="video_ended" class="video-end-screen">
               <img src="../../src/assets/logos/logo_circular.png"/>
             </div>
@@ -370,8 +370,9 @@ export default {
       video_container.appendChild(iframe);
       this.player = await new Vimeo.Player(iframe);
       iframe.addEventListener('mouseenter', (event) => {
-        if (!this.share_button_visibile) this.share_button_visible = true;
+        this.share_button_visible = true;
       }); 
+
       this.initFinishWatcher(this.current_wem);
     },
 
