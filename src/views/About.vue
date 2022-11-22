@@ -1,12 +1,5 @@
 <template>
   <div class="about-page flex flex-row w-full">
-    <div class="about-page-header-container">
-      <div class="header-background"></div>
-      <div class="header-title-container">
-        <div class="header-title">About Us</div>
-      </div>
-    </div>
-   
     <div class="about-content-container">
       <div class="about-content-inner">
         <div class="section about-founders">
@@ -117,36 +110,10 @@
   width: 100%;
   height: 100%;
   background-color: #469cdd;
-  .about-page-header-container {
-    min-height: 325px;
-    width: 100%;
-    position: relative;
-    .header-background {
-      height: 100%;
-      background-image: url('../../src/assets/backgrounds/about_bg.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    .header-title-container {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background-color: #469cdd;
-      padding: 10px;
-      width: 250px;
-      border-radius: 0 25px 0 0;
-      .header-title {
-        color: #FFFFFF;
-        font-size: 36px;
-        font-weight: bold;
-        font-family: 'Baloo 2';
-      }
-    }
-  }
   .about-content-container {
     display: flex;
     width: 100%;
-    height: calc(100% - 325px);
+    height: 100%;
   }
   .about-content-inner {
     display: flex;

@@ -25,7 +25,18 @@
               </div>
             </div> -->
             <div v-if="video_ended" class="video-end-screen">
-              <img src="../../src/assets/logos/logo_circular.png"/>
+              <div class="sponsors-container">
+                <div class="uw-proud-sponsors-container">
+                  <div class="uw-proud-sponsors-logo">
+                    <img src="../../src/assets/logos/logo_proud_sponsors.png"/>
+                  </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2 w-full relative">
+                  <div class="sponsor-grid-item ad-hot-button pulse">
+                    <img @click="form_open=true" src="../../src/assets/logos/Farm_Bureau_Ad.png"/>
+                  </div>
+                </div>
+              </div>
             </div>
             <farm-bureau-form v-if="form_open" @closeForm="closeForm"></farm-bureau-form>
           </div>
@@ -39,14 +50,6 @@
                 <h2 v-else>Hide Description</h2>
               </div>
             </div>
-            <div v-if="show_ad" class="ad-container">
-              <div class="logo-sponsors">
-                <img src="../../src/assets/logos/logo_proud_sponsors.png"/>
-              </div>
-              <div class="ad-hot-button pulse">
-                <img @click="form_open=true" src="../../src/assets/logos/Farm_Bureau_Ad.png"/>
-              </div>
-            </div> 
           </div>
           <div v-if="show_description" class="description-container">
             <div class="description-overlay"></div>
@@ -250,7 +253,6 @@ export default {
       unlocked_wems: Array,
       locked_wems: [],
       video_ended: false,
-      show_ad: false,
       form_open: false,
       series_gallery: false,
       series_collections: Array,
@@ -365,7 +367,7 @@ export default {
       var video_container = document.getElementById('current-video-container');     
       let iframe = document.createElement('iframe');
       iframe.src = this.current_wem.video_link + '&title=0&byline=0&portrait=0';
-      iframe.setAttribute('allowFullScreen', '')
+      iframe.setAttribute('allowfullscreen', '')
       iframe.className = "responsive-vid-container";
       video_container.appendChild(iframe);
       this.player = await new Vimeo.Player(iframe);
@@ -414,7 +416,6 @@ export default {
 
     switchCurrentWEM(wem) {
       this.video_ended = false;
-      this.show_ad = false;
       this.series_gallery = !wem.series ? false : true;
       this.current_wem = wem;
       if (this.current_wem.series) {
@@ -430,7 +431,6 @@ export default {
       var iframe = document.getElementsByClassName('responsive-vid-container')[0]
       this.player.on('ended', data => {
         this.video_ended = true;
-        this.show_ad = true;
         wem.play_count += 1;
         let url = `/api/v1/wems/${wem.id}/`;
         let update = {
@@ -440,10 +440,6 @@ export default {
           console.log('Play count updated!')
         })
       })
-    },
-
-    triggerAd() {
-      this.show_ad = true;
     },
 
     updatePage(page) {
@@ -648,43 +644,6 @@ export default {
     @media(max-width:1200px) {
       flex-direction: column;
     }
-    .ad-container {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      padding: 5px;
-      justify-content: flex-end;
-      align-items: center;
-      .logo-sponsors {
-        width: 200px;
-        margin-right: 10px;
-        img {
-          image-rendering: -moz-crisp-edges;         
-          image-rendering: -o-crisp-edges;         
-          image-rendering: -webkit-optimize-contrast;
-        }
-      }
-      .ad-hot-button, .sponsor-logo {
-        cursor: pointer;
-        width: 125px;
-        padding: 2px;
-        image-rendering: -moz-crisp-edges;
-        image-rendering: crisp-edges;
-      }
-      .sponsor-logo {
-        cursor: auto;
-      }
-      @keyframes pulse {
-        from { transform: scale(1); box-shadow: 0 0 0 0px rgba(166, 202, 231, 0.2);}
-        50% { transform: scale(0.85); }
-        to { transform: scale(1); box-shadow: 0 0 0 15px rgba(166, 202, 231, 0);}
-      }
-      .pulse {
-        animation-name: pulse;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-      }
-    }
   }
 }
 .video-container {
@@ -792,8 +751,45 @@ export default {
     width: 100%;
     height: 100%;
     background-color: #435B6B;
-    img {
-      width: 75%;
+    .sponsors-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      .uw-proud-sponsors-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        background-color: #FFFFFF;
+        padding: 10px;
+        .uw-proud-sponsors-logo {
+          width: 40%;
+          img {
+            image-rendering: -moz-crisp-edges;         
+            image-rendering: -o-crisp-edges;         
+            image-rendering: -webkit-optimize-contrast;
+          }
+        }
+      }
+      .sponsor-grid-item{
+        padding: 10px;
+      }
+      .ad-hot-button {
+        cursor: pointer;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+      }
+      @keyframes pulse {
+        from { transform: scale(1); box-shadow: 0 0 0 0px rgba(166, 202, 231, 0.2);}
+        50% { transform: scale(0.85); }
+        to { transform: scale(1); box-shadow: 0 0 0 15px rgba(166, 202, 231, 0);}
+      }
+      .pulse {
+        animation-name: pulse;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+      }
     }
   }
 }
