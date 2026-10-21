@@ -172,16 +172,49 @@ describe('Play recording and end screen', () => {
 describe('Share', () => {
   const shareBtn = (wrapper) => wrapper.findAll('button').find((b) => b.text().startsWith('Share'))
 
+  const URL_ = 'https://urbanwild.tv/episodes/lady-eagle-dock-lake-auman'
+  const stub = (prop, value) => Object.defineProperty(navigator, prop, { value, configurable: true })
+
   it('uses navigator.share when available', async () => {
-    const share = vi.fn().mockRejectedValue(new Error('cancelled'))
-    Object.defineProperty(navigator, 'share', { value: share, configurable: true })
+    const share = vi.fn().mockResolvedValue()
+    stub('share', share)
     const { wrapper } = await mountApp(KEY)
     await shareBtn(wrapper).trigger('click')
     await flushPromises()
-    expect(share).toHaveBeenCalledWith({
-      title: 'Lady Eagle Dock - Lake Auman',
-      url: 'https://urbanwild.tv/episodes/lady-eagle-dock-lake-auman',
-    })
+    expect(share).toHaveBeenCalledWith({ title: 'Lady Eagle Dock - Lake Auman', url: URL_ })
+    expect(wrapper.find('[data-testid="share-url"]').exists()).toBe(false)
+  })
+
+  it('shows the URL when the share sheet is cancelled', async () => {
+    stub('share', vi.fn().mockRejectedValue(new DOMException('Share canceled', 'AbortError')))
+    const writeText = vi.fn().mockResolvedValue()
+    stub('clipboard', { writeText })
+    const { wrapper } = await mountApp(KEY)
+    await shareBtn(wrapper).trigger('click')
+    await flushPromises()
+    expect(writeText).not.toHaveBeenCalled()
+    expect(wrapper.find('[data-testid="share-url"]').text()).toBe(URL_)
+  })
+
+  it('falls back to the clipboard when sharing fails for another reason', async () => {
+    stub('share', vi.fn().mockRejectedValue(new DOMException('Not allowed', 'NotAllowedError')))
+    const writeText = vi.fn().mockResolvedValue()
+    stub('clipboard', { writeText })
+    const { wrapper } = await mountApp(KEY)
+    await shareBtn(wrapper).trigger('click')
+    await flushPromises()
+    expect(writeText).toHaveBeenCalledWith(URL_)
+    expect(wrapper.text()).toContain('Link copied')
+    expect(wrapper.find('[data-testid="share-url"]').text()).toBe(URL_)
+  })
+
+  it('shows the URL when sharing fails and the clipboard is unavailable', async () => {
+    stub('share', vi.fn().mockRejectedValue(new TypeError('share() failed')))
+    const { wrapper } = await mountApp(KEY)
+    await shareBtn(wrapper).trigger('click')
+    await flushPromises()
+    expect(wrapper.find('[data-testid="share-url"]').text()).toBe(URL_)
+    expect(wrapper.text()).not.toContain('Link copied')
   })
 
   it('copies to the clipboard otherwise', async () => {

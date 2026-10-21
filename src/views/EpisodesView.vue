@@ -73,7 +73,7 @@ const statusMessage = computed(() => {
   <section class="bg-forest text-white">
     <div class="mx-auto flex max-w-[1240px] flex-col gap-9 px-6 pb-16 pt-14">
       <div class="flex max-w-[760px] flex-col gap-2.5">
-        <h1 class="font-display text-[clamp(44px,5.4vw,68px)] font-extrabold leading-[1.02] tracking-[-0.025em]">{{ markMain }}<span class="mt-2 block text-[0.42em] font-bold tracking-[-0.01em] text-leaf">{{ markSub }}</span></h1>
+        <h1 :aria-label="WEM_MARK" class="font-display text-[clamp(44px,5.4vw,68px)] font-extrabold leading-[1.02] tracking-[-0.025em]">{{ markMain }}<span class="mt-2 block text-[0.42em] font-bold tracking-[-0.01em] text-leaf">{{ markSub }}</span></h1>
         <p class="text-[19px] text-on-forest">
           Short films about the animals in your backyard, made alongside the licensed rehabilitators who care for them.
         </p>

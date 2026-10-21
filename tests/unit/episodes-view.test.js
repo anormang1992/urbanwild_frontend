@@ -28,6 +28,11 @@ describe('Episodes page', () => {
     expect(h1.find('span').text()).toBe('(Wildlife Educational Moment)')
   })
 
+  it('gives the H1 the exact trademark as its accessible name', async () => {
+    const { wrapper } = await mountApp('/episodes')
+    expect(wrapper.find('h1').attributes('aria-label')).toBe(WEM_MARK)
+  })
+
   it('shows the newest episode and the rest in the default view', async () => {
     const { wrapper } = await mountApp('/episodes')
     const newest = wrapper.find('[data-testid="newest"]')

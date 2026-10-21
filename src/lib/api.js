@@ -1,6 +1,6 @@
 import { toEpisode } from './episodes.js'
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://urbanwild-api.herokuapp.com'
+export const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://urbanwild-api.herokuapp.com').replace(/\/+$/, '')
 export const RATE_LIMIT_MESSAGE = "You've sent a few requests already. Please try again later."
 export const GENERIC_LEAD_MESSAGE = 'Something went wrong. Please try again.'
 

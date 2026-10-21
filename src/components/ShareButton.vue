@@ -8,13 +8,18 @@ const state = ref('idle')
 watch(() => props.url, () => (state.value = 'idle'))
 
 async function share() {
-  try {
-    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+  if (typeof navigator.share === 'function') {
+    try {
       await navigator.share({ title: props.title, url: props.url })
       return
+    } catch (err) {
+      // Cancelled: show the URL so it can still be copied by hand.
+      if (err?.name === 'AbortError') {
+        state.value = 'manual'
+        return
+      }
+      // Any other failure falls through to the clipboard.
     }
-  } catch {
-    return // the user cancelled the share sheet
   }
   try {
     await navigator.clipboard.writeText(props.url)

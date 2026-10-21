@@ -24,6 +24,23 @@ describe('fetchCatalog', () => {
   })
 })
 
+describe('API_BASE', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.resetModules()
+  })
+
+  it('strips a trailing slash from VITE_API_BASE_URL', async () => {
+    vi.stubEnv('VITE_API_BASE_URL', 'https://api.example.test/')
+    vi.resetModules()
+    const api = await import('../../src/lib/api.js')
+    expect(api.API_BASE).toBe('https://api.example.test')
+    fetch.mockResolvedValue(json({ results: [] }))
+    await api.fetchCatalog()
+    expect(fetch.mock.calls[0][0]).toBe('https://api.example.test/api/v1/wems/?wem_locked=False&limit=100')
+  })
+})
+
 describe('fetchEpisode', () => {
   it('requests the key URL and returns null when empty', async () => {
     fetch.mockResolvedValue(json({ results: [] }))
