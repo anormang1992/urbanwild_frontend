@@ -116,7 +116,7 @@ export function isDefaultView({ q, animal, sort }) {
 }
 
 export function resultsHeading({ count, q, isDefault }) {
-  if (isDefault) return 'More episodes'
+  if (isDefault) return 'All episodes'
   const base = `${count} ${count === 1 ? 'episode' : 'episodes'}`
   const term = (q || '').trim()
   return term ? `${base} for “${term}”` : base

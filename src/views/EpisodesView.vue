@@ -10,6 +10,7 @@ import {
   filterEpisodes,
   animalOptions,
   isDefaultView,
+  pickFeatured,
   resultsHeading,
   formatDate,
   formatDuration,
@@ -55,8 +56,10 @@ const chips = computed(() => animalOptions(episodes.value))
 const results = computed(() =>
   sortEpisodes(filterEpisodes(episodes.value, { q: q.value, animal: animal.value }), sort.value),
 )
-const newest = computed(() => (isDefault.value ? results.value[0] || null : null))
-const grid = computed(() => (newest.value ? results.value.slice(1) : results.value))
+// The featured episode stays put whatever the filters, and is also listed in the grid,
+// so filtering never makes the page jump.
+const featured = computed(() => pickFeatured(episodes.value))
+const grid = results
 const heading = computed(() =>
   resultsHeading({ count: results.value.length, q: q.value, isDefault: isDefault.value }),
 )
@@ -79,18 +82,18 @@ const statusMessage = computed(() => {
       </div>
 
       <div
-        v-if="newest"
-        data-testid="newest"
+        v-if="featured"
+        data-testid="featured"
         class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] items-center gap-8"
       >
         <RouterLink
-          :to="{ name: 'watch', params: { key: newest.key } }"
-          :aria-label="`Play ${newest.title}`"
+          :to="{ name: 'watch', params: { key: featured.key } }"
+          :aria-label="`Play ${featured.title}`"
           class="relative block aspect-video overflow-hidden rounded-[22px] bg-[#0b1712] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-leaf"
         >
           <img
-            v-if="newest.thumbnailUrl"
-            :src="thumbnailAt(newest.thumbnailUrl, 960)"
+            v-if="featured.thumbnailUrl"
+            :src="thumbnailAt(featured.thumbnailUrl, 960)"
             alt=""
             class="absolute inset-0 block h-full w-full object-cover"
           />
@@ -100,21 +103,21 @@ const statusMessage = computed(() => {
             </span>
           </span>
           <span
-            v-if="formatDuration(newest.durationSeconds)"
+            v-if="formatDuration(featured.durationSeconds)"
             class="absolute bottom-3.5 right-3.5 rounded-lg bg-[#0b1712]/90 px-2.5 py-1 text-sm font-bold text-white"
-            >{{ formatDuration(newest.durationSeconds) }}</span
+            >{{ formatDuration(featured.durationSeconds) }}</span
           >
         </RouterLink>
         <div class="flex flex-col gap-4">
           <p class="flex flex-wrap items-center gap-2.5 text-sm">
-            <span class="rounded-full bg-leaf px-3 py-1 font-extrabold text-forest">Newest episode</span>
+            <span class="rounded-full bg-leaf px-3 py-1 font-extrabold text-forest">Featured episode</span>
             <span class="text-on-forest"
-              >{{ formatDate(newest.releasedAt) }}<template v-if="formatDate(newest.releasedAt) && newest.animalLabel"> · </template>{{ newest.animalLabel }}</span
+              >{{ formatDate(featured.releasedAt) }}<template v-if="formatDate(featured.releasedAt) && featured.animalLabel"> · </template>{{ featured.animalLabel }}</span
             >
           </p>
-          <h2 class="font-display text-[44px] font-extrabold leading-[1.05] tracking-[-0.02em]">{{ newest.title }}</h2>
+          <h2 class="font-display text-[44px] font-extrabold leading-[1.05] tracking-[-0.02em]">{{ featured.title }}</h2>
           <RouterLink
-            :to="{ name: 'watch', params: { key: newest.key } }"
+            :to="{ name: 'watch', params: { key: featured.key } }"
             class="inline-flex min-h-13 items-center gap-2.5 self-start rounded-full bg-white px-6.5 font-bold text-forest no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" /></svg>

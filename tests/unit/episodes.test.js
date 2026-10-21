@@ -53,7 +53,7 @@ test('featured, latest and up next', () => {
 test('view helpers', () => {
   expect(isDefaultView({ q: '', animal: 'all', sort: 'newest' })).toBe(true)
   expect(isDefaultView({ q: '', animal: 'all', sort: 'oldest' })).toBe(false)
-  expect(resultsHeading({ count: 3, q: '', isDefault: true })).toBe('More episodes')
+  expect(resultsHeading({ count: 3, q: '', isDefault: true })).toBe('All episodes')
   expect(resultsHeading({ count: 1, q: '', isDefault: false })).toBe('1 episode')
   expect(resultsHeading({ count: 2, q: 'eagle', isDefault: false })).toBe('2 episodes for “eagle”')
 })

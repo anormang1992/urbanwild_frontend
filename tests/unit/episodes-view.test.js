@@ -33,15 +33,30 @@ describe('Episodes page', () => {
     expect(wrapper.find('h1').attributes('aria-label')).toBe(WEM_MARK)
   })
 
-  it('shows the newest episode and the rest in the default view', async () => {
+  it('shows the featured episode above every episode in the default view', async () => {
     const { wrapper } = await mountApp('/episodes')
-    const newest = wrapper.find('[data-testid="newest"]')
-    expect(newest.text()).toContain('Newest episode')
-    expect(newest.text()).toContain("Nina's Chimney Swifts")
-    newest.findAll('a').forEach((a) => expect(a.attributes('href')).toBe('/episodes/ninas-chimney-swifts'))
-    expect(newest.text()).toContain('Play episode')
-    expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('More episodes')
-    expect(idsFor(gridKeys(wrapper).map((k) => k))).toEqual([8, 6, 1])
+    const featured = wrapper.find('[data-testid="featured"]')
+    expect(featured.text()).toContain('Featured episode')
+    expect(featured.text()).toContain('Lady Eagle Dock - Lake Auman')
+    featured.findAll('a').forEach((a) => expect(a.attributes('href')).toBe('/episodes/lady-eagle-dock-lake-auman'))
+    expect(featured.text()).toContain('Play episode')
+    expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('All episodes')
+    expect(idsFor(gridKeys(wrapper))).toEqual([11, 8, 6, 1])
+  })
+
+  it('falls back to the newest episode when none is flagged featured', async () => {
+    fetchCatalog.mockResolvedValue(catalog.map((e) => ({ ...e, featured: false })))
+    const { wrapper } = await mountApp('/episodes')
+    expect(wrapper.find('[data-testid="featured"]').text()).toContain("Nina's Chimney Swifts")
+  })
+
+  it('keeps the featured episode in place while filtering', async () => {
+    const { wrapper } = await mountApp('/episodes')
+    const chip = wrapper.findAll('[role="group"] button').find((c) => c.text().startsWith('Small mammals'))
+    await chip.trigger('click')
+    await flushPromises()
+    expect(wrapper.find('[data-testid="featured"]').text()).toContain('Lady Eagle Dock - Lake Auman')
+    expect(idsFor(gridKeys(wrapper))).toEqual([8])
   })
 
   it('searches and updates the URL', async () => {
@@ -49,7 +64,7 @@ describe('Episodes page', () => {
     await wrapper.find('input[type="search"]').setValue('eagle')
     await flushPromises()
     expect(router.currentRoute.value.query.q).toBe('eagle')
-    expect(wrapper.find('[data-testid="newest"]').exists()).toBe(false)
+    expect(wrapper.find('[data-testid="featured"]').exists()).toBe(true)
     expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('1 episode for “eagle”')
   })
 
@@ -75,7 +90,7 @@ describe('Episodes page', () => {
 
   it('treats unknown query values as defaults', async () => {
     const { wrapper } = await mountApp('/episodes?animal=dragons&sort=zzz')
-    expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('More episodes')
+    expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('All episodes')
   })
 
   it('shows an empty state and clears filters', async () => {
@@ -85,7 +100,7 @@ describe('Episodes page', () => {
     await clear.trigger('click')
     await flushPromises()
     expect(router.currentRoute.value.query).toEqual({})
-    expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('More episodes')
+    expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('All episodes')
   })
 
   it('shows Loading, not the empty state, while the catalog is pending', async () => {
@@ -104,7 +119,7 @@ describe('Episodes page', () => {
     expect(wrapper.text()).not.toContain('Rats! Nothing matched that search.')
     await wrapper.findAll('button').find((b) => b.text() === 'Try again').trigger('click')
     await flushPromises()
-    expect(wrapper.findAll('[data-testid="grid"] a')).toHaveLength(3)
+    expect(wrapper.findAll('[data-testid="grid"] a')).toHaveLength(4)
     expect(wrapper.text()).not.toContain("We couldn't load")
   })
 })

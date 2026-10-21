@@ -196,12 +196,14 @@ Match the mockup. The tokens:
 1. **Forest-colored header band:**
    - **H1:** "On a WEM", with "(Wildlife Educational Moment)" on a second, smaller line in leaf green. Both parts sit in the **same `<h1>`**, with **no space** between them in the text, so the accessible name and the page text read exactly "On a WEM(Wildlife Educational Moment)". The accessible name is provided with `aria-label="On a WEM(Wildlife Educational Moment)"` on the `<h1>`, because the second line is a block box and some browsers' accessibility trees otherwise insert a space before it. This is a trademark placement.
    - **Lede:** "Short films about the animals in your backyard, made alongside the licensed rehabilitators who care for them."
-   - **Featured newest episode:** a large thumbnail with a play button, plus the "Newest episode" pill, date, animal, title and a "Play episode" button. **Only shown in the default view:** no search text, "All" animals, sort "Newest first". Don't repeat that episode in the grid below while it's shown.
+   - **Featured episode:** a large thumbnail with a play button, plus the "Featured episode" pill, date, animal, title and a "Play episode" button. It uses the same featured-episode rule as Home.
+     - **Always shown,** whatever the search, animal or sort. Andrew's call: hiding it while filtering made the page jump, and the feature is featured for a reason.
+     - **Also listed in the grid** like any other episode.
 2. **Toolbar** (wraps on mobile):
    - **Search input:** matches title, description, tags and animal label, case-insensitive.
    - **Animal chips:** "All" plus one chip per animal class that has at least one unlocked episode, each with a count. The selected chip is filled ink. Chips are toggle buttons with `aria-pressed`.
    - **Sort select:** Newest first (default), Oldest first, Most watched, A to Z.
-3. **Results heading:** "More episodes" in the default view. Otherwise "{n} episode(s)", plus ` for "{q}"` when there's search text.
+3. **Results heading:** "All episodes" in the default view. Otherwise "{n} episode(s)", plus ` for "{q}"` when there's search text.
 4. **Grid:** the same cards as Home. A card opens `/episodes/:key`.
 5. **Empty state:** "Rats! Nothing matched that search." / "Try another animal, or clear your filters to see every episode." / a "Clear filters" button.
 
