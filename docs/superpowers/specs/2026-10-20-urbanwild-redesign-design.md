@@ -194,7 +194,7 @@ Match the mockup. The tokens:
 ### Episodes (`/episodes`)
 
 1. **Forest-colored header band:**
-   - **H1:** "On a WEM", with "(Wildlife Educational Moment)" on a second, smaller line in leaf green. Both parts sit in the **same `<h1>`**, with **no space** between them in the text, so the accessible name and the page text read exactly "On a WEM(Wildlife Educational Moment)". This is a trademark placement.
+   - **H1:** "On a WEM", with "(Wildlife Educational Moment)" on a second, smaller line in leaf green. Both parts sit in the **same `<h1>`**, with **no space** between them in the text, so the accessible name and the page text read exactly "On a WEM(Wildlife Educational Moment)". The accessible name is provided with `aria-label="On a WEM(Wildlife Educational Moment)"` on the `<h1>`, because the second line is a block box and some browsers' accessibility trees otherwise insert a space before it. This is a trademark placement.
    - **Lede:** "Short films about the animals in your backyard, made alongside the licensed rehabilitators who care for them."
    - **Featured newest episode:** a large thumbnail with a play button, plus the "Newest episode" pill, date, animal, title and a "Play episode" button. **Only shown in the default view:** no search text, "All" animals, sort "Newest first". Don't repeat that episode in the grid below while it's shown.
 2. **Toolbar** (wraps on mobile):
@@ -228,7 +228,7 @@ Match the mockup. The tokens:
    - **Before playback**, show the poster from the mockup: the thumbnail, a centered play disc and a duration badge. Pressing it loads the Vimeo player and starts playback. This also keeps the page light.
    - When the video **ends**:
      - **Record a play:** send `POST /api/v1/wems/{id}/play/` once per page view of that episode. Don't count replays in the same view, and don't retry on failure.
-     - **Show the end screen** over the player, on a forest background:
+     - **Show the end screen** over the player, on a forest background. Where the player is too narrow for it to fit (phones, and narrow two-column layouts), it sits directly below the player instead, so nothing has to scroll inside the 16:9 box:
        - **Up next:** the next episode's thumbnail and title, with "Play next" and "Replay" buttons.
        - **Sponsor card** (white): "This episode is supported by", the Farm Bureau logo, the line "Home, auto, life and farm insurance from people who share our love of North Carolina's wild places.", and a "Get a free quote" button that opens the lead form.
    - **"Next" episode:** the first item in the "Up next" list (see below). That's the next *older* episode, wrapping around to the newest after the oldest, so "Play next" walks the whole catalog instead of bouncing between the two newest.
@@ -241,7 +241,7 @@ Match the mockup. The tokens:
    - **Share button:** uses `navigator.share` where available, otherwise copies `https://urbanwild.tv/episodes/{key}` to the clipboard. The label changes to "Link copied" and the URL shows beside it.
 5. **Up next sidebar:** every other unlocked episode. Start with the one after the current episode in newest-first order, continue to the oldest, then wrap round to the newest. Each is a compact row (144px thumbnail with duration, title, "{animal} · {date}").
 6. **Unknown or locked key:** the 404 page.
-7. **Page title:** `{episode title} · On A WEM · UrbanWild`.
+7. **Page title:** `{episode title} · On a WEM · UrbanWild`.
 
 ### Lead form (modal, opened from the end screen)
 

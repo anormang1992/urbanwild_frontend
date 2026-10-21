@@ -49,7 +49,7 @@ defineEmits(['play-next', 'replay', 'get-quote'])
       </p>
       <button
         type="button"
-        class="min-h-11 cursor-pointer self-start rounded-full border-0 bg-green-text px-[18px] font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        class="min-h-11 cursor-pointer self-start rounded-full border-0 bg-green px-[18px] font-bold text-white hover:bg-green-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         @click="$emit('get-quote')"
       >
         Get a free quote

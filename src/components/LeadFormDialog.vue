@@ -126,7 +126,7 @@ async function submit() {
           <button
             type="submit"
             :disabled="sending"
-            class="min-h-[50px] cursor-pointer rounded-full border-none bg-green-text px-6 text-[17px] font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
+            class="min-h-[50px] cursor-pointer rounded-full border-none bg-green px-6 text-[17px] font-bold text-white hover:bg-green-text disabled:cursor-not-allowed disabled:opacity-60"
           >
             Request my quote
           </button>

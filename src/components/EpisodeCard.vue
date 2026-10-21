@@ -17,7 +17,7 @@ defineProps({ episode: { type: Object, required: true } })
         loading="lazy"
         class="block h-full w-full object-cover"
       />
-      <div v-else data-testid="thumb-placeholder" class="h-full w-full bg-line"></div>
+      <span v-else data-testid="thumb-placeholder" class="block h-full w-full bg-line"></span>
       <span
         v-if="formatDuration(episode.durationSeconds)"
         class="absolute bottom-2.5 right-2.5 rounded-md bg-forest/90 px-2 py-0.5 text-[13px] font-bold text-white"

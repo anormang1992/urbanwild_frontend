@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { useCatalog } from '../composables/useCatalog.js'
+import { SITE_EMAIL } from '../lib/brand.js'
 import { pickFeatured, latestEpisodes, formatDate, formatDuration, thumbnailAt } from '../lib/episodes.js'
 import EpisodeCard from '../components/EpisodeCard.vue'
 import CatalogStatus from '../components/CatalogStatus.vue'
@@ -121,7 +122,7 @@ const statusMessage = computed(() => (shownStatus.value === 'loading' || shownSt
     </div>
     <p class="max-w-[36em] text-muted">
       Want to help bring wildlife education to more families?
-      <a href="mailto:urbanwild.wems@gmail.com" class="inline-block py-3 font-bold text-green-text underline">Talk to us about sponsorship</a>.
+      <a :href="`mailto:${SITE_EMAIL}`" class="inline-block py-3 font-bold text-green-text underline">Talk to us about sponsorship</a>.
     </p>
   </section>
 </template>

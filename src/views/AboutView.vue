@@ -53,7 +53,7 @@ const team = [
       </div>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-x-6 gap-y-8">
         <figure v-for="p in photos" :key="p.src" class="m-0 flex flex-col">
-          <img :src="p.src" :alt="p.alt" class="block aspect-[4/5] w-full rounded-3xl object-cover" />
+          <img :src="p.src" :alt="p.alt" loading="lazy" class="block aspect-[4/5] w-full rounded-3xl object-cover" />
           <figcaption class="relative z-0 mx-4 -mt-12 box-border flex min-h-24 items-center gap-3 rounded-2xl bg-surface px-4 py-3.5 shadow-[0_10px_28px_rgba(16,34,26,0.14)]">
             <span aria-hidden="true" class="font-display flex size-10 flex-none items-center justify-center rounded-full text-base font-extrabold" :class="tones[p.tone].badge">{{ p.initial }}</span>
             <span class="flex min-w-0 flex-col gap-0.5">

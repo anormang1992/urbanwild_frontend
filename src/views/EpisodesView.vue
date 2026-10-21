@@ -60,7 +60,6 @@ const grid = computed(() => (newest.value ? results.value.slice(1) : results.val
 const heading = computed(() =>
   resultsHeading({ count: results.value.length, q: q.value, isDefault: isDefault.value }),
 )
-// Keep showing episodes during a reload; only show "Loading" when there are none yet.
 // Keep showing episodes during a reload; with none yet, anything but 'ready' (idle, loading, error)
 // shows the status instead of an empty grid.
 const statusMessage = computed(() => {
@@ -138,7 +137,7 @@ const statusMessage = computed(() => {
           type="search"
           placeholder="Search eagles, beavers, rescue…"
           :value="q"
-          class="box-border h-12 w-full rounded-full border-[1.5px] border-line-strong bg-surface pl-11 pr-4 text-base text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-text"
+          class="box-border h-12 w-full rounded-full border-[1.5px] border-line-strong bg-surface pl-11 pr-4 text-base text-ink placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-text"
           @input="update({ q: $event.target.value })"
         />
       </div>
