@@ -21,7 +21,7 @@ defineProps({ episodes: { type: Array, required: true } })
         </span>
         <span class="flex min-w-0 flex-col gap-1">
           <span data-testid="up-next-title" class="text-base font-bold leading-[1.3]">{{ e.title }}</span>
-          <span v-if="e.animalLabel" class="text-sm text-muted">{{ e.animalLabel }}</span>
+          <span v-if="e.animalLabel" data-testid="animal-chip" class="self-start rounded-full bg-green-soft px-2.5 py-0.5 text-sm font-bold text-green-text">{{ e.animalLabel }}</span>
         </span>
       </RouterLink>
     </li>

@@ -64,9 +64,10 @@ describe('Watch details', () => {
     const { wrapper } = await mountApp(KEY)
     const titles = wrapper.findAll('[data-testid="up-next-title"]').map((t) => t.text())
     expect(titles).toEqual(["Nina's Chimney Swifts", 'Jimmy the Beaver Goes Free', "Byron's Hawk in the Crepe Myrtle Tree"])
-    const rows = wrapper.find('aside').text()
-    expect(rows).toContain('Birds')
-    expect(rows).not.toMatch(/\b20\d\d\b/)
+    const chips = wrapper.findAll('aside [data-testid="animal-chip"]')
+    expect(chips.map((c) => c.text())).toEqual(['Birds', 'Small mammals', 'Birds of prey'])
+    chips.forEach((c) => expect(c.classes()).toEqual(expect.arrayContaining(['rounded-full', 'bg-green-soft', 'text-green-text'])))
+    expect(wrapper.find('aside').text()).not.toMatch(/\b20\d\d\b/)
   })
 
   it('renders the 404 for an unknown key', async () => {

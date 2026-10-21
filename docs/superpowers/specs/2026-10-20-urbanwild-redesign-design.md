@@ -241,7 +241,7 @@ Match the mockup. The tokens:
    - **Description,** if any.
    - **Tag buttons** (`#bald eagle`, etc.). Clicking one goes to `/episodes?q={tag}`.
    - **Share button:** uses `navigator.share` where available, otherwise copies `https://urbanwild.tv/episodes/{key}` to the clipboard. The label changes to "Link copied" and the URL shows beside it.
-5. **Up next sidebar:** every other unlocked episode. Start with the one after the current episode in newest-first order, continue to the oldest, then wrap round to the newest. Each is a compact row (144px thumbnail with duration, title, animal).
+5. **Up next sidebar:** every other unlocked episode. Start with the one after the current episode in newest-first order, continue to the oldest, then wrap round to the newest. Each is a compact row (144px thumbnail with duration, title, animal chip).
 6. **Unknown or locked key:** the 404 page.
 7. **Page title:** `{episode title} · On a WEM · UrbanWild`.
 
