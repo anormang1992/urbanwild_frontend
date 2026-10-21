@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import Player from '@vimeo/player'
 import { thumbnailAt } from '../lib/episodes.js'
 import { embedUrl } from '../lib/vimeo.js'
@@ -30,19 +30,36 @@ async function start() {
 
 async function replay() {
   if (!player) return
-  await player.setCurrentTime(0)
-  await player.play()
+  try {
+    await player.setCurrentTime(0)
+    await player.play()
+  } catch {
+    // Playback can be refused (e.g. NotAllowedError); never reject to the caller.
+  }
 }
+
+function disposePlayer() {
+  if (player) {
+    player.destroy().catch(() => {})
+    player = null
+  }
+}
+
+watch(
+  () => props.videoLink,
+  () => {
+    disposePlayer()
+    if (props.autostart) start()
+    else playing.value = false
+  },
+)
 
 onMounted(() => {
   if (props.autostart) start()
 })
 onBeforeUnmount(() => {
   unmounted = true
-  if (player) {
-    player.destroy().catch(() => {})
-    player = null
-  }
+  disposePlayer()
 })
 
 defineExpose({ replay })
@@ -53,6 +70,7 @@ defineExpose({ replay })
     <iframe
       v-if="playing"
       ref="iframe"
+      :key="videoLink"
       :src="src"
       :title="title"
       allow="autoplay; fullscreen; picture-in-picture"

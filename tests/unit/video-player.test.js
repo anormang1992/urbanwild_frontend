@@ -100,4 +100,33 @@ describe('VideoPlayer', () => {
     w.unmount()
     expect(players[0].destroy).toHaveBeenCalled()
   })
+
+  it('rebuilds the player when videoLink changes', async () => {
+    const w = make({ autostart: true })
+    await flushPromises()
+    const old = players[0]
+    const B = 'https://player.vimeo.com/video/111222333?h=bbbb'
+    await w.setProps({ videoLink: B })
+    await flushPromises()
+    expect(old.destroy).toHaveBeenCalled()
+    expect(players).toHaveLength(2)
+    const iframe = w.get('iframe')
+    expect(iframe.attributes('src')).toContain('111222333')
+    expect(players[1].el).toBe(iframe.element)
+    players[1].handlers.ended()
+    expect(w.emitted('ended')).toHaveLength(1)
+
+    await w.setProps({ videoLink: 'https://player.vimeo.com/video/444555666?h=cccc', autostart: false })
+    await flushPromises()
+    expect(players[1].destroy).toHaveBeenCalled()
+    expect(w.find('iframe').exists()).toBe(false)
+    expect(w.find('img').exists()).toBe(true)
+  })
+
+  it('replay never rejects', async () => {
+    const w = make({ autostart: true })
+    await flushPromises()
+    players[0].play = vi.fn(() => Promise.reject(new Error('NotAllowedError')))
+    await expect(w.vm.replay()).resolves.toBeUndefined()
+  })
 })
