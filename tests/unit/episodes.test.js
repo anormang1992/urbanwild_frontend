@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest'
 import { catalog } from './fixtures.js'
 import {
-  formatDuration, formatDate, thumbnailAt, sortEpisodes, filterEpisodes, animalOptions,
+  formatDuration, thumbnailAt, sortEpisodes, filterEpisodes, animalOptions,
   pickFeatured, latestEpisodes, upNextFor, isDefaultView, resultsHeading,
 } from '../../src/lib/episodes.js'
 
@@ -13,9 +13,8 @@ test('maps raw API episodes', () => {
   expect(eagle.releasedAt).toEqual(new Date('2022-05-20T00:00:00Z'))
   expect(catalog[0].description).toBe('')
 })
-test('formats durations and dates', () => {
+test('formats durations', () => {
   expect(formatDuration(156)).toBe('2:36'); expect(formatDuration(350)).toBe('5:50'); expect(formatDuration(null)).toBe('')
-  expect(formatDate(new Date('2022-05-20T00:00:00Z'))).toBe('May 20, 2022'); expect(formatDate(null)).toBe('')
 })
 test('resizes Vimeo thumbnails', () => {
   expect(thumbnailAt('https://i.vimeocdn.com/video/1-abc-d_1280?region=us', 640)).toBe('https://i.vimeocdn.com/video/1-abc-d_640?region=us')

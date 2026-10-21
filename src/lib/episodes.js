@@ -41,11 +41,6 @@ export function formatDuration(seconds) {
   return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`
 }
 
-const dateFormat = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
-export function formatDate(date) {
-  return date ? dateFormat.format(date) : ''
-}
-
 export function thumbnailAt(url, width) {
   return url ? url.replace(/-d_\d+/, `-d_${width}`) : ''
 }

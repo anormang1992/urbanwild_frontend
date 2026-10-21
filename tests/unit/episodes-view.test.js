@@ -40,6 +40,8 @@ describe('Episodes page', () => {
     expect(featured.text()).toContain('Lady Eagle Dock - Lake Auman')
     featured.findAll('a').forEach((a) => expect(a.attributes('href')).toBe('/episodes/lady-eagle-dock-lake-auman'))
     expect(featured.text()).toContain('Play episode')
+    expect(featured.text()).toContain('Birds of prey')
+    expect(featured.text()).not.toContain('May 20, 2022')
     expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('All episodes')
     expect(idsFor(gridKeys(wrapper))).toEqual([11, 8, 6, 1])
   })

@@ -23,6 +23,8 @@ describe('Home', () => {
     expect(link.attributes('href')).toBe('/episodes/lady-eagle-dock-lake-auman')
     expect(link.text()).toContain('Featured episode')
     expect(link.text()).toContain('Lady Eagle Dock - Lake Auman')
+    expect(link.text()).toContain('Birds of prey')
+    expect(link.text()).not.toContain('May 20, 2022')
   })
 
   it('lists the three newest other episodes in order', async () => {

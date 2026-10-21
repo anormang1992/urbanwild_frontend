@@ -2,7 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { useCatalog } from '../composables/useCatalog.js'
 import { SITE_EMAIL } from '../lib/brand.js'
-import { pickFeatured, latestEpisodes, formatDate, formatDuration, thumbnailAt } from '../lib/episodes.js'
+import { pickFeatured, latestEpisodes, formatDuration, thumbnailAt } from '../lib/episodes.js'
 import EpisodeCard from '../components/EpisodeCard.vue'
 import CatalogStatus from '../components/CatalogStatus.vue'
 import rexOwl from '../assets/about/rex-owl.webp'
@@ -60,9 +60,7 @@ const statusMessage = computed(() => (shownStatus.value === 'loading' || shownSt
       <span class="flex flex-col gap-1">
         <span class="text-[13px] font-extrabold uppercase tracking-[0.1em] text-green-text">Featured episode</span>
         <span class="font-display text-[28px] font-extrabold leading-[1.15]">{{ featured.title }}</span>
-        <span class="text-[15px] text-muted"
-          >{{ featured.animalLabel }}<template v-if="featured.animalLabel && featured.releasedAt"> · </template>{{ formatDate(featured.releasedAt) }}</span
-        >
+        <span v-if="featured.animalLabel" class="text-[15px] text-muted">{{ featured.animalLabel }}</span>
       </span>
     </RouterLink>
   </section>

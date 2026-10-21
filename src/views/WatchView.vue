@@ -5,7 +5,7 @@ import { useCatalog } from '../composables/useCatalog.js'
 import { fetchEpisode, recordPlay } from '../lib/api.js'
 import { DEFAULT_DESCRIPTION, WEM_MARK } from '../lib/brand.js'
 import { setPageMeta } from '../lib/head.js'
-import { formatDate, formatDuration, tagLabel, upNextFor } from '../lib/episodes.js'
+import { formatDuration, tagLabel, upNextFor } from '../lib/episodes.js'
 import VideoPlayer from '../components/VideoPlayer.vue'
 import LeadFormDialog from '../components/LeadFormDialog.vue'
 import EndScreen from '../components/EndScreen.vue'
@@ -143,9 +143,7 @@ function replay() {
           <p data-testid="wem-label" class="text-[13px] font-extrabold uppercase tracking-[0.1em] text-green-text">{{ WEM_MARK }}</p>
           <p data-testid="meta" class="flex flex-wrap items-center gap-2.5 text-[15px]">
             <span v-if="episode.animalLabel" class="rounded-full bg-green-soft px-2.5 py-[3px] font-bold text-green-text">{{ episode.animalLabel }}</span>
-            <span class="text-muted"
-              >{{ formatDate(episode.releasedAt) }}<template v-if="formatDate(episode.releasedAt) && formatDuration(episode.durationSeconds)"> · </template>{{ formatDuration(episode.durationSeconds) }}</span
-            >
+            <span v-if="formatDuration(episode.durationSeconds)" class="text-muted">{{ formatDuration(episode.durationSeconds) }}</span>
           </p>
           <h1 class="font-display text-[clamp(30px,3.4vw,42px)] font-extrabold leading-[1.1] tracking-[-0.02em]">{{ episode.title }}</h1>
           <p v-if="episode.description" class="max-w-[46em] text-lg text-text-strong">{{ episode.description }}</p>

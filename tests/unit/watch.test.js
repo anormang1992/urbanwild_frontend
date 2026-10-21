@@ -53,7 +53,7 @@ describe('Watch details', () => {
     expect(wrapper.find('h1').text()).toBe('Lady Eagle Dock - Lake Auman')
     const meta = wrapper.find('[data-testid="meta"]').text()
     expect(meta).toContain('Birds of prey')
-    expect(meta).toContain('May 20, 2022')
+    expect(meta).not.toContain('May 20, 2022')
     expect(meta).toContain('2:36')
     expect(document.title).toBe('Lady Eagle Dock - Lake Auman · On a WEM · UrbanWild')
     const tag = wrapper.findAll('a').find((a) => a.text() === '#bald eagle')
@@ -64,6 +64,9 @@ describe('Watch details', () => {
     const { wrapper } = await mountApp(KEY)
     const titles = wrapper.findAll('[data-testid="up-next-title"]').map((t) => t.text())
     expect(titles).toEqual(["Nina's Chimney Swifts", 'Jimmy the Beaver Goes Free', "Byron's Hawk in the Crepe Myrtle Tree"])
+    const rows = wrapper.find('aside').text()
+    expect(rows).toContain('Birds')
+    expect(rows).not.toMatch(/\b20\d\d\b/)
   })
 
   it('renders the 404 for an unknown key', async () => {

@@ -1,5 +1,5 @@
 <script setup>
-import { formatDate, formatDuration, thumbnailAt } from '../lib/episodes.js'
+import { formatDuration, thumbnailAt } from '../lib/episodes.js'
 
 defineProps({ episodes: { type: Array, required: true } })
 </script>
@@ -21,9 +21,7 @@ defineProps({ episodes: { type: Array, required: true } })
         </span>
         <span class="flex min-w-0 flex-col gap-1">
           <span data-testid="up-next-title" class="text-base font-bold leading-[1.3]">{{ e.title }}</span>
-          <span class="text-sm text-muted"
-            >{{ e.animalLabel }}<template v-if="e.animalLabel && formatDate(e.releasedAt)"> · </template>{{ formatDate(e.releasedAt) }}</span
-          >
+          <span v-if="e.animalLabel" class="text-sm text-muted">{{ e.animalLabel }}</span>
         </span>
       </RouterLink>
     </li>

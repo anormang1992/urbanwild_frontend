@@ -177,7 +177,7 @@ Match the mockup. The tokens:
      - **No buttons.**
    - **Right column:** the **featured episode** as one large link to its Watch page:
      - a 16:10 thumbnail with a centered play disc and a duration badge;
-     - under it, the "Featured episode" eyebrow, the title, and the "{animal label} · {release date}" line.
+     - under it, the "Featured episode" eyebrow, the title, and the animal label.
 2. **Latest episodes:**
    - H2 "Latest episodes", with one "See all {N} episodes →" link on the right. N is the API count of unlocked episodes.
    - Three cards: the newest released, excluding the featured episode. Each card shows a 16:9 thumbnail with a duration badge, an animal chip and the title (no date), and links to its Watch page.
@@ -196,7 +196,7 @@ Match the mockup. The tokens:
 1. **Forest-colored header band:**
    - **H1:** "On a WEM", with "(Wildlife Educational Moment)" on a second, smaller line in leaf green. Both parts sit in the **same `<h1>`**, with **no space** between them in the text, so the accessible name and the page text read exactly "On a WEM(Wildlife Educational Moment)". The accessible name is provided with `aria-label="On a WEM(Wildlife Educational Moment)"` on the `<h1>`, because the second line is a block box and some browsers' accessibility trees otherwise insert a space before it. This is a trademark placement.
    - **Lede:** "Short films about the animals in your backyard, made alongside the licensed rehabilitators who care for them."
-   - **Featured episode:** a large thumbnail with a play button, plus the "Featured episode" pill, date, animal, title and a "Play episode" button. It uses the same featured-episode rule as Home.
+   - **Featured episode:** a large thumbnail with a play button, plus the "Featured episode" pill, animal, title and a "Play episode" button. It uses the same featured-episode rule as Home.
      - **Always shown,** whatever the search, animal or sort. Andrew's call: hiding it while filtering made the page jump, and the feature is featured for a reason.
      - **Also listed in the grid** like any other episode.
 2. **Toolbar** (wraps on mobile):
@@ -236,12 +236,12 @@ Match the mockup. The tokens:
    - **"Next" episode:** the first item in the "Up next" list (see below). That's the next *older* episode, wrapping around to the newest after the oldest, so "Play next" walks the whole catalog instead of bouncing between the two newest.
 4. **Below the player, in order:**
    - **Trademark label:** "On a WEM(Wildlife Educational Moment)" as an uppercase green eyebrow. It renders "ON A WEM(WILDLIFE EDUCATIONAL MOMENT)", identical to the registered wordmark. This is a trademark placement.
-   - **Meta row:** animal chip, release date, duration.
+   - **Meta row:** animal chip and duration.
    - **H1:** the episode title.
    - **Description,** if any.
    - **Tag buttons** (`#bald eagle`, etc.). Clicking one goes to `/episodes?q={tag}`.
    - **Share button:** uses `navigator.share` where available, otherwise copies `https://urbanwild.tv/episodes/{key}` to the clipboard. The label changes to "Link copied" and the URL shows beside it.
-5. **Up next sidebar:** every other unlocked episode. Start with the one after the current episode in newest-first order, continue to the oldest, then wrap round to the newest. Each is a compact row (144px thumbnail with duration, title, "{animal} · {date}").
+5. **Up next sidebar:** every other unlocked episode. Start with the one after the current episode in newest-first order, continue to the oldest, then wrap round to the newest. Each is a compact row (144px thumbnail with duration, title, animal).
 6. **Unknown or locked key:** the 404 page.
 7. **Page title:** `{episode title} · On a WEM · UrbanWild`.
 

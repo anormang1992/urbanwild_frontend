@@ -12,7 +12,6 @@ import {
   isDefaultView,
   pickFeatured,
   resultsHeading,
-  formatDate,
   formatDuration,
   thumbnailAt,
 } from '../lib/episodes.js'
@@ -111,9 +110,7 @@ const statusMessage = computed(() => {
         <div class="flex flex-col gap-4">
           <p class="flex flex-wrap items-center gap-2.5 text-sm">
             <span class="rounded-full bg-leaf px-3 py-1 font-extrabold text-forest">Featured episode</span>
-            <span class="text-on-forest"
-              >{{ formatDate(featured.releasedAt) }}<template v-if="formatDate(featured.releasedAt) && featured.animalLabel"> · </template>{{ featured.animalLabel }}</span
-            >
+            <span v-if="featured.animalLabel" class="text-on-forest">{{ featured.animalLabel }}</span>
           </p>
           <h2 class="font-display text-[44px] font-extrabold leading-[1.05] tracking-[-0.02em]">{{ featured.title }}</h2>
           <RouterLink
