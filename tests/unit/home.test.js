@@ -73,7 +73,7 @@ describe('EpisodeCard', () => {
     return mount(EpisodeCard, { props: { episode }, global: { plugins: [router] } })
   }
 
-  it('renders a lazy 16:9 thumbnail, duration, chip, date and title in one link', async () => {
+  it('renders a lazy 16:9 thumbnail, duration, chip and title in one link, with no date', async () => {
     const w = await mountCard(catalog[3])
     expect(w.findAll('a')).toHaveLength(1)
     const img = w.find('img')
@@ -81,7 +81,7 @@ describe('EpisodeCard', () => {
     expect(img.attributes('src')).toContain('-d_640')
     expect(w.text()).toContain('2:36')
     expect(w.text()).toContain('Birds of prey')
-    expect(w.text()).toContain('May 20, 2022')
+    expect(w.text()).not.toContain('May 20, 2022')
   })
 
   it('renders a placeholder, not an img, when there is no thumbnail', async () => {

@@ -180,7 +180,7 @@ Match the mockup. The tokens:
      - under it, the "Featured episode" eyebrow, the title, and the "{animal label} · {release date}" line.
 2. **Latest episodes:**
    - H2 "Latest episodes", with one "See all {N} episodes →" link on the right. N is the API count of unlocked episodes.
-   - Three cards: the newest released, excluding the featured episode. Each card shows a 16:9 thumbnail with a duration badge, an animal chip, the date and the title, and links to its Watch page.
+   - Three cards: the newest released, excluding the featured episode. Each card shows a 16:9 thumbnail with a duration badge, an animal chip and the title (no date), and links to its Watch page.
 3. **Our story band** (white):
    - the photo of Rex filming with a barn owl;
    - eyebrow "Our story", H2 "Two TV producers, one turtle, and a lot of wildlife stories.";

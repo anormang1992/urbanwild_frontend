@@ -1,5 +1,5 @@
 <script setup>
-import { formatDate, formatDuration, thumbnailAt } from '../lib/episodes.js'
+import { formatDuration, thumbnailAt } from '../lib/episodes.js'
 
 defineProps({ episode: { type: Object, required: true } })
 </script>
@@ -24,10 +24,7 @@ defineProps({ episode: { type: Object, required: true } })
         >{{ formatDuration(episode.durationSeconds) }}</span
       >
     </span>
-    <span class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm">
-      <span v-if="episode.animalLabel" class="rounded-full bg-green-soft px-2.5 py-0.5 font-bold text-green-text">{{ episode.animalLabel }}</span>
-      <span v-if="formatDate(episode.releasedAt)" class="text-muted">{{ formatDate(episode.releasedAt) }}</span>
-    </span>
+    <span v-if="episode.animalLabel" class="self-start rounded-full bg-green-soft px-2.5 py-0.5 text-sm font-bold text-green-text">{{ episode.animalLabel }}</span>
     <span data-testid="card-title" class="font-display text-[22px] font-bold leading-tight group-hover:underline">{{ episode.title }}</span>
   </RouterLink>
 </template>
