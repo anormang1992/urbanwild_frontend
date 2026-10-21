@@ -256,6 +256,7 @@ Match the mockup. The tokens:
   - a consent checkbox, "I agree to be contacted by an NC Farm Bureau agent about insurance products.", required to submit;
   - a "Request my quote" button.
 - **Client-side validation mirrors the API:** name required; ZIP as 5 digits or ZIP+4; at least one of email or phone; email format when given.
+- **Phone formatting:** the phone field formats US numbers as they're typed, as "(828) 262-2605", and sends the formatted value, so agents see it formatted in the email. A phone number that's given must have 10 digits ("Enter a 10-digit phone number."). Andrew asked for this.
 - **Submitting:** `POST /send-lead-message/` with `{name, zip, email, phone, consent: true}`.
 - **Consent is recorded.**
   - The API accepts an optional `consent` boolean. It must stay optional, so the old frontend keeps working until cutover.

@@ -7,7 +7,7 @@ vi.mock('../../src/lib/api.js', async (importOriginal) => {
 })
 
 import { GENERIC_LEAD_MESSAGE, LeadError, RATE_LIMIT_MESSAGE, sendLead } from '../../src/lib/api.js'
-import { validateLead } from '../../src/lib/lead.js'
+import { formatPhone, validateLead } from '../../src/lib/lead.js'
 import LeadFormDialog from '../../src/components/LeadFormDialog.vue'
 
 beforeEach(() => {
@@ -26,7 +26,10 @@ describe('validateLead', () => {
     expect(validateLead(valid)).toEqual({})
   })
   it('accepts ZIP+4 and phone instead of email', () => {
-    expect(validateLead({ ...valid, zip: '27601-1234', email: '', phone: '555' })).toEqual({})
+    expect(validateLead({ ...valid, zip: '27601-1234', email: '', phone: '(828) 262-2605' })).toEqual({})
+  })
+  it('flags an incomplete phone number', () => {
+    expect(validateLead({ ...valid, phone: '(828) 26' })).toEqual({ phone: 'Enter a 10-digit phone number.' })
   })
   it('flags only a bad ZIP', () => {
     expect(validateLead({ ...valid, zip: '2760' })).toEqual({ zip: 'Enter a 5-digit ZIP code.' })
@@ -36,6 +39,27 @@ describe('validateLead', () => {
   })
   it('needs email or phone', () => {
     expect(validateLead({ ...valid, email: '' }).email).toBe('Enter an email address or a phone number.')
+  })
+})
+
+describe('formatPhone', () => {
+  it('formats US numbers progressively as they are typed', () => {
+    expect(formatPhone('')).toBe('')
+    expect(formatPhone('8')).toBe('(8')
+    expect(formatPhone('828')).toBe('(828')
+    expect(formatPhone('8282')).toBe('(828) 2')
+    expect(formatPhone('828262')).toBe('(828) 262')
+    expect(formatPhone('8282622')).toBe('(828) 262-2')
+    expect(formatPhone('8282622605')).toBe('(828) 262-2605')
+  })
+  it('ignores punctuation, a leading country code and extra digits', () => {
+    expect(formatPhone('828-262-2605')).toBe('(828) 262-2605')
+    expect(formatPhone('+1 828 262 2605')).toBe('(828) 262-2605')
+    expect(formatPhone('82826226059999')).toBe('(828) 262-2605')
+  })
+  it('never adds a trailing character, so backspace is not trapped', () => {
+    expect(formatPhone('(828) ')).toBe('(828')
+    expect(formatPhone('(828) 262-')).toBe('(828) 262')
   })
 })
 
@@ -57,6 +81,16 @@ describe('LeadFormDialog', () => {
     expect(HTMLDialogElement.prototype.showModal).not.toHaveBeenCalled()
     await w.setProps({ open: true })
     expect(HTMLDialogElement.prototype.showModal).toHaveBeenCalledTimes(1)
+  })
+
+  it('formats the phone as it is typed and sends it formatted', async () => {
+    sendLead.mockResolvedValue()
+    const w = mountOpen()
+    await fill(w, { phone: '8282622605' })
+    expect(w.get('input[type="tel"]').element.value).toBe('(828) 262-2605')
+    await w.get('form').trigger('submit')
+    await flushPromises()
+    expect(sendLead).toHaveBeenCalledWith(expect.objectContaining({ phone: '(828) 262-2605' }))
   })
 
   it('shows validation errors and does not send', async () => {

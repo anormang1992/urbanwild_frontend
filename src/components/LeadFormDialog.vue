@@ -2,7 +2,7 @@
 import { reactive, ref, watch } from 'vue'
 import farmBureauLogo from '@/assets/sponsors/farm-bureau.webp'
 import { LeadError, sendLead } from '../lib/api.js'
-import { validateLead } from '../lib/lead.js'
+import { formatPhone, validateLead } from '../lib/lead.js'
 
 const props = defineProps({ open: { type: Boolean, default: false } })
 const emit = defineEmits(['close'])
@@ -16,6 +16,13 @@ const sent = ref(false)
 
 const inputClass =
   'h-[46px] rounded-[12px] border-[1.5px] border-line-strong bg-surface px-3.5 text-base font-normal text-ink aria-[invalid=true]:border-red-700'
+
+// Write the formatted value back to the element too: when a keystroke doesn't change the
+// formatted result (e.g. a letter), the reactive value is unchanged and Vue wouldn't re-render.
+function onPhoneInput(event) {
+  form.phone = formatPhone(event.target.value)
+  event.target.value = form.phone
+}
 
 function reset() {
   Object.assign(form, { name: '', zip: '', email: '', phone: '', consent: false })
@@ -111,7 +118,7 @@ async function submit() {
             </label>
             <label class="flex flex-col gap-1.5 text-sm font-bold">
               Phone
-              <input v-model="form.phone" type="tel" autocomplete="tel" :class="inputClass" :aria-invalid="errors.phone ? 'true' : undefined" :aria-describedby="errors.phone ? 'lead-phone-error' : undefined" />
+              <input :value="form.phone" @input="onPhoneInput" type="tel" autocomplete="tel" :class="inputClass" :aria-invalid="errors.phone ? 'true' : undefined" :aria-describedby="errors.phone ? 'lead-phone-error' : undefined" />
               <span v-if="errors.phone" id="lead-phone-error" class="text-sm font-normal text-red-700">{{ errors.phone }}</span>
             </label>
           </div>
