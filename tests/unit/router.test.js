@@ -1,10 +1,24 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { afterEach, describe, it, expect, vi } from 'vitest'
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 import { createMemoryHistory } from 'vue-router'
+import { fetchCatalog } from '../../src/lib/api.js'
+import { resetCatalog } from '../../src/composables/useCatalog.js'
 import { createAppRouter } from '../../src/router.js'
+import { catalog } from './fixtures.js'
 import { mountApp } from './helpers.js'
+
+vi.mock('../../src/lib/api.js', () => ({
+  fetchCatalog: vi.fn(),
+  fetchEpisode: vi.fn(),
+  recordPlay: vi.fn(),
+}))
+
+beforeEach(() => {
+  resetCatalog()
+  fetchCatalog.mockReset().mockResolvedValue(catalog)
+})
 
 describe('router', () => {
   it('redirects /learn to episodes', async () => {

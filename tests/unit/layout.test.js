@@ -1,6 +1,21 @@
-import { describe, it, expect } from 'vitest'
+import { beforeEach, describe, it, expect, vi } from 'vitest'
+import { fetchCatalog, fetchEpisode } from '../../src/lib/api.js'
+import { resetCatalog } from '../../src/composables/useCatalog.js'
 import { WEM_MARK } from '../../src/lib/brand.js'
+import { catalog } from './fixtures.js'
 import { mountApp } from './helpers.js'
+
+vi.mock('../../src/lib/api.js', () => ({
+  fetchCatalog: vi.fn(),
+  fetchEpisode: vi.fn(),
+  recordPlay: vi.fn(),
+}))
+
+beforeEach(() => {
+  resetCatalog()
+  fetchCatalog.mockReset().mockResolvedValue(catalog)
+  fetchEpisode.mockReset().mockResolvedValue(null)
+})
 
 describe('layout', () => {
   it('exposes the exact trademark phrase', () => {
