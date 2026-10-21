@@ -11,40 +11,45 @@ import LeadFormDialog from '../components/LeadFormDialog.vue'
 import EndScreen from '../components/EndScreen.vue'
 import ShareButton from '../components/ShareButton.vue'
 import UpNextList from '../components/UpNextList.vue'
+import CatalogStatus from '../components/CatalogStatus.vue'
 import NotFoundView from './NotFoundView.vue'
 
 const route = useRoute()
 const router = useRouter()
-const { episodes, load } = useCatalog()
+const { episodes, status, load, reload } = useCatalog()
 onMounted(load)
 
 const key = computed(() => String(route.params.key))
 const episode = ref(null)
-const lookup = ref('loading') // 'loading' | 'found' | 'missing'
+const lookup = ref('loading') // 'loading' | 'found' | 'missing' | 'error'
 const ended = ref(false)
 const leadOpen = ref(false)
 const player = ref(null)
 let playRecorded = false
 let token = 0
 
+function useCached(k) {
+  const cached = episodes.value.find((e) => e.key === k)
+  if (!cached) return false
+  episode.value = cached
+  lookup.value = 'found'
+  return true
+}
+
 async function resolve(k) {
   const mine = ++token
   ended.value = false
   leadOpen.value = false
   playRecorded = false
-  const cached = episodes.value.find((e) => e.key === k)
-  if (cached) {
-    episode.value = cached
-    lookup.value = 'found'
-    return
-  }
+  if (useCached(k)) return
   episode.value = null
   lookup.value = 'loading'
-  let found = null
+  let found
   try {
     found = await fetchEpisode(k)
   } catch {
-    found = null
+    if (mine === token) lookup.value = 'error'
+    return
   }
   if (mine !== token) return
   episode.value = found
@@ -52,14 +57,29 @@ async function resolve(k) {
 }
 watch(key, resolve, { immediate: true })
 
-watch(episode, (e) => {
-  if (e) {
-    setPageMeta({
-      title: `${e.title} · On a WEM · UrbanWild`,
-      description: e.description || DEFAULT_DESCRIPTION,
-    })
-  }
+// A failed lookup recovers when the separately loaded catalog has the episode.
+watch([lookup, episodes], ([state]) => {
+  if (state === 'error') useCached(key.value)
 })
+
+function retry() {
+  if (status.value === 'error') reload()
+  resolve(key.value)
+}
+
+watch(
+  [lookup, episode],
+  ([state, e]) => {
+    if (state === 'found' && e) {
+      setPageMeta({ title: `${e.title} · On a WEM · UrbanWild`, description: e.description || DEFAULT_DESCRIPTION })
+    } else if (state === 'missing') {
+      setPageMeta({ title: 'Page not found · UrbanWild' })
+    } else if (state === 'error') {
+      setPageMeta({ title: 'UrbanWild' })
+    }
+  },
+  { immediate: true },
+)
 
 const upNext = computed(() => (episode.value ? upNextFor(episodes.value, episode.value.id) : []))
 const next = computed(() => upNext.value[0] || null)
@@ -85,6 +105,9 @@ function replay() {
 <template>
   <NotFoundView v-if="lookup === 'missing'" />
   <p v-else-if="lookup === 'loading'" role="status" class="mx-auto max-w-[1240px] px-6 py-24 text-lg text-muted">Loading…</p>
+  <section v-else-if="lookup === 'error'" class="mx-auto max-w-[1240px] px-6 py-14">
+    <CatalogStatus status="error" @retry="retry" />
+  </section>
   <section v-else class="mx-auto flex max-w-[1240px] flex-col gap-5 px-6 pb-24 pt-6">
     <RouterLink
       :to="{ name: 'episodes' }"

@@ -72,6 +72,63 @@ describe('Watch details', () => {
   })
 })
 
+describe('Watch page meta', () => {
+  const description = () => document.head.querySelector('meta[name="description"]').getAttribute('content')
+
+  it('sets the title and description when arriving from Home with the catalog cached', async () => {
+    const { router } = await mountApp('/')
+    expect(document.title).toBe('UrbanWild · Saving the wild, one life at a time')
+    await router.push('/episodes/jimmy-the-beaver-goes-free')
+    await flushPromises()
+    expect(fetchEpisode).not.toHaveBeenCalled()
+    expect(document.title).toBe('Jimmy the Beaver Goes Free · On a WEM · UrbanWild')
+    expect(description()).toBe(catalog.find((e) => e.key === 'jimmy-the-beaver-goes-free').description)
+  })
+
+  it('updates the title when moving between cached episodes', async () => {
+    const { router } = await mountApp(KEY)
+    await router.push('/episodes/ninas-chimney-swifts')
+    await flushPromises()
+    expect(document.title).toBe("Nina's Chimney Swifts · On a WEM · UrbanWild")
+  })
+
+  it('uses the not-found title when moving to an unknown key', async () => {
+    const { wrapper, router } = await mountApp(KEY)
+    expect(document.title).toBe('Lady Eagle Dock - Lake Auman · On a WEM · UrbanWild')
+    await router.push('/episodes/does-not-exist')
+    await flushPromises()
+    expect(wrapper.text()).toContain("We couldn't find that page.")
+    expect(document.title).toBe('Page not found · UrbanWild')
+  })
+})
+
+describe('Watch lookup failures', () => {
+  const tryAgain = (wrapper) => wrapper.findAll('button').find((b) => b.text() === 'Try again')
+
+  it('shows a retryable error, not the 404, when the API is down', async () => {
+    fetchCatalog.mockReset().mockRejectedValueOnce(new Error('down')).mockResolvedValue(catalog)
+    fetchEpisode.mockRejectedValueOnce(new TypeError('Failed to fetch'))
+    const { wrapper } = await mountApp(KEY)
+    expect(wrapper.text()).toContain("We couldn't load the episodes right now.")
+    expect(wrapper.text()).not.toContain("We couldn't find that page.")
+    expect(document.title).toBe('UrbanWild')
+
+    await tryAgain(wrapper).trigger('click')
+    await flushPromises()
+    expect(fetchEpisode).toHaveBeenCalledTimes(2)
+    expect(wrapper.find('h1').text()).toBe('Lady Eagle Dock - Lake Auman')
+    expect(document.title).toBe('Lady Eagle Dock - Lake Auman · On a WEM · UrbanWild')
+    expect(wrapper.findAll('[data-testid="up-next-title"]')).toHaveLength(3)
+  })
+
+  it('falls back to the catalog when only the episode request fails', async () => {
+    fetchEpisode.mockRejectedValueOnce(new TypeError('Failed to fetch'))
+    const { wrapper } = await mountApp(KEY)
+    expect(wrapper.text()).not.toContain("We couldn't load the episodes right now.")
+    expect(wrapper.find('h1').text()).toBe('Lady Eagle Dock - Lake Auman')
+  })
+})
+
 describe('Play recording and end screen', () => {
   it('records once per view, resetting on navigation', async () => {
     const { wrapper, router } = await mountApp(KEY)
