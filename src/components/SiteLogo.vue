@@ -4,13 +4,17 @@ import { computed } from 'vue'
 const props = defineProps({
   size: { type: String, default: 'header', validator: (v) => ['header', 'footer'].includes(v) },
 })
-const px = computed(() => (props.size === 'footer' ? 36 : 40))
-const wordPx = computed(() => (props.size === 'footer' ? 23 : 26))
+// The header mark steps down to the footer size below `sm` so the nav fits beside it at 360px.
+const SIZES = {
+  header: { px: 40, mark: 'size-9 sm:size-10', word: 'text-[23px] sm:text-[26px]' },
+  footer: { px: 36, mark: 'size-9', word: 'text-[23px]' },
+}
+const s = computed(() => SIZES[props.size])
 </script>
 
 <template>
   <span class="inline-flex items-center gap-2.5">
-    <svg :width="px" :height="px" viewBox="0 0 48 48" aria-hidden="true" class="block shrink-0">
+    <svg :width="s.px" :height="s.px" viewBox="0 0 48 48" aria-hidden="true" class="block shrink-0" :class="s.mark">
       <rect width="48" height="48" rx="12" fill="#14231B" />
       <path d="M10.5 18 C9 11 12 7.5 17 9.5 C19 10.5 20 12 20 14 Z" fill="#9AA8A0" />
       <path d="M37.5 18 C39 11 36 7.5 31 9.5 C29 10.5 28 12 28 14 Z" fill="#9AA8A0" />
@@ -23,9 +27,7 @@ const wordPx = computed(() => (props.size === 'footer' ? 23 : 26))
       <ellipse cx="24" cy="35" rx="6.2" ry="4.4" fill="#FFFFFF" />
       <ellipse cx="24" cy="33.4" rx="2.4" ry="1.7" fill="#14231B" />
     </svg>
-    <span
-      class="font-display font-extrabold leading-none tracking-[-0.02em] text-ink"
-      :style="{ fontSize: wordPx + 'px' }"
+    <span class="font-display font-extrabold leading-none tracking-[-0.02em] text-ink" :class="s.word"
       >Urban<span class="text-green">Wild</span></span
     >
   </span>

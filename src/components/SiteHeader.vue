@@ -17,7 +17,7 @@ const links = [
 
 <template>
   <header class="sticky top-0 z-20 border-b border-line bg-paper/95">
-    <div class="mx-auto flex max-w-[1240px] flex-wrap items-center gap-x-8 gap-y-3 px-6 py-3">
+    <div class="mx-auto flex max-w-[1240px] flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:gap-x-8 sm:px-6">
       <RouterLink
         to="/"
         aria-label="UrbanWild home"
@@ -25,7 +25,7 @@ const links = [
       >
         <SiteLogo size="header" />
       </RouterLink>
-      <nav aria-label="Main" class="flex flex-1 flex-wrap items-center justify-end gap-x-7 gap-y-1 text-base font-semibold">
+      <nav aria-label="Main" class="flex flex-1 flex-wrap items-center justify-end gap-x-5 gap-y-1 text-base font-semibold sm:gap-x-7">
         <RouterLink
           v-for="l in links"
           :key="l.key"

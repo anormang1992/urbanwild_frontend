@@ -119,7 +119,7 @@ function replay() {
 
     <div class="flex flex-wrap items-start gap-10">
       <div class="flex min-w-0 flex-[999_1_620px] flex-col gap-6">
-        <div class="relative">
+        <div class="relative @container">
           <VideoPlayer
             ref="player"
             :video-link="episode.videoLink"

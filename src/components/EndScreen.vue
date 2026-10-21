@@ -7,9 +7,14 @@ defineEmits(['play-next', 'replay', 'get-quote'])
 </script>
 
 <template>
+  <!--
+    Overlays the player only once the player (the parent @container) is wide enough for the
+    content to fit its 16:9 box; narrower, it sits in normal flow below the player so nothing
+    needs scrolling inside a small box.
+  -->
   <div
     data-testid="end-screen"
-    class="absolute inset-0 grid grid-cols-[repeat(auto-fit,minmax(min(100%,250px),1fr))] content-center gap-6 overflow-auto bg-forest p-7 text-white"
+    class="mt-4 grid grid-cols-[repeat(auto-fit,minmax(min(100%,250px),1fr))] gap-6 bg-forest p-7 text-white @min-[700px]:absolute @min-[700px]:inset-0 @min-[700px]:mt-0 @min-[700px]:content-center-safe @min-[700px]:overflow-auto"
   >
     <div class="flex flex-col gap-3">
       <p class="text-[13px] font-extrabold uppercase tracking-[0.1em] text-leaf">Up next</p>
