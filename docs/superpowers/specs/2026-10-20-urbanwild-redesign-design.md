@@ -81,7 +81,7 @@ The current frontend was built in 2021–22 with Vue CLI 4 on Node 16. It:
 
 ## Stack (builder may adjust within these lines)
 
-- Vue 3 (Composition API, `<script setup>`), Vue Router 4, Vite, Tailwind CSS 4.
+- Vue 3 (Composition API, `<script setup>`), Vue Router 5 (the current major; same `createRouter` API as v4, with no breaking changes for this usage), Vite, Tailwind CSS 4.
 - Node 24 LTS, pinned in `package.json` `engines`.
 - `@vimeo/player` from npm, replacing the global `player.vimeo.com/api/player.js` script tag.
 - **Drop:**
