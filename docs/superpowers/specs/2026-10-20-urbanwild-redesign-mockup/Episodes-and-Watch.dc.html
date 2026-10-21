@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UrbanWild – Video library</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="font-family: 'Figtree', system-ui, sans-serif; color: #14231B; background: #F7F8F3; min-height: 100vh; font-size: 17px; line-height: 1.55">
+
+<header style="position: sticky; top: 0; z-index: 20; background: #F7F8F3; border-bottom: 1px solid #DCE3D8">
+<div style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px">
+<a href="Main.dc.html" aria-label="UrbanWild home" style="display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; min-height: 44px; text-decoration: none">
+<svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true" style="display: block; flex: 0 0 auto"><rect width="48" height="48" rx="12" fill="#14231B"></rect><path d="M10.5 18 C9 11 12 7.5 17 9.5 C19 10.5 20 12 20 14 Z" fill="#9AA8A0"></path><path d="M37.5 18 C39 11 36 7.5 31 9.5 C29 10.5 28 12 28 14 Z" fill="#9AA8A0"></path><path d="M24 12.5 C32.5 12.5 38.5 16 40.5 22.5 L45 26 L39.5 28.5 C37 35.5 31 40 24 40 C17 40 11 35.5 8.5 28.5 L3 26 L7.5 22.5 C9.5 16 15.5 12.5 24 12.5 Z" fill="#C9D3CC"></path><path d="M9.5 23 C13 18.5 19 18 23 21 M38.5 23 C35 18.5 29 18 25 21" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><path d="M22.6 12.6 L25.4 12.6 L24.9 22 L23.1 22 Z" fill="#3F4A44"></path><path d="M7.5 26 C11 21.5 17.5 21.5 21.5 25 L24 27.5 L26.5 25 C30.5 21.5 37 21.5 40.5 26 C37.5 31 31.5 31.5 27.5 29.5 L24 32 L20.5 29.5 C16.5 31.5 10.5 31 7.5 26 Z" fill="#14231B"></path><circle cx="15.5" cy="26" r="1.9" fill="#FFFFFF"></circle><circle cx="32.5" cy="26" r="1.9" fill="#FFFFFF"></circle><ellipse cx="24" cy="35" rx="6.2" ry="4.4" fill="#FFFFFF"></ellipse><ellipse cx="24" cy="33.4" rx="2.4" ry="1.7" fill="#14231B"></ellipse></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; line-height: 1; letter-spacing: -0.02em; color: #14231B">Urban<span style="color: #3B7A2B">Wild</span></span>
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px 28px; flex: 1 1 auto; font-weight: 600; font-size: 16px">
+<a href="Learn.dc.html" aria-current="page" style="color: #14231B; text-decoration: none; padding: 8px 0; border-bottom: 3px solid #3B7A2B">Episodes</a>
+<a href="About.dc.html" style="color: #14231B; text-decoration: none; padding: 10px 0">About</a>
+</nav>
+</div>
+</header>
+
+<sc-if value="{{ isLibrary }}" hint-placeholder-val="{{ true }}">
+<main>
+<section style="background: #10221A; color: #FFFFFF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 64px; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 760px">
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 5.4vw, 68px); line-height: 1.02; letter-spacing: -0.025em">On a WEM<span style="display: block; margin-top: 8px; font-size: 0.42em; font-weight: 700; letter-spacing: -0.01em; color: #A9D79A">(Wildlife Educational Moment)</span></h1>
+<p style="margin: 0; font-size: 19px; color: #C9D8CE">Short films about the animals in your backyard, made alongside the licensed rehabilitators who care for them.</p>
+</div>
+<sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 32px; align-items: center">
+<button type="button" onClick="{{ featured.open }}" aria-label="Play {{ featured.title }}" style="position: relative; display: block; padding: 0; border: none; background: #0B1712; border-radius: 22px; overflow: hidden; aspect-ratio: 16 / 9; cursor: pointer">
+<img src="{{ featured.thumb }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(11, 23, 18, 0.2)"><span style="width: 84px; height: 84px; border-radius: 999px; background: #FFFFFF; color: #14231B; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"></path></svg></span></span>
+<span style="position: absolute; right: 14px; bottom: 14px; padding: 4px 10px; border-radius: 8px; background: rgba(11, 23, 18, 0.88); color: #FFFFFF; font-size: 14px; font-weight: 700; font-family: 'Figtree', sans-serif">{{ featured.dur }}</span>
+</button>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 14px"><span style="padding: 4px 12px; border-radius: 999px; background: #A9D79A; color: #10221A; font-weight: 800">Newest episode</span><span style="color: #C9D8CE">{{ featured.date }} · {{ featured.clsLabel }}</span></p>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 44px; line-height: 1.05; letter-spacing: -0.02em">{{ featured.title }}</h2>
+<button type="button" onClick="{{ featured.open }}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; border: none; background: #FFFFFF; color: #10221A; font: inherit; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"></path></svg>Play episode</button>
+</div>
+</div>
+</sc-if>
+</div>
+</section>
+
+<section style="max-width: 1240px; margin: 0 auto; padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+<div style="position: relative; flex: 1 1 280px; max-width: 420px">
+<label for="ep-search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Search episodes</label>
+<span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #4B5B53; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></span>
+<input id="ep-search" type="search" placeholder="Search eagles, beavers, rescue…" value="{{ query }}" onChange="{{ onQuery }}" style="box-sizing: border-box; width: 100%; height: 48px; padding: 0 16px 0 44px; border-radius: 999px; border: 1.5px solid #C9D3C4; background: #FFFFFF; font: inherit; font-size: 16px; color: #14231B">
+</div>
+<div role="group" aria-label="Filter by animal" style="display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 auto">
+<sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{ c.pressed }}" onClick="{{ c.pick }}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid {{ c.bd }}; background: {{ c.bg }}; color: {{ c.fg }}; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer">{{ c.label }} <span style="opacity: 0.75; font-weight: 600">{{ c.count }}</span></button>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<label for="ep-sort" style="font-size: 15px; font-weight: 600; color: #4B5B53">Sort</label>
+<select id="ep-sort" value="{{ sort }}" onChange="{{ onSort }}" style="height: 44px; padding: 0 14px; border-radius: 999px; border: 1.5px solid #C9D3C4; background: #FFFFFF; font: inherit; font-size: 15px; font-weight: 600; color: #14231B">
+<option value="newest">Newest first</option>
+<option value="oldest">Oldest first</option>
+<option value="popular">Most watched</option>
+<option value="title">A to Z</option>
+</select>
+</div>
+</div>
+
+<h2 style="margin: 8px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; line-height: 1.2">{{ gridHeading }}</h2>
+
+<sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 32px 24px">
+<sc-for list="{{ gridEps }}" as="ep" hint-placeholder-count="8">
+<button type="button" onClick="{{ ep.open }}" style="display: flex; flex-direction: column; gap: 10px; padding: 0; border: none; background: none; text-align: left; font: inherit; color: #14231B; cursor: pointer">
+<span style="position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: #DCE3D8">
+<img src="{{ ep.thumb }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<span style="position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; border-radius: 6px; background: rgba(16, 34, 26, 0.88); color: #FFFFFF; font-size: 13px; font-weight: 700">{{ ep.dur }}</span>
+</span>
+<span style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="padding: 3px 10px; border-radius: 999px; background: #E3EFDA; color: #2F6322; font-weight: 700">{{ ep.clsLabel }}</span>
+<span style="color: #4B5B53">{{ ep.date }}</span>
+</span>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; line-height: 1.25">{{ ep.title }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 64px 24px; border: 1.5px dashed #C9D3C4; border-radius: 24px; text-align: center">
+<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px">Rats! Nothing matched that search.</p>
+<p style="margin: 0; color: #4B5B53">Try another animal, or clear your filters to see every episode.</p>
+<button type="button" onClick="{{ clear }}" style="min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #14231B; background: #FFFFFF; font: inherit; font-weight: 700; cursor: pointer">Clear filters</button>
+</div>
+</sc-if>
+</section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isWatch }}" hint-placeholder-val="{{ false }}">
+<main style="max-width: 1240px; margin: 0 auto; padding: 24px 24px 96px; display: flex; flex-direction: column; gap: 20px">
+<button type="button" onClick="{{ back }}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 4px; border: none; background: none; font: inherit; font-weight: 700; color: #2F6322; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>All episodes</button>
+
+<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+<div style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+
+<div style="position: relative; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #0B1712">
+<img src="{{ cur.thumb }}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
+<sc-if value="{{ pIdle }}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(11, 23, 18, 0.22)">
+<button type="button" onClick="{{ play }}" aria-label="Play {{ cur.title }}" style="width: 96px; height: 96px; border-radius: 999px; border: none; background: #FFFFFF; color: #14231B; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3)"><svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"></path></svg></button>
+<span style="position: absolute; left: 16px; bottom: 16px; padding: 4px 10px; border-radius: 8px; background: rgba(11, 23, 18, 0.88); color: #FFFFFF; font-size: 14px; font-weight: 700">{{ cur.dur }}</span>
+</div>
+</sc-if>
+<sc-if value="{{ pPlaying }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ skipEnd }}" style="position: absolute; top: 14px; right: 14px; min-height: 36px; padding: 0 14px; border-radius: 999px; border: none; background: rgba(255, 255, 255, 0.92); color: #14231B; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer">Skip to end (demo)</button>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 18px; background: rgba(11, 23, 18, 0.78); display: flex; align-items: center; gap: 16px; color: #FFFFFF">
+<button type="button" onClick="{{ pause }}" aria-label="Pause" style="width: 40px; height: 40px; border-radius: 999px; border: none; background: none; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"></path></svg></button>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap">{{ cur.elapsed }} / {{ cur.dur }}</span>
+<span style="flex: 1 1 auto; height: 6px; border-radius: 999px; background: rgba(255, 255, 255, 0.3); overflow: hidden"><span style="display: block; width: 38%; height: 100%; background: #A9D79A"></span></span>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+</div>
+</sc-if>
+<sc-if value="{{ pEnded }}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; overflow: auto; background: #10221A; color: #FFFFFF; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 24px; align-content: center; padding: 28px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #A9D79A">Up next</p>
+<img src="{{ next.thumb }}" alt="" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; display: block">
+<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; line-height: 1.2">{{ next.title }}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" onClick="{{ playNext }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: none; background: #FFFFFF; color: #10221A; font: inherit; font-weight: 700; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"></path></svg>Play next</button>
+<button type="button" onClick="{{ play }}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid rgba(255, 255, 255, 0.6); background: none; color: #FFFFFF; font: inherit; font-weight: 700; cursor: pointer">Replay</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 18px; background: #FFFFFF; color: #14231B">
+<p style="margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #4B5B53">This episode is supported by</p>
+<img src="/_blob/e95ca581744f69c642d625be038b0f61" alt="NC Farm Bureau Insurance" style="height: 72px; width: auto; align-self: flex-start">
+<p style="margin: 0; font-size: 16px; color: #33443B">Home, auto, life and farm insurance from people who share our love of North Carolina's wild places.</p>
+<button type="button" onClick="{{ openForm }}" style="align-self: flex-start; min-height: 44px; padding: 0 18px; border-radius: 999px; border: none; background: #3B7A2B; color: #FFFFFF; font: inherit; font-weight: 700; cursor: pointer">Get a free quote</button>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #2F6322">On a WEM(Wildlife Educational Moment)</p>
+<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 15px"><span style="padding: 3px 10px; border-radius: 999px; background: #E3EFDA; color: #2F6322; font-weight: 700">{{ cur.clsLabel }}</span><span style="color: #4B5B53">{{ cur.date }} · {{ cur.dur }}</span></p>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.1; letter-spacing: -0.02em">{{ cur.title }}</h1>
+<sc-if value="{{ cur.hasDesc }}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; font-size: 18px; color: #33443B; max-width: 46em">{{ cur.desc }}</p>
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-top: 4px">
+<sc-for list="{{ cur.tagItems }}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{ t.pick }}" style="min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid #C9D3C4; background: #FFFFFF; color: #33443B; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer">#{{ t.label }}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 8px">
+<button type="button" onClick="{{ share }}" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid #14231B; background: #FFFFFF; color: #14231B; font: inherit; font-weight: 700; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg>{{ shareLabel }}</button>
+<sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 14px; color: #4B5B53">urbanwild.tv/watch/{{ cur.key }}</span>
+</sc-if>
+</div>
+</div>
+
+</div>
+
+<aside aria-label="Up next" style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px">Up next</h2>
+<sc-for list="{{ upNext }}" as="u" hint-placeholder-count="6">
+<button type="button" onClick="{{ u.open }}" style="display: flex; align-items: flex-start; gap: 14px; padding: 6px; margin: 0 -6px; border: none; border-radius: 14px; background: none; text-align: left; font: inherit; color: #14231B; cursor: pointer">
+<span style="position: relative; flex: 0 0 144px; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: #DCE3D8"><img src="{{ u.thumb }}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; right: 6px; bottom: 6px; padding: 1px 6px; border-radius: 5px; background: rgba(16, 34, 26, 0.88); color: #FFFFFF; font-size: 12px; font-weight: 700">{{ u.dur }}</span></span>
+<span style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<span style="font-weight: 700; font-size: 16px; line-height: 1.3">{{ u.title }}</span>
+<span style="font-size: 14px; color: #4B5B53">{{ u.clsLabel }} · {{ u.date }}</span>
+</span>
+</button>
+</sc-for>
+</aside>
+</div>
+</main>
+</sc-if>
+
+<footer style="background: #E8EEE3; border-top: 1px solid #DCE3D8">
+<div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px 32px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; gap: 40px 64px">
+<div style="display: flex; flex-direction: column; gap: 16px; flex: 1 1 340px; max-width: 440px">
+<span style="display: inline-flex; align-items: center; gap: 10px">
+<svg width="36" height="36" viewBox="0 0 48 48" aria-hidden="true" style="display: block; flex: 0 0 auto"><rect width="48" height="48" rx="12" fill="#14231B"></rect><path d="M10.5 18 C9 11 12 7.5 17 9.5 C19 10.5 20 12 20 14 Z" fill="#9AA8A0"></path><path d="M37.5 18 C39 11 36 7.5 31 9.5 C29 10.5 28 12 28 14 Z" fill="#9AA8A0"></path><path d="M24 12.5 C32.5 12.5 38.5 16 40.5 22.5 L45 26 L39.5 28.5 C37 35.5 31 40 24 40 C17 40 11 35.5 8.5 28.5 L3 26 L7.5 22.5 C9.5 16 15.5 12.5 24 12.5 Z" fill="#C9D3CC"></path><path d="M9.5 23 C13 18.5 19 18 23 21 M38.5 23 C35 18.5 29 18 25 21" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path><path d="M22.6 12.6 L25.4 12.6 L24.9 22 L23.1 22 Z" fill="#3F4A44"></path><path d="M7.5 26 C11 21.5 17.5 21.5 21.5 25 L24 27.5 L26.5 25 C30.5 21.5 37 21.5 40.5 26 C37.5 31 31.5 31.5 27.5 29.5 L24 32 L20.5 29.5 C16.5 31.5 10.5 31 7.5 26 Z" fill="#14231B"></path><circle cx="15.5" cy="26" r="1.9" fill="#FFFFFF"></circle><circle cx="32.5" cy="26" r="1.9" fill="#FFFFFF"></circle><ellipse cx="24" cy="35" rx="6.2" ry="4.4" fill="#FFFFFF"></ellipse><ellipse cx="24" cy="33.4" rx="2.4" ry="1.7" fill="#14231B"></ellipse></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 23px; line-height: 1; letter-spacing: -0.02em; color: #14231B">Urban<span style="color: #3B7A2B">Wild</span></span>
+</span>
+<p style="margin: 0; color: #4B5B53; font-size: 15px">UrbanWild is a non-profit based in Raleigh, North Carolina, dedicated to rescuing and protecting wildlife from the threats of urbanization.</p>
+</div>
+<nav aria-label="Footer" style="display: flex; flex-direction: column; gap: 8px; flex: 0 1 160px">
+<p style="margin: 0 0 4px; font-weight: 800; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Explore</p>
+<a href="Learn.dc.html" style="color: #14231B; text-decoration: none">Episodes</a>
+<a href="About.dc.html" style="color: #14231B; text-decoration: none">About</a>
+</nav>
+<div style="display: flex; flex-direction: column; gap: 8px; flex: 0 1 260px">
+<p style="margin: 0 0 4px; font-weight: 800; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Contact</p>
+<a href="mailto:urbanwild.wems@gmail.com" style="color: #14231B">urbanwild.wems@gmail.com</a>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding-top: 24px; border-top: 1px solid #D3DCCD; font-size: 14px; color: #4B5B53">
+<p style="margin: 0">© 2026 UrbanWild · Ballard Productions LLC</p>
+<p style="margin: 0; font-size: 13px">On a WEM(Wildlife Educational Moment) is a registered trademark of Ballard Productions LLC.</p>
+</div>
+</div>
+</footer>
+
+<sc-if value="{{ formOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 50; background: rgba(11, 23, 18, 0.6); display: flex; align-items: center; justify-content: center; padding: 16px">
+<div role="dialog" aria-modal="true" aria-labelledby="fb-title" style="position: relative; box-sizing: border-box; width: 100%; max-width: 520px; max-height: 100%; overflow: auto; padding: 32px; border-radius: 24px; background: #FFFFFF; color: #14231B; display: flex; flex-direction: column; gap: 18px">
+<button type="button" onClick="{{ closeForm }}" aria-label="Close" style="position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border-radius: 999px; border: none; background: #F0F3EE; color: #14231B; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<img src="/_blob/e95ca581744f69c642d625be038b0f61" alt="NC Farm Bureau Insurance" style="height: 64px; width: auto; align-self: flex-start">
+<sc-if value="{{ formFresh }}" hint-placeholder-val="{{ true }}">
+<h2 id="fb-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; line-height: 1.15">Helping you is what we do best.</h2>
+<p style="margin: 0; color: #33443B; font-size: 16px">Home, auto, life and health insurance, plus farm, crop, commercial and personal liability policies. Leave your details and a local agent will be in touch.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 14px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Full name<input type="text" autocomplete="name" style="height: 46px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #C9D3C4; font: inherit; font-weight: 400; font-size: 16px"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">ZIP code<input type="text" inputmode="numeric" autocomplete="postal-code" style="height: 46px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #C9D3C4; font: inherit; font-weight: 400; font-size: 16px"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Email<input type="email" autocomplete="email" style="height: 46px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #C9D3C4; font: inherit; font-weight: 400; font-size: 16px"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">Phone<input type="tel" autocomplete="tel" style="height: 46px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #C9D3C4; font: inherit; font-weight: 400; font-size: 16px"></label>
+</div>
+<label style="display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #33443B"><input type="checkbox" style="width: 20px; height: 20px; margin: 2px 0 0; flex: 0 0 auto">I agree to be contacted by an NC Farm Bureau agent about insurance products.</label>
+<button type="button" onClick="{{ submitForm }}" style="min-height: 50px; border-radius: 999px; border: none; background: #3B7A2B; color: #FFFFFF; font: inherit; font-weight: 700; font-size: 17px; cursor: pointer">Request my quote</button>
+</sc-if>
+<sc-if value="{{ formSent }}" hint-placeholder-val="{{ false }}">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; line-height: 1.15">Thanks! You're all set.</h2>
+<p style="margin: 0; color: #33443B">A local NC Farm Bureau agent will reach out soon. Thanks for supporting wildlife education.</p>
+<button type="button" onClick="{{ closeForm }}" style="min-height: 50px; border-radius: 999px; border: 1.5px solid #14231B; background: #FFFFFF; color: #14231B; font: inherit; font-weight: 700; cursor: pointer">Back to the video</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startView":{"editor":"enum","options":["library","watch"],"default":"library"},"startId":{"editor":null},"$preview":{"width":1440,"height":2400}}'>
+class Component extends DCLogic {
+  episodes() {
+    return [
+      { id: 11, key: 'ninas-chimney-swifts', title: "Nina's Chimney Swifts", cls: 'bird', iso: '2022-11-02', date: 'Nov 2, 2022', secs: 350, plays: 52, thumb: '/_blob/1e0c1ab9a76b9f3a359725f1794e8ec6', tags: ['bird', 'chimney swifts', 'lees-mcrae'], desc: '' },
+      { id: 10, key: 'elissas-baby-bird-caught-in-a-nest', title: "Elissa's Baby Bird Caught in a Nest", cls: 'bird', iso: '2022-10-17', date: 'Oct 17, 2022', secs: 174, plays: 12, thumb: '/_blob/63329c60351226032a11f41a5656fb99', tags: ['bird', 'nest', 'rescue'], desc: '' },
+      { id: 9, key: 'dr-joni-sky-bird-and-curly-the-vulture', title: 'Dr. Joni, Sky Bird, and Curly the Vulture', cls: 'raptor', iso: '2022-10-05', date: 'Oct 5, 2022', secs: 144, plays: 9, thumb: '/_blob/eae2e78e0e431ca462a555d87201632b', tags: ['bald eagle', 'vulture', 'dr joni'], desc: '' },
+      { id: 8, key: 'jimmy-the-beaver-goes-free', title: 'Jimmy the Beaver Goes Free', cls: 'small-mammal', iso: '2022-09-19', date: 'Sep 19, 2022', secs: 195, plays: 15, thumb: '/_blob/02583e77edcd636d9658ac03a170beba', tags: ['beaver', 'byron', 'release'], desc: 'Byron is back with Jimmy the Beaver! Learn more about beavers and their habitats in this WEM, and watch Byron release Jimmy back into the wild.' },
+      { id: 7, key: 'dr-joni-sky-bird-and-karma', title: 'Dr. Joni, Sky Bird, and Karma', cls: 'raptor', iso: '2022-09-06', date: 'Sep 6, 2022', secs: 116, plays: 9, thumb: '/_blob/2b331751ebeb8450f99ea8ad591dc0b1', tags: ['bald eagle', 'barn owl', 'dr joni'], desc: 'Dr. Joni is back again with Sky Bird, but this time, she has brought one more friend: Karma, the Barn Owl! Learn more about barn owls, including how their eyes help them hunt in the dark, the types of prey they eat, and more.' },
+      { id: 6, key: 'byrons-hawk-in-the-crepe-myrtle-tree', title: "Byron's Hawk in the Crepe Myrtle Tree", cls: 'raptor', iso: '2022-08-22', date: 'Aug 22, 2022', secs: 157, plays: 11, thumb: '/_blob/c26fe73a90d2e8120924ded5d11461dd', tags: ['red-tailed hawk', 'byron', 'rescue'], desc: 'Byron is back to help out another feathery friend! This time, he responds to a report of a red-tailed hawk that has flown into a crepe myrtle tree and is now stuck.' },
+      { id: 5, key: 'big-boy-herring-gull', title: 'Big Boy Herring Gull', cls: 'bird', iso: '2022-08-08', date: 'Aug 8, 2022', secs: 274, plays: 17, thumb: '/_blob/2a0d1cf1d23f5b17fd142645c783a77a', tags: ['gull', 'herring gull'], desc: '' },
+      { id: 4, key: 'dr-joni-and-sky-bird', title: 'Dr. Joni and Sky Bird', cls: 'raptor', iso: '2022-07-25', date: 'Jul 25, 2022', secs: 176, plays: 14, thumb: '/_blob/85d98f2429dee4dcdccda3f86bdc9ae4', tags: ['bald eagle', 'dr joni'], desc: "Dr. Joni introduces us to Sky Bird, a majestic bald eagle! Tune in as we learn some cool facts about our nation's bird." },
+      { id: 1, key: 'lady-eagle-dock-lake-auman', title: 'Lady Eagle Dock - Lake Auman', cls: 'raptor', iso: '2022-05-20', date: 'May 20, 2022', secs: 156, plays: 62, thumb: '/_blob/c196315a07e14af5fba1d73e80ba159a', tags: ['bald eagle', 'release', 'rescue'], desc: 'Licensed wildlife rehabilitator Byron Wortham swoops in to save a bald eagle that was unable to get ashore after falling into a lake!' }
+    ];
+  }
+
+  fmt(s) {
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  toTop() {
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  renderVals() {
+    const labels = { 'bird': 'Birds', 'raptor': 'Birds of prey', 'small-mammal': 'Small mammals' };
+    const s = this.state || {};
+    const view = s.view || this.props.startView || 'library';
+    const currentId = s.currentId || Number(this.props.startId || 11);
+    const cls = s.cls || 'all';
+    const query = s.query || '';
+    const sort = s.sort || 'newest';
+    const player = s.player || 'idle';
+
+    const open = (ep) => () => {
+      this.setState({ view: 'watch', currentId: ep.id, player: 'idle', copied: false });
+      this.toTop();
+    };
+
+    const all = this.episodes().map((ep) => {
+      const item = Object.assign({}, ep, { clsLabel: labels[ep.cls], dur: this.fmt(ep.secs) });
+      item.open = open(item);
+      return item;
+    });
+
+    const q = query.trim().toLowerCase();
+    let list = all.filter((ep) => cls === 'all' || ep.cls === cls);
+    if (q) {
+      list = list.filter((ep) => (ep.title + ' ' + ep.tags.join(' ') + ' ' + ep.clsLabel + ' ' + ep.desc).toLowerCase().indexOf(q) !== -1);
+    }
+    const sorters = {
+      newest: (a, b) => (a.iso < b.iso ? 1 : -1),
+      oldest: (a, b) => (a.iso > b.iso ? 1 : -1),
+      popular: (a, b) => b.plays - a.plays,
+      title: (a, b) => a.title.localeCompare(b.title)
+    };
+    list = list.slice().sort(sorters[sort]);
+
+    const showFeatured = cls === 'all' && !q && sort === 'newest';
+    const featured = all[0];
+    const gridEps = showFeatured ? list.filter((ep) => ep.id !== featured.id) : list;
+
+    const chipDefs = [{ id: 'all', label: 'All' }, { id: 'bird', label: 'Birds' }, { id: 'raptor', label: 'Birds of prey' }, { id: 'small-mammal', label: 'Small mammals' }];
+    const chips = chipDefs.map((c) => {
+      const on = c.id === cls;
+      return {
+        label: c.label,
+        count: c.id === 'all' ? all.length : all.filter((ep) => ep.cls === c.id).length,
+        pressed: on ? 'true' : 'false',
+        bg: on ? '#14231B' : '#FFFFFF',
+        fg: on ? '#FFFFFF' : '#14231B',
+        bd: on ? '#14231B' : '#C9D3C4',
+        pick: () => this.setState({ cls: c.id })
+      };
+    });
+
+    let gridHeading = 'More episodes';
+    if (!showFeatured) {
+      gridHeading = list.length === 1 ? '1 episode' : list.length + ' episodes';
+      if (q) gridHeading += ' for “' + query.trim() + '”';
+    }
+
+    const cur = all.find((ep) => ep.id === currentId) || all[0];
+    const others = all.filter((ep) => ep.id !== cur.id);
+    const next = others[0];
+    const curVals = Object.assign({}, cur, {
+      hasDesc: !!cur.desc,
+      elapsed: this.fmt(Math.round(cur.secs * 0.38)),
+      tagItems: cur.tags.map((t) => ({ label: t.replace(/-/g, ' '), pick: () => { this.setState({ view: 'library', query: t, cls: 'all', sort: 'newest' }); this.toTop(); } }))
+    });
+
+    return {
+      isLibrary: view === 'library',
+      isWatch: view === 'watch',
+      query: query,
+      sort: sort,
+      chips: chips,
+      showFeatured: showFeatured,
+      featured: featured,
+      gridEps: gridEps,
+      gridHeading: gridHeading,
+      hasResults: gridEps.length > 0 || showFeatured,
+      noResults: gridEps.length === 0 && !showFeatured,
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      onSort: (e) => this.setState({ sort: e.target.value }),
+      clear: () => this.setState({ query: '', cls: 'all', sort: 'newest' }),
+      cur: curVals,
+      next: next,
+      upNext: others,
+      pIdle: player === 'idle',
+      pPlaying: player === 'playing',
+      pEnded: player === 'ended',
+      play: () => this.setState({ player: 'playing' }),
+      pause: () => this.setState({ player: 'idle' }),
+      skipEnd: () => this.setState({ player: 'ended' }),
+      playNext: () => { this.setState({ currentId: next.id, player: 'playing', copied: false }); this.toTop(); },
+      back: () => { this.setState({ view: 'library' }); this.toTop(); },
+      copied: !!s.copied,
+      shareLabel: s.copied ? 'Link copied' : 'Share',
+      share: () => {
+        try { navigator.clipboard.writeText('https://urbanwild.tv/watch/' + cur.key); } catch (e) {}
+        this.setState({ copied: true });
+      },
+      formOpen: !!s.formOpen,
+      formFresh: !s.formSent,
+      formSent: !!s.formSent,
+      openForm: () => this.setState({ formOpen: true, formSent: false }),
+      closeForm: () => this.setState({ formOpen: false }),
+      submitForm: () => this.setState({ formSent: true })
+    };
+  }
+}
+</script>
+</body>
+</html>
