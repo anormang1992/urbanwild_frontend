@@ -82,4 +82,24 @@ describe('Episodes page', () => {
     expect(router.currentRoute.value.query).toEqual({})
     expect(wrapper.find('[data-testid="results-heading"]').text()).toBe('More episodes')
   })
+
+  it('shows Loading, not the empty state, while the catalog is pending', async () => {
+    fetchCatalog.mockReturnValue(new Promise(() => {}))
+    const { wrapper } = await mountApp('/episodes')
+    expect(wrapper.text()).toContain('Loading episodes…')
+    expect(wrapper.text()).not.toContain('Rats! Nothing matched that search.')
+    expect(wrapper.find('[data-testid="results-heading"]').exists()).toBe(false)
+  })
+
+  it('shows an error with a working Try again', async () => {
+    fetchCatalog.mockReset()
+    fetchCatalog.mockRejectedValueOnce(new Error('down')).mockResolvedValue(catalog)
+    const { wrapper } = await mountApp('/episodes')
+    expect(wrapper.text()).toContain("We couldn't load the episodes right now.")
+    expect(wrapper.text()).not.toContain('Rats! Nothing matched that search.')
+    await wrapper.findAll('button').find((b) => b.text() === 'Try again').trigger('click')
+    await flushPromises()
+    expect(wrapper.findAll('[data-testid="grid"] a')).toHaveLength(3)
+    expect(wrapper.text()).not.toContain("We couldn't load")
+  })
 })

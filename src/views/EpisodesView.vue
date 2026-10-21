@@ -61,10 +61,12 @@ const heading = computed(() =>
   resultsHeading({ count: results.value.length, q: q.value, isDefault: isDefault.value }),
 )
 // Keep showing episodes during a reload; only show "Loading" when there are none yet.
-const shownStatus = computed(() => (episodes.value.length ? 'ready' : status.value))
-const statusMessage = computed(() =>
-  shownStatus.value === 'loading' || shownStatus.value === 'error' ? shownStatus.value : '',
-)
+// Keep showing episodes during a reload; with none yet, anything but 'ready' (idle, loading, error)
+// shows the status instead of an empty grid.
+const statusMessage = computed(() => {
+  if (episodes.value.length || status.value === 'ready') return ''
+  return status.value === 'error' ? 'error' : 'loading'
+})
 </script>
 
 <template>
