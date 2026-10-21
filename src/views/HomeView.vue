@@ -24,13 +24,13 @@ const statusMessage = computed(() => (shownStatus.value === 'loading' || shownSt
     class="mx-auto grid max-w-[1240px] items-center gap-14 px-6 pb-22 pt-18 md:grid-cols-2"
   >
     <div class="flex flex-col gap-6.5">
-      <p class="self-start rounded-full bg-green-soft px-3.5 py-1.5 text-sm font-bold text-green-text">Wildlife education · Raleigh, NC</p>
       <h1 class="font-display text-[clamp(44px,5.6vw,78px)] font-extrabold leading-[1.02] tracking-[-0.025em]">
         Saving the <span class="text-green">wild</span>, one <span class="text-green">life</span> at a time.
       </h1>
       <p class="max-w-[30em] text-xl leading-[1.55] text-muted">
         Short films about the animals that share our neighborhoods, made alongside the licensed wildlife rehabilitators who care for them.
       </p>
+      <p class="self-start rounded-full bg-green-soft px-3.5 py-1.5 text-sm font-bold text-green-text">Wildlife education · Raleigh, NC</p>
     </div>
 
     <RouterLink
