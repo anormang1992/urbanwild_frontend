@@ -10,3 +10,15 @@ export function setPageMeta({ title, description = DEFAULT_DESCRIPTION }) {
   }
   meta.setAttribute('content', description)
 }
+
+export const SITE_ORIGIN = 'https://urbanwild.tv'
+
+export function setCanonical(path) {
+  let link = document.head.querySelector('link[rel="canonical"]')
+  if (!link) {
+    link = document.createElement('link')
+    link.setAttribute('rel', 'canonical')
+    document.head.appendChild(link)
+  }
+  link.setAttribute('href', `${SITE_ORIGIN}${path}`)
+}

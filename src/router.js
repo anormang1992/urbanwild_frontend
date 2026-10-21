@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { setPageMeta } from './lib/head.js'
+import { setCanonical, setPageMeta } from './lib/head.js'
 import HomeView from './views/HomeView.vue'
 import EpisodesView from './views/EpisodesView.vue'
 import WatchView from './views/WatchView.vue'
@@ -34,10 +34,12 @@ export function createAppRouter(history = createWebHistory()) {
         meta: { title: 'Page not found · UrbanWild' },
       },
     ],
-    scrollBehavior: (to, from, savedPosition) => savedPosition || { top: 0 },
+    // Query-only changes (search, chips, sort) keep the scroll position.
+    scrollBehavior: (to, from, savedPosition) => savedPosition || (to.path === from.path ? false : { top: 0 }),
   })
 
   router.afterEach((to) => {
+    setCanonical(to.path)
     if (to.meta.title) setPageMeta({ title: to.meta.title })
   })
 
