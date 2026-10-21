@@ -223,7 +223,7 @@ Match the mockup. The tokens:
 
 ### Watch (`/episodes/:key`)
 
-1. "← All episodes" link, back to `/episodes` (keeping any previous query if practical).
+1. Back link to the Episodes list the visitor last saw, with its search, filter and sort (kept while moving between episodes). It reads "← All episodes" for the unfiltered list and "← Back to results" otherwise.
 2. **Two columns** that stack on mobile: the main column, plus an "Up next" sidebar about 320px wide.
 3. **Player:** a Vimeo embed via `@vimeo/player`, 16:9, radius 20px, built from `video_link` (keep its `h` parameter; add `title=0&byline=0&portrait=0`).
    - **Use Vimeo's native controls.** The control bar drawn in the mockup was only a stand-in for a real player; don't build custom controls.

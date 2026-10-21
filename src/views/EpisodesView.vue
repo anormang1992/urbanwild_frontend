@@ -1,7 +1,8 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCatalog } from '../composables/useCatalog.js'
+import { useEpisodesReturn } from '../composables/useEpisodesReturn.js'
 import { WEM_MARK } from '../lib/brand.js'
 import {
   ANIMALS,
@@ -40,15 +41,20 @@ const sort = computed(() => {
   return SORTS.some((s) => s.id === v) ? v : 'newest'
 })
 
-function update(patch) {
-  const next = { q: q.value, animal: animal.value, sort: sort.value, ...patch }
+function toQuery({ q, animal, sort }) {
   const query = {}
-  if (next.q.trim() !== '') query.q = next.q
-  if (next.animal !== 'all') query.animal = next.animal
-  if (next.sort !== 'newest') query.sort = next.sort
-  router.replace({ query })
+  if (q.trim() !== '') query.q = q
+  if (animal !== 'all') query.animal = animal
+  if (sort !== 'newest') query.sort = sort
+  return query
+}
+function update(patch) {
+  router.replace({ query: toQuery({ q: q.value, animal: animal.value, sort: sort.value, ...patch }) })
 }
 const clearFilters = () => router.replace({ query: {} })
+
+const { remember } = useEpisodesReturn()
+watchEffect(() => remember(toQuery({ q: q.value, animal: animal.value, sort: sort.value })))
 
 const isDefault = computed(() => isDefaultView({ q: q.value.trim(), animal: animal.value, sort: sort.value }))
 const chips = computed(() => animalOptions(episodes.value))

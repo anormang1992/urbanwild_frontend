@@ -2,6 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCatalog } from '../composables/useCatalog.js'
+import { useEpisodesReturn } from '../composables/useEpisodesReturn.js'
 import { fetchEpisode, recordPlay } from '../lib/api.js'
 import { DEFAULT_DESCRIPTION, WEM_MARK } from '../lib/brand.js'
 import { setPageMeta } from '../lib/head.js'
@@ -17,6 +18,7 @@ import NotFoundView from './NotFoundView.vue'
 const route = useRoute()
 const router = useRouter()
 const { episodes, status, load, reload } = useCatalog()
+const { backTo, isFiltered } = useEpisodesReturn()
 onMounted(load)
 
 const key = computed(() => String(route.params.key))
@@ -110,11 +112,12 @@ function replay() {
   </section>
   <section v-else class="mx-auto flex max-w-[1240px] flex-col gap-5 px-6 pb-24 pt-6">
     <RouterLink
-      :to="{ name: 'episodes' }"
+      :to="backTo"
+      data-testid="back-link"
       class="inline-flex min-h-11 items-center gap-2 self-start px-1 font-bold text-green-text no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-text"
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
-      All episodes
+      {{ isFiltered ? 'Back to results' : 'All episodes' }}
     </RouterLink>
 
     <div class="flex flex-wrap items-start gap-10">

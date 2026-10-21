@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 import { fetchCatalog, fetchEpisode, recordPlay } from '../../src/lib/api.js'
 import { resetCatalog } from '../../src/composables/useCatalog.js'
+import { resetEpisodesReturn } from '../../src/composables/useEpisodesReturn.js'
 import { WEM_MARK } from '../../src/lib/brand.js'
 import { catalog } from './fixtures.js'
 import { mountApp } from './helpers.js'
@@ -32,6 +33,7 @@ const showModal = vi.fn()
 
 beforeEach(() => {
   resetCatalog()
+  resetEpisodesReturn()
   fetchCatalog.mockReset().mockResolvedValue(catalog)
   fetchEpisode.mockReset().mockImplementation(async (key) => catalog.find((e) => e.key === key) || null)
   recordPlay.mockReset()
@@ -238,5 +240,40 @@ describe('Share', () => {
     expect(wrapper.find('[data-testid="share-url"]').text()).toBe(
       'https://urbanwild.tv/episodes/lady-eagle-dock-lake-auman',
     )
+  })
+})
+
+describe('Back link', () => {
+  const backLink = (wrapper) => wrapper.find('[data-testid="back-link"]')
+
+  it('goes to all episodes when no list was filtered', async () => {
+    const { wrapper } = await mountApp(KEY)
+    expect(backLink(wrapper).text()).toBe('All episodes')
+    expect(backLink(wrapper).attributes('href')).toBe('/episodes')
+  })
+
+  it('returns to the filtered list the visitor came from', async () => {
+    const { wrapper, router } = await mountApp('/episodes?q=eagle&animal=birds-of-prey&sort=oldest')
+    await router.push(KEY)
+    await flushPromises()
+    expect(backLink(wrapper).text()).toBe('Back to results')
+    expect(backLink(wrapper).attributes('href')).toBe('/episodes?q=eagle&animal=birds-of-prey&sort=oldest')
+  })
+
+  it('keeps the list while moving between episodes', async () => {
+    const { wrapper, router } = await mountApp('/episodes?animal=birds-of-prey')
+    await router.push(KEY)
+    await router.push('/episodes/byrons-hawk-in-the-crepe-myrtle-tree')
+    await flushPromises()
+    expect(backLink(wrapper).attributes('href')).toBe('/episodes?animal=birds-of-prey')
+  })
+
+  it('forgets the filters once the visitor returns to the unfiltered list', async () => {
+    const { wrapper, router } = await mountApp('/episodes?animal=birds-of-prey')
+    await router.push('/episodes')
+    await router.push(KEY)
+    await flushPromises()
+    expect(backLink(wrapper).text()).toBe('All episodes')
+    expect(backLink(wrapper).attributes('href')).toBe('/episodes')
   })
 })
